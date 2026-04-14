@@ -13,26 +13,13 @@ public:
     explicit MeuFrame(QWidget *parent = nullptr);
     ~MeuFrame();
    void adicionarPonto(int x, int y);
-/*
-public slots:
-    void atualizarEspessuraSelecionada(int novaEspessura);
 
-signals:
-    void formaSelecionada(int espessuraDaForma);
-*/
 protected:
     void paintEvent(QPaintEvent *event) override;
-    /*
 
-    void mousePressEvent(QMouseEvent *event) ;
-
-    void mouseMoveEvent(QMouseEvent *event) override;
-    void mouseReleaseEvent(QMouseEvent *event) override;
-    */
 private:
     QVector<Forma*> formas;
-    //Forma* m_formaSelecionada = nullptr;
-    //bool m_arrastando = false;
+
 };
 
 #endif // MEUFRAME_H

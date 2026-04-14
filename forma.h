@@ -1,8 +1,14 @@
 #ifndef FORMA_H
 #define FORMA_H
+
 #include <QPainter>
 #include <QVector>
 #include <QPoint>
+
+struct Coordenada {
+    double x;
+    double y;
+};
 
 enum class TipoForma{PONTO, RETA, POLIGONO};
 
@@ -18,6 +24,7 @@ public:
 protected:
     QString nome;
     TipoForma o_tipo;
+    std::list<Coordenada>p;
 };
 
 #endif // FORMA_H

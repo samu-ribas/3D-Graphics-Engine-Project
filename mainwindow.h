@@ -18,7 +18,7 @@ public:
     ~MainWindow() override;
 
 public slots:
-    void processarDesenhoPonto();
+    void processarDesenho();
 
 private:
     Ui::MainWindow *ui;

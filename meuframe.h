@@ -11,8 +11,8 @@ class MeuFrame : public QFrame
 public:
     explicit MeuFrame(QWidget *parent = nullptr);
     ~MeuFrame();
-   void adicionarPonto(QString nome, double x, double y);
-
+    void adicionarPonto(QString nome, double x, double y);
+    void adicionarReta(QString name, double x1, double y1, double x2, double y2);
 protected:
     void paintEvent(QPaintEvent *event) override;
 

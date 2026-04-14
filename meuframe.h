@@ -3,7 +3,6 @@
 
 #include <QFrame>
 #include <QVector>
-#include <QMouseEvent> // Necessário
 #include "forma.h"
 
 class MeuFrame : public QFrame
@@ -12,14 +11,13 @@ class MeuFrame : public QFrame
 public:
     explicit MeuFrame(QWidget *parent = nullptr);
     ~MeuFrame();
-   void adicionarPonto(int x, int y);
+   void adicionarPonto(QString nome, double x, double y);
 
 protected:
     void paintEvent(QPaintEvent *event) override;
 
 private:
-    QVector<Forma*> formas;
-
+    QVector<Forma*> displayFile;
 };
 
 #endif // MEUFRAME_H

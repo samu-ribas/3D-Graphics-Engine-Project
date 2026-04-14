@@ -1,3 +1,10 @@
-//#include "forma.h"
+#include "forma.h"
 
-//Forma::Forma() {}
+
+QString Forma::getNome(){
+    return this->nome;
+}
+
+QString Forma::getTipo(){
+    return this->tipo;
+}

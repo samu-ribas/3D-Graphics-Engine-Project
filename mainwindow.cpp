@@ -15,7 +15,7 @@ MainWindow::MainWindow(QWidget *parent)
 void MainWindow::processarDesenhoPonto(){
     int x = ui->inputX->text().toInt();
     int y = ui->inputY->text().toInt();
-    ui->frame->adicionarPonto(x, y);
+    ui->frame->adicionarPonto("ponto",x, y);
 }
 
 MainWindow::~MainWindow()

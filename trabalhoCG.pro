@@ -7,18 +7,16 @@ CONFIG += c++17
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-    forma.cpp \
     main.cpp \
     mainwindow.cpp \
-    meuframe.cpp \
-    ponto.cpp
+    meuframe.cpp
 
 HEADERS += \
-    Coordenadas.h \
+    Ponto.h \
+    Reta.h \
     forma.h \
     mainwindow.h \
-    meuframe.h \
-    ponto.h
+    meuframe.h
 
 FORMS += \
     mainwindow.ui

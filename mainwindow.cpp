@@ -45,7 +45,6 @@ void MainWindow::processarPoligono() {
         double largura = ui->largura->text().toDouble();
         double altura = ui->comprimento->text().toDouble();
 
-        // Gera os 4 vértices do retângulo (coordenadas de mundo)
         listaDePontos.push_back({xBase, yBase});
         listaDePontos.push_back({xBase + largura, yBase});
         listaDePontos.push_back({xBase + largura, yBase + altura});
@@ -55,9 +54,8 @@ void MainWindow::processarPoligono() {
         int lados = ui->lados->text().toInt();
         double raio = ui->raio->text().toDouble();
 
-        if (lados < 3) return; // Validação básica
-
-        // Algoritmo para gerar vértices de um polígono regular
+        if (lados < 3) return;
+        //algoritmo para poligono
         for (int i = 0; i < lados; ++i) {
             double angulo = 2.0 * M_PI * i / lados;
             double x = xBase + raio * cos(angulo);

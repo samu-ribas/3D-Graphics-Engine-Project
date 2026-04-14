@@ -38,8 +38,8 @@ void MainWindow::processarPoligono() {
     QString tipo = ui->comboBox->currentText();
     std::list<Coordenada> listaDePontos;
 
-    double xBase = ui->inputX->text().toDouble();
-    double yBase = ui->inputY->text().toDouble();
+    double xBase = ui->inputX_2->text().toDouble();
+    double yBase = ui->inputY_2->text().toDouble();
 
     if (tipo == "RETANGULO") {
         double largura = ui->largura->text().toDouble();

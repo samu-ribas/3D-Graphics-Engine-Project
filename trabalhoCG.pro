@@ -12,6 +12,7 @@ SOURCES += \
     meuframe.cpp
 
 HEADERS += \
+    Poligono.h \
     Ponto.h \
     Reta.h \
     forma.h \

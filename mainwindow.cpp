@@ -10,6 +10,13 @@ MainWindow::MainWindow(QWidget *parent)
 
     connect(ui->desenharPonto, &QPushButton::clicked, this, &MainWindow::processarDesenho);
     connect(ui->desenharReta, &QPushButton::clicked, this, &MainWindow::processarDesenho);
+
+    std::list<Coordenada> triangulo;
+    triangulo.push_back({100, 100});
+    triangulo.push_back({200, 100});
+    triangulo.push_back({150, 50});
+
+    ui->frame->adicionarPoligono("Meu Triangulo", triangulo);
 }
 
 void MainWindow::processarDesenho(){

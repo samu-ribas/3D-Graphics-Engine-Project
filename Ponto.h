@@ -6,17 +6,18 @@
 class Ponto : public Forma
 {
 public:
-    Ponto(QString n, double x, double y) : Forma(n, TipoForma::PONTO), x(x), y(y){}
-
-    void desenhar(QPainter &painter) override{
-        QPen caneta(Qt::white, 5);
-        painter.setPen(caneta);
-        painter.drawPoint(x, y);
+    Ponto(QString n, double x, double y) : Forma(n, TipoForma::PONTO){
+        p.push_back({x,y});
     }
 
-private:
-    double x;
-    double y;
+    void desenhar(QPainter &painter) override{
+        QPen caneta(Qt::white, 5, Qt::SolidLine, Qt::RoundCap);
+        painter.setPen(caneta);
+        if(!p.empty()){
+            Coordenada coorde = p.front();
+            painter.drawPoint(coorde.x, coorde.y);
+        }
+    }
 };
 
 #endif // PONTO_H

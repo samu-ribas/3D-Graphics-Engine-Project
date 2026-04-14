@@ -85,3 +85,4 @@ CMakeLists.txt.user*
 
 debug/
 release/
+.vscode/

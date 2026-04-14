@@ -19,6 +19,7 @@ public:
 
 public slots:
     void processarDesenho();
+    void processarPoligono();
 
 private:
     Ui::MainWindow *ui;

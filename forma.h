@@ -18,13 +18,14 @@ public:
     Forma(QString n, TipoForma tipo) : nome(n), o_tipo(tipo){}
     virtual ~Forma() {}
     virtual void desenhar(QPainter &painter) = 0;
-    //QString getNome(){const return nome;}
+
+    const QString getNome() { return nome; }
     //QString getTipo(){const return tipo;}
 
 protected:
     QString nome;
     TipoForma o_tipo;
-    std::list<Coordenada>p;
+    std::list<Coordenada> p;
 };
 
 #endif // FORMA_H

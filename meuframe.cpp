@@ -33,6 +33,18 @@ void MeuFrame::paintEvent(QPaintEvent *event){
 
 }
 
+bool MeuFrame::acharNome( QString nome )
+{
+    int tam = displayFile.length();
+    for ( int i = 0; i < tam; i++ )
+    {
+        //if ( QString::compare( displayFile[i]->getNome(), nome ) )
+        if ( displayFile[i]->getNome() == nome )
+            return true;
+    }
+    return false;
+}
+
 MeuFrame::~MeuFrame() {
     qDeleteAll(displayFile);
     displayFile.clear();

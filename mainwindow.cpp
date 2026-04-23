@@ -17,10 +17,18 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->desenharPoligono_2, &QPushButton::clicked, this, &MainWindow::processarPoligono);
 }
 
-void MainWindow::processarDesenho(){
+void MainWindow::processarDesenho()
+{
+    QString nome = ui->lineNome->text();
+    if ( ui->frame->acharNome( nome ) )
+    {
+        mostrarPopup();
+        return;
+    }
+
     double x = ui->inputX->text().toDouble();
     double y = ui->inputY->text().toDouble();
-    QString nome = ui->lineNome->text();
+
     QString tipo = ui->comboBox->currentText();
 
     if(tipo == "PONTO"){
@@ -66,6 +74,11 @@ void MainWindow::processarPoligono() {
 
     // Envia para o Display File no MeuFrame
     ui->frame->adicionarPoligono(nome, listaDePontos);
+}
+
+void MainWindow::mostrarPopup()
+{
+    qDebug() << "Mostrando popup...";
 }
 
 MainWindow::~MainWindow()

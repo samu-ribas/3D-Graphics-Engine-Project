@@ -20,6 +20,7 @@ public:
 public slots:
     void processarDesenho();
     void processarPoligono();
+    void mostrarPopup();
 
 private:
     Ui::MainWindow *ui;

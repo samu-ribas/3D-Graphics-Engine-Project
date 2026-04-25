@@ -1,13 +1,10 @@
 #include "meuframe.h"
 #include "Ponto.h"
 #include <QPainter>
-#include "forma.h"
 #include "Reta.h"
 #include "Poligono.h"
 
 MeuFrame::MeuFrame(QWidget *parent) : QFrame(parent) {}
-
-
 
 void MeuFrame:: adicionarPonto(QString name, double x, double y){
     displayFile.append(new Ponto(name ,x ,y));
@@ -30,7 +27,6 @@ void MeuFrame::paintEvent(QPaintEvent *event){
 
     for(Forma* df : std::as_const(displayFile))
         df->desenhar(painter);
-
 }
 
 MeuFrame::~MeuFrame() {

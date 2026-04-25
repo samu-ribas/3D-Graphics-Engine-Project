@@ -10,9 +10,6 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
 
-    connect(ui->desenharPoligono, &QPushButton::clicked, this, &MainWindow::processarPoligono);
-    connect(ui->desenharPoligono_2, &QPushButton::clicked, this, &MainWindow::processarPoligono);
-
     connect(ui->comboBox, QOverload<int>::of(&QComboBox::currentIndexChanged),ui->stackedWidget, &QStackedWidget::setCurrentIndex);
     connect(ui->Bt_add_forma, &QPushButton::clicked, this, &MainWindow::inputCoordenadas);
 }
@@ -30,54 +27,52 @@ void MainWindow::inputCoordenadas(){;
                                 ui->inputYReta_2->text().toDouble());
         break;
     case 2:
-
+        this->processarDesenho(ui->inputXPoligono->text().toDouble(), // x do centro
+                               ui->inputYPoligono->text().toDouble(), // y do centro
+                               ui->inputLados->text().toInt(),
+                               ui->inputRaio->text().toDouble());
         break;
     case 3:
+        this->processarDesenho(ui->lineNome->text(),
+                               ui->inputXRetangulo->text().toDouble(), // x do canto
+                               ui   ->inputYRetangulo->text().toDouble(), // y do canto
+                               ui->comprimentoRetangulo->text().toDouble(),
+                               ui->alturaRetangulo->text().toDouble());
         break;
     }
 }
-
+// ponto
 void MainWindow::processarDesenho(double x,  double y){
     ui->frame->adicionarPonto(ui->lineNome->text(),x, y);
 }
-
+//reta
 void MainWindow::processarDesenho(double x1, double y1, double x2, double y2){
     ui->frame->adicionarReta(ui->lineNome->text(), x1, y1, x2, y2);
 }
+//polígono
+void MainWindow::processarDesenho(double x, double y, int l, double r){
+    if (l< 3) return;
 
-//essa função será alterada
-void MainWindow::processarPoligono() {
-    QString nome = ui->lineNome->text();
-    QString tipo = ui->comboBox->currentText();
     std::list<Coordenada> listaDePontos;
+    double offset = (l % 2 == 0) ? (M_PI / l) : (M_PI / 2.0);
 
-    double xBase = ui->inputX_2->text().toDouble();
-    double yBase = ui->inputY_2->text().toDouble();
-
-    if (tipo == "RETANGULO") {
-        double largura = ui->largura->text().toDouble();
-        double altura = ui->comprimento->text().toDouble();
-
-        listaDePontos.push_back({xBase, yBase});
-        listaDePontos.push_back({xBase + largura, yBase});
-        listaDePontos.push_back({xBase + largura, yBase + altura});
-        listaDePontos.push_back({xBase, yBase + altura});
-
-    } else if (tipo == "POLIGONO") {
-        int lados = ui->lados->text().toInt();
-        double raio = ui->raio->text().toDouble();
-
-        if (lados < 3) return;
-        //algoritmo para poligono
-        for (int i = 0; i < lados; ++i) {
-            double angulo = 2.0 * M_PI * i / lados;
-            double x = xBase + raio * cos(angulo);
-            double y = yBase + raio * sin(angulo);
-            listaDePontos.push_back({x, y});
-        }
+    for (int i = 0; i < l; ++i){
+        double angulo = 2.0 * M_PI * i / l - offset;
+        double xbase = x + r * cos(angulo);
+        double ybase = y + r * sin(angulo);
+        listaDePontos.push_back({xbase, ybase});
     }
 
-    // Envia para o Display File no MeuFrame
+    ui->frame->adicionarPoligono(ui->lineNome->text(), listaDePontos);
+}
+//retângulo
+void MainWindow::processarDesenho(QString nome, double x, double y, double c, double h){
+    std::list<Coordenada> listaDePontos;
+    listaDePontos.push_back({x, y});
+    listaDePontos.push_back({x + c, y});
+    listaDePontos.push_back({x + c, y+ h});
+    listaDePontos.push_back({x, y + h});
+
     ui->frame->adicionarPoligono(nome, listaDePontos);
 }
 

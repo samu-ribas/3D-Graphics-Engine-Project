@@ -2,6 +2,7 @@
 #define POLIGONO_H
 #include "forma.h"
 
+
 class Poligono : public Forma{
 
 public:

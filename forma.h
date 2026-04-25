@@ -21,6 +21,7 @@ public:
     //QString getNome(){const return nome;}
     //QString getTipo(){const return tipo;}
 
+
 protected:
     QString nome;
     TipoForma o_tipo;

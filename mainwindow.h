@@ -18,8 +18,12 @@ public:
     ~MainWindow() override;
 
 public slots:
-    void processarDesenho();
     void processarPoligono();
+    void processarDesenho(double x, double y);
+    void processarDesenho(double x1, double y1, double x2, double y2);
+
+private slots:
+    void inputCoordenadas();
 
 private:
     Ui::MainWindow *ui;

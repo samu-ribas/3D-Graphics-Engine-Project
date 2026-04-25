@@ -1,6 +1,5 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include <QSlider>
 #include <list>
 #include <cmath>
 #include "forma.h"
@@ -11,28 +10,42 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
 
-    connect(ui->desenharPonto, &QPushButton::clicked, this, &MainWindow::processarDesenho);
-    connect(ui->desenharReta, &QPushButton::clicked, this, &MainWindow::processarDesenho);
     connect(ui->desenharPoligono, &QPushButton::clicked, this, &MainWindow::processarPoligono);
     connect(ui->desenharPoligono_2, &QPushButton::clicked, this, &MainWindow::processarPoligono);
+
+    connect(ui->comboBox, QOverload<int>::of(&QComboBox::currentIndexChanged),ui->stackedWidget, &QStackedWidget::setCurrentIndex);
+    connect(ui->Bt_add_forma, &QPushButton::clicked, this, &MainWindow::inputCoordenadas);
 }
 
-void MainWindow::processarDesenho(){
-    double x = ui->inputX->text().toDouble();
-    double y = ui->inputY->text().toDouble();
-    QString nome = ui->lineNome->text();
-    QString tipo = ui->comboBox->currentText();
+void MainWindow::inputCoordenadas(){;
+    int id = ui->stackedWidget->currentIndex();
+    switch(id){
+    case 0:
+        this->processarDesenho(ui->inputX->text().toDouble(), ui->inputY->text().toDouble());
+        break;
+    case 1:
+        this->processarDesenho(ui->inputXReta->text().toDouble(),
+                                ui->inputYReta->text().toDouble(),
+                                ui->inputXReta_2->text().toDouble(),
+                                ui->inputYReta_2->text().toDouble());
+        break;
+    case 2:
 
-    if(tipo == "PONTO"){
-         ui->frame->adicionarPonto(nome ,x, y);
-    }else{
-        double x2 = ui->inputXReta->text().toDouble();
-        double y2 = ui->inputYReta->text().toDouble();
-        ui->frame->adicionarReta(nome, x, y, x2, y2);
+        break;
+    case 3:
+        break;
     }
-
 }
 
+void MainWindow::processarDesenho(double x,  double y){
+    ui->frame->adicionarPonto(ui->lineNome->text(),x, y);
+}
+
+void MainWindow::processarDesenho(double x1, double y1, double x2, double y2){
+    ui->frame->adicionarReta(ui->lineNome->text(), x1, y1, x2, y2);
+}
+
+//essa função será alterada
 void MainWindow::processarPoligono() {
     QString nome = ui->lineNome->text();
     QString tipo = ui->comboBox->currentText();

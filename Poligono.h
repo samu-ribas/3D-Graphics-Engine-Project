@@ -5,11 +5,13 @@
 class Poligono : public Forma{
 
 public:
-    Poligono(QString n, std::list<Coordenada> vertices): Forma(n, TipoForma::POLIGONO){
+    Poligono( QString n, std::list<Coordenada> vertices ) : Forma( n, TipoForma::POLIGONO )
+    {
         this->p = vertices;
     }
 
-    void desenhar(QPainter &painter) override{
+    void desenhar( QPainter &painter ) override
+    {
         QPen caneta(Qt::white, 5);
         painter.setPen(caneta);
 

@@ -16,7 +16,9 @@ public:
     void adicionarReta(QString name, double x1, double y1, double x2, double y2);
     void adicionarPoligono(QString name, std::list<Coordenada> pontos);
 
-    bool acharNome( QString nome );
+    Forma* acharNome( QString nome );
+
+    QVector<Forma*> *getDisplayFile();
 
 protected:
     void paintEvent(QPaintEvent *event) override;

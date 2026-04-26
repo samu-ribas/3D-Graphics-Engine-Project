@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include "janelatranformador.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -21,6 +22,9 @@ public slots:
     void processarDesenho();
     void processarPoligono();
     void mostrarPopup();
+
+private slots:
+    void on_pushButton_pressed();
 
 private:
     Ui::MainWindow *ui;

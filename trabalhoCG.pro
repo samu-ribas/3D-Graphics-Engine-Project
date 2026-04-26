@@ -7,6 +7,7 @@ CONFIG += c++17
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    janelatranformador.cpp \
     main.cpp \
     mainwindow.cpp \
     meuframe.cpp
@@ -16,10 +17,13 @@ HEADERS += \
     Ponto.h \
     Reta.h \
     forma.h \
+    janelatranformador.h \
     mainwindow.h \
+    matriz.h \
     meuframe.h
 
 FORMS += \
+    janelatranformador.ui \
     mainwindow.ui
 
 # Default rules for deployment.

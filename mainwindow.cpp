@@ -20,7 +20,7 @@ MainWindow::MainWindow(QWidget *parent)
 void MainWindow::processarDesenho()
 {
     QString nome = ui->lineNome->text();
-    if ( ui->frame->acharNome( nome ) )
+    if ( ui->frame->acharNome( nome ) != nullptr )
     {
         mostrarPopup();
         return;
@@ -31,9 +31,9 @@ void MainWindow::processarDesenho()
 
     QString tipo = ui->comboBox->currentText();
 
-    if(tipo == "PONTO"){
+    if ( tipo == "PONTO" ){
          ui->frame->adicionarPonto(nome ,x, y);
-    }else{
+    } else {
         double x2 = ui->inputXReta->text().toDouble();
         double y2 = ui->inputYReta->text().toDouble();
         ui->frame->adicionarReta(nome, x, y, x2, y2);
@@ -85,3 +85,10 @@ MainWindow::~MainWindow()
 {
     delete ui;
 }
+
+void MainWindow::on_pushButton_pressed()
+{
+    JanelaTranformador *janela = new JanelaTranformador( this, ui->frame->getDisplayFile() );
+    janela->show();
+}
+

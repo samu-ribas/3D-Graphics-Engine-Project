@@ -18,6 +18,11 @@ public:
             painter.drawPoint(coordenada.x, coordenada.y);
         }
     }
+    void aplicarTransformacao(const Matriz& m) override{
+        for(Coordenada& vertice : this->p){
+            vertice = m * vertice;
+        }
+    }
 };
 
 #endif // PONTO_H

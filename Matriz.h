@@ -1,7 +1,7 @@
 #ifndef MATRIZ_H
 #define MATRIZ_H
 
-// #include "forma.h"
+#include "forma.h"
 
 class Matriz
 {
@@ -11,6 +11,11 @@ public:
 
     static Matriz gerarMatrizT(double dx, double dy);
     static Matriz gerarMatrizE(double sx, double sy);
+    static Matriz gerarMatrizR(double angulo);
+
+    //sobrecarga de operador para multiplicar matriz
+    Matriz operator*(const Matriz& outra) const;
+    Coordenada operator*(const Coordenada& ponto) const;
 
 };
 

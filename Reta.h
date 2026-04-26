@@ -22,6 +22,11 @@ public:
             painter.drawLine(QLineF(p1.x, p1.y, p2.x, p2.y));
         }
     }
+    void aplicarTransformacao(const Matriz& m) override{
+        for(Coordenada& vertice : this->p){
+            vertice = m * vertice;
+        }
+    }
 };
 
 #endif // RETA_H

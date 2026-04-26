@@ -4,7 +4,6 @@
 #include <cmath>
 #include <QMessageBox>
 #include "forma.h"
-//#include "Matriz.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -24,15 +23,12 @@ void MainWindow::inputOperacao(){
     QString nome = ui->lineNome->text();
     switch(op){
         case 0:{
-            // Matriz::gerarMatrizT(ui->inputXTranslacao->text().toDouble(), ui->inputYTranslacao->text().toDouble());
             break;
         }
         case 1:{
-            // Matriz::gerarMatrizE(ui->inputXEscala->text().toDouble(), ui->inputYEscala->text().toDouble());
             break;
         }
         case 2:{
-
             break;
         }
     }

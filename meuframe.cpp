@@ -3,6 +3,7 @@
 #include <QPainter>
 #include "Reta.h"
 #include "Poligono.h"
+#include "Matriz.h"
 
 MeuFrame::MeuFrame(QWidget *parent) : QFrame(parent) {}
 
@@ -27,6 +28,22 @@ void MeuFrame::paintEvent(QPaintEvent *event){
 
     for(Forma* df : std::as_const(displayFile))
         df->desenhar(painter);
+}
+
+void MeuFrame::rotacionarObjeto(QString nome, double angulo, double px, double py){
+    for(Forma* df:std::as_const(displayFile)){
+        if(df->getNome() == nome){
+            Coordenada centro = df->getCentroide();
+            Matriz mToOrigin = Matriz::gerarMatrizT(-px, -py);
+            Matriz mRotation = Matriz::gerarMatrizR(angulo);
+            Matriz mToReturn = Matriz::gerarMatrizT(px, py);
+
+            Matriz composta = mToReturn * mRotation * mToOrigin;
+            df->aplicarTransformacao(composta);
+            break;
+        }
+    }
+    this->update();
 }
 
 MeuFrame::~MeuFrame() {

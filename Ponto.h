@@ -14,8 +14,8 @@ public:
         QPen caneta(Qt::white, 5, Qt::SolidLine, Qt::RoundCap);
         painter.setPen(caneta);
         if(!p.empty()){
-            Coordenada coorde = p.front();
-            painter.drawPoint(coorde.x, coorde.y);
+            Coordenada coordenada = p.front();
+            painter.drawPoint(coordenada.x, coordenada.y);
         }
     }
 };

@@ -2,7 +2,6 @@
 #define POLIGONO_H
 #include "forma.h"
 
-
 class Poligono : public Forma{
 
 public:
@@ -28,7 +27,6 @@ public:
         Coordenada ultimo = p.back();
         painter.drawLine(QLineF(ultimo.x, ultimo.y, primeiro.x, primeiro.y));
     }
-
 };
 
 #endif // POLIGONO_H

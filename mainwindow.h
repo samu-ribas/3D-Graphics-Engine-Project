@@ -22,9 +22,10 @@ public slots:
     void processarDesenho(double x1, double y1, double x2, double y2); // reta
     void processarDesenho(double x, double y, int l, double r); // polígono
     void processarDesenho(QString nome, double x, double y, double c, double h); // retângulo
-
+    void inputOperacao();
 private slots:
     void inputCoordenadas();
+
 
 private:
     Ui::MainWindow *ui;

@@ -21,9 +21,7 @@ public:
             Coordenada p2 = *it;
             painter.drawLine(QLineF(p1.x, p1.y, p2.x, p2.y));
         }
-
     }
-
 };
 
 #endif // RETA_H

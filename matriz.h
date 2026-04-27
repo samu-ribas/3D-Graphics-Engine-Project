@@ -1,35 +1,24 @@
 #ifndef MATRIZ_H
 #define MATRIZ_H
 
-class matriz
+class Matriz
 {
 private:
-    //double valor[3][3];
+
 
 public:
+    double m[3][3];
 
-    matriz() {
-        for ( int j = 0; j < 3; j++ )
-        {
-            for ( int i = 0; i < 3; i++ )
-            {
-                m[i][j] = 0;
-            }
-        }
-    }
+    Matriz();
 
-    static double *multiplicar( double m1[3][3], double m2[3][3] )
-    {
-        double resul[3][3];
-        for ( int j = 0; j < 3; j++ )
-        {
-            for ( int i = 0; i < 3; i++ )
-            {
-                resul =
-            }
-        }
-        return resul;
-    }
+    static Matriz gerarMatrizTranslacao( double dx, double dy );
+    static Matriz gerarMatrizEscala( double sx, double sy );
+    static Matriz gerarMatrizRotacao( double angulo );
+
+    static Matriz multiplicar( Matriz m1, Matriz m2 );
+    static void multiplicarVM( double v[3], Matriz m );
+
+    void imprimir();
 };
 
 #endif // MATRIZ_H

@@ -6,277 +6,466 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>600</width>
-    <height>500</height>
+    <width>260</width>
+    <height>300</height>
    </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QScrollArea" name="scrollArea">
-    <property name="geometry">
-     <rect>
-      <x>12</x>
-      <y>12</y>
-      <width>221</width>
-      <height>366</height>
-     </rect>
-    </property>
-    <property name="widgetResizable">
-     <bool>true</bool>
-    </property>
-    <widget class="QWidget" name="scrollAreaWidgetContents">
-     <property name="geometry">
-      <rect>
-       <x>0</x>
-       <y>0</y>
-       <width>204</width>
-       <height>537</height>
-      </rect>
-     </property>
-     <layout class="QVBoxLayout" name="verticalLayout_3">
-      <item>
-       <layout class="QHBoxLayout" name="horizontalLayout_9">
+   <layout class="QVBoxLayout" name="verticalLayout">
+    <item>
+     <widget class="QWidget" name="widget_2" native="true">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <layout class="QHBoxLayout" name="horizontalLayout">
+       <property name="topMargin">
+        <number>0</number>
+       </property>
+       <property name="bottomMargin">
+        <number>0</number>
+       </property>
+       <item>
+        <widget class="QLabel" name="label_2">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="text">
+          <string>Objeto:</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QComboBox" name="formaBox"/>
+       </item>
+      </layout>
+     </widget>
+    </item>
+    <item>
+     <widget class="QScrollArea" name="scrollArea">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="sizeAdjustPolicy">
+       <enum>QAbstractScrollArea::SizeAdjustPolicy::AdjustIgnored</enum>
+      </property>
+      <property name="widgetResizable">
+       <bool>true</bool>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignTop</set>
+      </property>
+      <widget class="QWidget" name="scrollAreaWidgetContents">
+       <property name="geometry">
+        <rect>
+         <x>0</x>
+         <y>-268</y>
+         <width>219</width>
+         <height>440</height>
+        </rect>
+       </property>
+       <layout class="QVBoxLayout" name="verticalLayout_3">
         <item>
-         <widget class="QLabel" name="label_2">
+         <widget class="QWidget" name="widget" native="true">
           <property name="sizePolicy">
-           <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+           <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
             <horstretch>0</horstretch>
             <verstretch>0</verstretch>
            </sizepolicy>
           </property>
+          <layout class="QFormLayout" name="formLayout_3">
+           <property name="topMargin">
+            <number>0</number>
+           </property>
+           <property name="bottomMargin">
+            <number>0</number>
+           </property>
+           <item row="0" column="0">
+            <widget class="QLabel" name="label">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="text">
+              <string>Tempo (em seg):</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="1">
+            <widget class="QDoubleSpinBox" name="tempo">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
+        <item>
+         <widget class="QCheckBox" name="checkBoxTraslacao">
+          <property name="font">
+           <font>
+            <pointsize>22</pointsize>
+           </font>
+          </property>
           <property name="text">
-           <string>Objeto:</string>
+           <string>Translação</string>
+          </property>
+          <property name="checked">
+           <bool>false</bool>
           </property>
          </widget>
         </item>
         <item>
-         <widget class="QComboBox" name="formaBox"/>
-        </item>
-       </layout>
-      </item>
-      <item>
-       <layout class="QHBoxLayout" name="horizontalLayout_11">
-        <item>
-         <widget class="QLabel" name="label">
-          <property name="text">
-           <string>Tempo (em seg):</string>
+         <widget class="QWidget" name="widgetTranslacao" native="true">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
           </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QDoubleSpinBox" name="tempo"/>
-        </item>
-       </layout>
-      </item>
-      <item>
-       <widget class="QCheckBox" name="checkBoxEscala">
-        <property name="font">
-         <font>
-          <pointsize>22</pointsize>
-         </font>
-        </property>
-        <property name="text">
-         <string>Escala</string>
-        </property>
-        <property name="checked">
-         <bool>true</bool>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QWidget" name="widget_2" native="true">
-        <layout class="QVBoxLayout" name="verticalLayout_6">
-         <item>
-          <layout class="QHBoxLayout" name="horizontalLayout_12">
-           <item>
-            <widget class="QLabel" name="label_15">
-             <property name="text">
-              <string>X:</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QDoubleSpinBox" name="escalaX"/>
-           </item>
-          </layout>
-         </item>
-         <item>
-          <layout class="QHBoxLayout" name="horizontalLayout_13">
-           <item>
-            <widget class="QLabel" name="label_16">
-             <property name="text">
-              <string>Y:</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QDoubleSpinBox" name="escalaY"/>
-           </item>
-          </layout>
-         </item>
-        </layout>
-       </widget>
-      </item>
-      <item>
-       <widget class="QCheckBox" name="checkBoxTraslacao">
-        <property name="font">
-         <font>
-          <pointsize>22</pointsize>
-         </font>
-        </property>
-        <property name="text">
-         <string>Translação</string>
-        </property>
-        <property name="checked">
-         <bool>true</bool>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QWidget" name="Translacao" native="true">
-        <layout class="QVBoxLayout" name="verticalLayout_4">
-         <item>
-          <widget class="QCheckBox" name="translacaoRelativa">
-           <property name="text">
-            <string>Relativo?</string>
+          <layout class="QFormLayout" name="formLayout_2">
+           <property name="leftMargin">
+            <number>8</number>
            </property>
-           <property name="checked">
-            <bool>true</bool>
+           <property name="topMargin">
+            <number>0</number>
            </property>
-          </widget>
-         </item>
-         <item>
-          <layout class="QHBoxLayout" name="horizontalLayout_8">
-           <item>
+           <property name="bottomMargin">
+            <number>12</number>
+           </property>
+           <item row="1" column="0">
             <widget class="QLabel" name="label_11">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
              <property name="text">
               <string>X:</string>
              </property>
             </widget>
            </item>
-           <item>
-            <widget class="QDoubleSpinBox" name="translacaoX"/>
+           <item row="1" column="1">
+            <widget class="QDoubleSpinBox" name="translacaoX">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="minimum">
+              <double>-999.990000000000009</double>
+             </property>
+             <property name="maximum">
+              <double>999.990000000000009</double>
+             </property>
+            </widget>
            </item>
-          </layout>
-         </item>
-         <item>
-          <layout class="QHBoxLayout" name="horizontalLayout">
-           <item>
+           <item row="2" column="0">
             <widget class="QLabel" name="label_4">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
              <property name="text">
               <string>Y:</string>
              </property>
             </widget>
            </item>
-           <item>
-            <widget class="QDoubleSpinBox" name="translacaoY"/>
+           <item row="2" column="1">
+            <widget class="QDoubleSpinBox" name="translacaoY">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="minimum">
+              <double>-999.990000000000009</double>
+             </property>
+             <property name="maximum">
+              <double>999.990000000000009</double>
+             </property>
+            </widget>
            </item>
           </layout>
-         </item>
-        </layout>
-       </widget>
-      </item>
-      <item>
-       <widget class="QCheckBox" name="checkBoxRotacao">
-        <property name="font">
-         <font>
-          <pointsize>22</pointsize>
-         </font>
-        </property>
-        <property name="text">
-         <string>Rotação</string>
-        </property>
-        <property name="checked">
-         <bool>true</bool>
-        </property>
-        <property name="tristate">
-         <bool>false</bool>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QWidget" name="widget" native="true">
-        <layout class="QVBoxLayout" name="verticalLayout_2">
-         <item>
-          <layout class="QHBoxLayout" name="horizontalLayout_4">
-           <item>
+         </widget>
+        </item>
+        <item>
+         <widget class="QCheckBox" name="checkBoxEscala">
+          <property name="font">
+           <font>
+            <pointsize>22</pointsize>
+           </font>
+          </property>
+          <property name="text">
+           <string>Escala</string>
+          </property>
+          <property name="checked">
+           <bool>false</bool>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QWidget" name="widgetEscala" native="true">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <layout class="QFormLayout" name="formLayout">
+           <property name="topMargin">
+            <number>0</number>
+           </property>
+           <item row="0" column="0">
+            <widget class="QLabel" name="label_15">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="text">
+              <string>X:</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="1">
+            <widget class="QDoubleSpinBox" name="escalaX">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="maximum">
+              <double>9999.989999999999782</double>
+             </property>
+             <property name="value">
+              <double>1.000000000000000</double>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="0">
+            <widget class="QLabel" name="label_16">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="text">
+              <string>Y:</string>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="1">
+            <widget class="QDoubleSpinBox" name="escalaY">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="value">
+              <double>1.000000000000000</double>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
+        <item>
+         <widget class="QCheckBox" name="checkBoxRotacao">
+          <property name="font">
+           <font>
+            <pointsize>22</pointsize>
+           </font>
+          </property>
+          <property name="text">
+           <string>Rotação</string>
+          </property>
+          <property name="checked">
+           <bool>false</bool>
+          </property>
+          <property name="tristate">
+           <bool>false</bool>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QWidget" name="widgetRotacao" native="true">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <layout class="QFormLayout" name="formLayout_4">
+           <property name="leftMargin">
+            <number>12</number>
+           </property>
+           <property name="topMargin">
+            <number>0</number>
+           </property>
+           <item row="1" column="0">
             <widget class="QLabel" name="label_7">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
              <property name="text">
               <string>Angulo:</string>
              </property>
             </widget>
            </item>
-           <item>
-            <widget class="QDoubleSpinBox" name="rotacaoAngulo"/>
+           <item row="1" column="1">
+            <widget class="QDoubleSpinBox" name="rotacaoAngulo">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignVCenter</set>
+             </property>
+             <property name="showGroupSeparator" stdset="0">
+              <bool>false</bool>
+             </property>
+             <property name="prefix">
+              <string/>
+             </property>
+             <property name="maximum">
+              <double>360.000000000000000</double>
+             </property>
+            </widget>
            </item>
-          </layout>
-         </item>
-         <item>
-          <widget class="QCheckBox" name="rotacaoRelativa">
-           <property name="text">
-            <string>Relativo?</string>
-           </property>
-           <property name="checked">
-            <bool>true</bool>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <layout class="QHBoxLayout" name="horizontalLayout_3">
-           <item>
+           <item row="3" column="0">
             <widget class="QLabel" name="label_6">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
              <property name="text">
               <string>Eixo X:</string>
              </property>
             </widget>
            </item>
-           <item>
-            <widget class="QDoubleSpinBox" name="rotacaoEixoX"/>
+           <item row="3" column="1">
+            <widget class="QDoubleSpinBox" name="rotacaoEixoX">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="minimum">
+              <double>-999.990000000000009</double>
+             </property>
+             <property name="maximum">
+              <double>999.990000000000009</double>
+             </property>
+            </widget>
            </item>
-          </layout>
-         </item>
-         <item>
-          <layout class="QHBoxLayout" name="horizontalLayout_7">
-           <item>
+           <item row="4" column="0">
             <widget class="QLabel" name="label_10">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
              <property name="text">
               <string>Eixo Y:</string>
              </property>
             </widget>
            </item>
-           <item>
-            <widget class="QDoubleSpinBox" name="rotacaoEixoY"/>
+           <item row="4" column="1">
+            <widget class="QDoubleSpinBox" name="rotacaoEixoY">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="minimum">
+              <double>-999.990000000000009</double>
+             </property>
+             <property name="maximum">
+              <double>999.990000000000009</double>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="1">
+            <widget class="QCheckBox" name="rotacaoRelativa">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="text">
+              <string>Relativo?</string>
+             </property>
+             <property name="checked">
+              <bool>true</bool>
+             </property>
+            </widget>
            </item>
           </layout>
-         </item>
-        </layout>
-       </widget>
-      </item>
-     </layout>
-    </widget>
-   </widget>
-   <widget class="QPushButton" name="botaoTranformar">
-    <property name="geometry">
-     <rect>
-      <x>12</x>
-      <y>413</y>
-      <width>102</width>
-      <height>32</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Transformar</string>
-    </property>
-   </widget>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+     </widget>
+    </item>
+    <item>
+     <widget class="QPushButton" name="botaoTranformar">
+      <property name="text">
+       <string>Transformar</string>
+      </property>
+     </widget>
+    </item>
+   </layout>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>600</width>
+     <width>260</width>
      <height>24</height>
     </rect>
    </property>
@@ -288,48 +477,48 @@
   <connection>
    <sender>checkBoxTraslacao</sender>
    <signal>toggled(bool)</signal>
-   <receiver>Translacao</receiver>
+   <receiver>widgetTranslacao</receiver>
    <slot>setVisible(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>123</x>
-     <y>-15</y>
+     <x>147</x>
+     <y>315</y>
     </hint>
     <hint type="destinationlabel">
-     <x>176</x>
-     <y>7</y>
+     <x>135</x>
+     <y>385</y>
     </hint>
    </hints>
   </connection>
   <connection>
    <sender>checkBoxRotacao</sender>
    <signal>toggled(bool)</signal>
-   <receiver>widget</receiver>
+   <receiver>widgetRotacao</receiver>
    <slot>setVisible(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>105</x>
-     <y>134</y>
+     <x>117</x>
+     <y>541</y>
     </hint>
     <hint type="destinationlabel">
-     <x>142</x>
-     <y>160</y>
+     <x>154</x>
+     <y>626</y>
     </hint>
    </hints>
   </connection>
   <connection>
    <sender>checkBoxEscala</sender>
    <signal>toggled(bool)</signal>
-   <receiver>widget_2</receiver>
+   <receiver>widgetEscala</receiver>
    <slot>setVisible(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>100</x>
-     <y>295</y>
+     <x>124</x>
+     <y>422</y>
     </hint>
     <hint type="destinationlabel">
-     <x>145</x>
-     <y>316</y>
+     <x>141</x>
+     <y>504</y>
     </hint>
    </hints>
   </connection>

@@ -2,28 +2,64 @@
 #define RETA_H
 
 #include "forma.h"
+#include <QDebug>
 
 class Reta : public Forma{
+private:
+    std::vector<double> ponto[2] = {{0.0, 0.0, 1.0},{0.0, 0.0, 1.0}};
 public:
     Reta( QString n, double x1, double y1, double x2, double y2 ): Forma( n, TipoForma::RETA )
     {
-        p.push_back( {x1, y1} );
-        p.push_back( {x2, y2} );
+        ponto[0].at(0) = x1;
+        ponto[0].at(1) = y1;
+        ponto[1].at(0) = x2;
+        ponto[1].at(1) = y2;
+
     }
 
     void desenhar( QPainter &painter ) override
     {
         QPen caneta( Qt::white, 5 );
         painter.setPen(caneta);
-        if ( p.size()>=2 )
+        painter.drawLine( QLineF(
+            ponto[0].at(0), ponto[0].at(1),
+            ponto[1].at(0), ponto[1].at(1)
+        ));
+        /*if ( p.size()>=2 )
         {
             auto it = p.begin();
             Coordenada p1 = *it;
             it++;
             Coordenada p2 = *it;
-            painter.drawLine(QLineF( p1.x, p1.y, p2.x, p2.y ));
-        }
 
+        }*/
+    }
+
+    void transfomar( Matriz mt ) override
+    {
+        std::vector<double> resultado = {0.0, 0.0, 1.0};
+        double soma;
+        for (int n = 0; n < 2; n++ )
+        {
+
+            for ( int i = 0; i < 3 ; i++ )
+            {
+                soma = 0;
+                for ( int j = 0; j < 3; j++ )
+                {
+                    soma += ponto[n].at(j) * mt.m[j][i];
+                }
+                resultado.at(i) = soma;
+            }
+            //qDebug() << resultado;
+            ponto[n].at(0) = resultado.at(0);
+            ponto[n].at(1) = resultado.at(1);
+        }
+    }
+
+    std::vector<double> getPos() override
+    {
+        return ponto[0];
     }
 
 };

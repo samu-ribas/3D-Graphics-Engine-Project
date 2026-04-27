@@ -2,14 +2,16 @@
 #include "ui_janelatranformador.h"
 #include <QDebug>
 
-JanelaTranformador::JanelaTranformador( QWidget *parent, QVector<Forma*> *df )
+JanelaTranformador::JanelaTranformador( QWidget *parent, MeuFrame *frame )
     : QMainWindow(parent)
     , ui(new Ui::JanelaTranformador)
 {
     ui->setupUi(this);
-    this->df = df;
+    this->frame = frame;
 
+    QVector<Forma*> *df = frame->getDisplayFile();
     //ui->formaBox->addItem( "Abobrinha" );
+    setWindowFlag( Qt::Tool, true );
 
     int max = (*df).length();
     qDebug() << max;
@@ -19,14 +21,73 @@ JanelaTranformador::JanelaTranformador( QWidget *parent, QVector<Forma*> *df )
         //qDebug() << "sim";
         ui->formaBox->addItem( (*df)[i]->getNome() );
     }
+
+    ui->widgetEscala->hide();
+    ui->widgetTranslacao->hide();
+    ui->widgetRotacao->hide();
 }
 
 void JanelaTranformador::on_botaoTranformar_pressed()
 {
+    QString nome = ui->formaBox->currentText();
+    Forma* obj = frame->acharNome( nome );
+    if ( obj == nullptr ) return;
+
+    std::vector<double> initialCods = obj->getPos();
+
+    Matriz tranfomacaoFinal = Matriz();
+
+    Matriz origem = Matriz::gerarMatrizTranslacao(
+        -initialCods.at(0), -initialCods.at(1)
+        );
+
+    Matriz posisaoOriginal = Matriz::gerarMatrizTranslacao(
+        initialCods.at(0), initialCods.at(1)
+        );
+
+    //tranfomacaoFinal.imprimir();
+
+    //obj->transfomar( translacaoOrigem );
+    //Matriz tranfomacaoFinal;
+
     if ( ui->checkBoxEscala->isChecked() )
     {
 
+        double ex = ui->escalaX->value();
+        double ey = ui->escalaY->value();
+        Matriz escala = Matriz::gerarMatrizEscala( ex, ey );
+
+        tranfomacaoFinal = Matriz::multiplicar( tranfomacaoFinal, origem );
+        tranfomacaoFinal = Matriz::multiplicar( tranfomacaoFinal, escala );
+        tranfomacaoFinal = Matriz::multiplicar( tranfomacaoFinal, posisaoOriginal );
     }
+
+    if ( ui->checkBoxRotacao->isChecked() )
+    {
+        double angulo = ui->rotacaoAngulo->value();
+        Matriz rotacao = Matriz::gerarMatrizRotacao( angulo );
+
+        tranfomacaoFinal = Matriz::multiplicar( tranfomacaoFinal, origem );
+        tranfomacaoFinal = Matriz::multiplicar( tranfomacaoFinal, rotacao );
+        tranfomacaoFinal = Matriz::multiplicar( tranfomacaoFinal, posisaoOriginal );
+    }
+
+    if ( ui->checkBoxTraslacao->isChecked() )
+    {
+        double tx = ui->translacaoX->value();
+        double ty = ui->translacaoY->value();
+        Matriz translacao = Matriz::gerarMatrizTranslacao( tx, ty );
+
+        tranfomacaoFinal = Matriz::multiplicar( tranfomacaoFinal, translacao );
+    }
+
+
+    //tranfomacaoFinal.imprimir()
+    obj->transfomar( tranfomacaoFinal );
+    (*frame).update();
+    //qDebug() << ;
+
+    //close();
 }
 
 JanelaTranformador::~JanelaTranformador()

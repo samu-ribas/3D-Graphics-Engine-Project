@@ -10,6 +10,7 @@ SOURCES += \
     janelatranformador.cpp \
     main.cpp \
     mainwindow.cpp \
+    matriz.cpp \
     meuframe.cpp
 
 HEADERS += \

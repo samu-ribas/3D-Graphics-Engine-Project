@@ -2,8 +2,7 @@
 #define JANELATRANFORMADOR_H
 
 #include <QMainWindow>
-#include "forma.h"
-
+#include "meuframe.h"
 namespace Ui {
 class JanelaTranformador;
 }
@@ -13,7 +12,7 @@ class JanelaTranformador : public QMainWindow
     Q_OBJECT
 
 public:
-    explicit JanelaTranformador(QWidget *parent = nullptr, QVector<Forma*> *df = nullptr);
+    explicit JanelaTranformador(QWidget *parent = nullptr, MeuFrame *frame = nullptr);
     ~JanelaTranformador();
 
 private slots:
@@ -21,7 +20,7 @@ private slots:
 
 private:
     Ui::JanelaTranformador *ui;
-    QVector<Forma*> *df;
+    MeuFrame *frame;
 };
 
 #endif // JANELATRANFORMADOR_H

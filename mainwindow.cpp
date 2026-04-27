@@ -3,7 +3,7 @@
 #include <QSlider>
 #include <list>
 #include <cmath>
-#include "forma.h"
+//#include "forma.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -14,7 +14,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->desenharPonto, &QPushButton::clicked, this, &MainWindow::processarDesenho);
     connect(ui->desenharReta, &QPushButton::clicked, this, &MainWindow::processarDesenho);
     connect(ui->desenharPoligono, &QPushButton::clicked, this, &MainWindow::processarPoligono);
-    connect(ui->desenharPoligono_2, &QPushButton::clicked, this, &MainWindow::processarPoligono);
+    connect(ui->desenharRetangulo, &QPushButton::clicked, this, &MainWindow::processarPoligono);
 }
 
 void MainWindow::processarDesenho()
@@ -26,16 +26,17 @@ void MainWindow::processarDesenho()
         return;
     }
 
-    double x = ui->inputX->text().toDouble();
-    double y = ui->inputY->text().toDouble();
-
     QString tipo = ui->comboBox->currentText();
 
     if ( tipo == "PONTO" ){
+        double x = ui->pontoX->value();
+        double y = ui->pontoY->value();
          ui->frame->adicionarPonto(nome ,x, y);
     } else {
-        double x2 = ui->inputXReta->text().toDouble();
-        double y2 = ui->inputYReta->text().toDouble();
+        double x = ui->retaX1->value();
+        double y = ui->retaY1->value();
+        double x2 = ui->retaX2->value();
+        double y2 = ui->retaY2->value();
         ui->frame->adicionarReta(nome, x, y, x2, y2);
     }
 
@@ -44,23 +45,28 @@ void MainWindow::processarDesenho()
 void MainWindow::processarPoligono() {
     QString nome = ui->lineNome->text();
     QString tipo = ui->comboBox->currentText();
-    std::list<Coordenada> listaDePontos;
+    std::list<std::vector<double>> listaDePontos;
 
-    double xBase = ui->inputX_2->text().toDouble();
-    double yBase = ui->inputY_2->text().toDouble();
+    if ( tipo == "RETANGULO" )
+    {
+        double xBase = ui->retanguloBaseX->value();
+        double yBase = ui->retanguloBaseY->value();
 
-    if (tipo == "RETANGULO") {
-        double largura = ui->largura->text().toDouble();
-        double altura = ui->comprimento->text().toDouble();
+        double largura = ui->retanguloComprimento->value();
+        double altura = ui->retanguloAltura->value();
 
-        listaDePontos.push_back({xBase, yBase});
-        listaDePontos.push_back({xBase + largura, yBase});
-        listaDePontos.push_back({xBase + largura, yBase + altura});
-        listaDePontos.push_back({xBase, yBase + altura});
+        listaDePontos.push_back({xBase, yBase, 1.0});
+        listaDePontos.push_back({xBase + largura, yBase , 1.0});
+        listaDePontos.push_back({xBase + largura, yBase + altura, 1.0});
+        listaDePontos.push_back({xBase, yBase + altura, 1.0});
 
-    } else if (tipo == "POLIGONO") {
-        int lados = ui->lados->text().toInt();
-        double raio = ui->raio->text().toDouble();
+    } else if ( tipo == "POLIGONO" )
+    {
+        double xBase = ui->poligonoBase->value();
+        double yBase = ui->poligonoBaseY->value();
+
+        int lados = ui->poligonoLado->value();
+        double raio = ui->poligonoRaio->value();
 
         if (lados < 3) return;
         //algoritmo para poligono
@@ -68,7 +74,7 @@ void MainWindow::processarPoligono() {
             double angulo = 2.0 * M_PI * i / lados;
             double x = xBase + raio * cos(angulo);
             double y = yBase + raio * sin(angulo);
-            listaDePontos.push_back({x, y});
+            listaDePontos.push_back({x, y, 1.0});
         }
     }
 
@@ -88,7 +94,7 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_pushButton_pressed()
 {
-    JanelaTranformador *janela = new JanelaTranformador( this, ui->frame->getDisplayFile() );
+    JanelaTranformador *janela = new JanelaTranformador( this, ui->frame );
     janela->show();
 }
 

@@ -19,7 +19,7 @@ void MeuFrame:: adicionarReta(QString name, double x1, double y1, double x2, dou
     update();
 }
 
-void MeuFrame:: adicionarPoligono(QString name, std::list<Coordenada> pontos){
+void MeuFrame:: adicionarPoligono(QString name, std::list<std::vector<double>> pontos){
     displayFile.append(new Poligono(name, pontos));
     update();
 }

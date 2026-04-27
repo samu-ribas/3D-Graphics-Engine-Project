@@ -4,29 +4,30 @@
 #include <QPainter>
 #include <QVector>
 #include <QPoint>
+#include "matriz.h"
 
-struct Coordenada {
-    double x;
-    double y;
-};
+//struct Coordenada {
+//    std::vector<double> cod = {0.0, 0.0, 1.0};
+//};
 
-enum class TipoForma{PONTO, RETA, POLIGONO};
+enum class TipoForma {PONTO = 0, RETA = 1, POLIGONO = 2};
 
 class Forma
 {
 public:
-    Forma(QString n, TipoForma tipo) : nome(n), o_tipo(tipo){}
+    Forma( QString n, TipoForma tipo ) : nome(n), o_tipo(tipo){}
     virtual ~Forma() {}
-    virtual void desenhar(QPainter &painter) = 0;
+    virtual void desenhar( QPainter &painter ) = 0;
+    virtual void transfomar( Matriz mt ) = 0;
 
     const QString getNome() { return nome; }
-    //QString getTipo(){const return tipo;}
-
+    virtual std::vector<double> getPos() = 0;
+    //int getTipo() { return o_tipo; }
 
 protected:
     QString nome;
     TipoForma o_tipo;
-    std::list<Coordenada> p;
+
 };
 
 #endif // FORMA_H

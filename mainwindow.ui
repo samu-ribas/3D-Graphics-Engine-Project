@@ -17,10 +17,10 @@
    <widget class="MeuFrame" name="frame">
     <property name="geometry">
      <rect>
-      <x>180</x>
-      <y>80</y>
+      <x>10</x>
+      <y>0</y>
       <width>891</width>
-      <height>431</height>
+      <height>531</height>
      </rect>
     </property>
     <property name="frameShape">
@@ -30,366 +30,403 @@
      <enum>QFrame::Shadow::Raised</enum>
     </property>
    </widget>
-   <widget class="QPushButton" name="desenharPonto">
+   <widget class="QWidget" name="verticalLayoutWidget">
     <property name="geometry">
      <rect>
-      <x>50</x>
-      <y>140</y>
-      <width>101</width>
-      <height>24</height>
+      <x>940</x>
+      <y>30</y>
+      <width>301</width>
+      <height>339</height>
      </rect>
     </property>
-    <property name="text">
-     <string>Desenhar Ponto</string>
-    </property>
-   </widget>
-   <widget class="QLineEdit" name="inputX">
-    <property name="geometry">
-     <rect>
-      <x>50</x>
-      <y>80</y>
-      <width>113</width>
-      <height>24</height>
-     </rect>
-    </property>
-   </widget>
-   <widget class="QLineEdit" name="inputY">
-    <property name="geometry">
-     <rect>
-      <x>50</x>
-      <y>110</y>
-      <width>113</width>
-      <height>24</height>
-     </rect>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label">
-    <property name="geometry">
-     <rect>
-      <x>410</x>
-      <y>10</y>
-      <width>51</width>
-      <height>41</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Nome:</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label_2">
-    <property name="geometry">
-     <rect>
-      <x>30</x>
-      <y>100</y>
-      <width>16</width>
-      <height>41</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>y</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label_3">
-    <property name="geometry">
-     <rect>
-      <x>30</x>
-      <y>200</y>
-      <width>16</width>
-      <height>41</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>x</string>
-    </property>
-   </widget>
-   <widget class="QLineEdit" name="inputXReta">
-    <property name="geometry">
-     <rect>
-      <x>50</x>
-      <y>210</y>
-      <width>113</width>
-      <height>24</height>
-     </rect>
-    </property>
-   </widget>
-   <widget class="QLineEdit" name="inputYReta">
-    <property name="geometry">
-     <rect>
-      <x>50</x>
-      <y>240</y>
-      <width>113</width>
-      <height>24</height>
-     </rect>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label_4">
-    <property name="geometry">
-     <rect>
-      <x>30</x>
-      <y>230</y>
-      <width>16</width>
-      <height>41</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>y</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="desenharReta">
-    <property name="geometry">
-     <rect>
-      <x>60</x>
-      <y>270</y>
-      <width>101</width>
-      <height>24</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Desenhar reta</string>
-    </property>
-   </widget>
-   <widget class="QComboBox" name="comboBox">
-    <property name="geometry">
-     <rect>
-      <x>40</x>
-      <y>20</y>
-      <width>79</width>
-      <height>23</height>
-     </rect>
-    </property>
-    <item>
-     <property name="text">
-      <string>PONTO</string>
-     </property>
-    </item>
-    <item>
-     <property name="text">
-      <string>RETA</string>
-     </property>
-    </item>
-    <item>
-     <property name="text">
-      <string>POLIGONO</string>
-     </property>
-    </item>
-    <item>
-     <property name="text">
-      <string>RETANGULO</string>
-     </property>
-    </item>
-   </widget>
-   <widget class="QLineEdit" name="lineNome">
-    <property name="geometry">
-     <rect>
-      <x>460</x>
-      <y>10</y>
-      <width>131</width>
-      <height>41</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string/>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label_5">
-    <property name="geometry">
-     <rect>
-      <x>30</x>
-      <y>70</y>
-      <width>16</width>
-      <height>41</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>x</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="desenharPoligono">
-    <property name="geometry">
-     <rect>
-      <x>1150</x>
-      <y>410</y>
-      <width>121</width>
-      <height>24</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Desenhar Poligono</string>
-    </property>
-   </widget>
-   <widget class="QLineEdit" name="comprimento">
-    <property name="geometry">
-     <rect>
-      <x>1160</x>
-      <y>90</y>
-      <width>113</width>
-      <height>24</height>
-     </rect>
-    </property>
-   </widget>
-   <widget class="QLineEdit" name="largura">
-    <property name="geometry">
-     <rect>
-      <x>1160</x>
-      <y>130</y>
-      <width>113</width>
-      <height>24</height>
-     </rect>
-    </property>
-   </widget>
-   <widget class="QLineEdit" name="raio">
-    <property name="geometry">
-     <rect>
-      <x>1160</x>
-      <y>380</y>
-      <width>113</width>
-      <height>24</height>
-     </rect>
-    </property>
-   </widget>
-   <widget class="QLineEdit" name="lados">
-    <property name="geometry">
-     <rect>
-      <x>1160</x>
-      <y>350</y>
-      <width>113</width>
-      <height>24</height>
-     </rect>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="desenharPoligono_2">
-    <property name="geometry">
-     <rect>
-      <x>1160</x>
-      <y>160</y>
-      <width>121</width>
-      <height>24</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Desenhar Retangulo</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label_6">
-    <property name="geometry">
-     <rect>
-      <x>1080</x>
-      <y>80</y>
-      <width>81</width>
-      <height>41</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Comprimento</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label_7">
-    <property name="geometry">
-     <rect>
-      <x>1120</x>
-      <y>120</y>
-      <width>31</width>
-      <height>41</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Altura</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label_8">
-    <property name="geometry">
-     <rect>
-      <x>1120</x>
-      <y>340</y>
-      <width>31</width>
-      <height>41</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Lados</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label_9">
-    <property name="geometry">
-     <rect>
-      <x>1120</x>
-      <y>370</y>
-      <width>31</width>
-      <height>41</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>raio</string>
-    </property>
-   </widget>
-   <widget class="QLineEdit" name="inputX_2">
-    <property name="geometry">
-     <rect>
-      <x>1160</x>
-      <y>230</y>
-      <width>113</width>
-      <height>24</height>
-     </rect>
-    </property>
-   </widget>
-   <widget class="QLineEdit" name="inputY_2">
-    <property name="geometry">
-     <rect>
-      <x>1160</x>
-      <y>260</y>
-      <width>113</width>
-      <height>24</height>
-     </rect>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label_10">
-    <property name="geometry">
-     <rect>
-      <x>1110</x>
-      <y>220</y>
-      <width>41</width>
-      <height>41</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>base x</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label_11">
-    <property name="geometry">
-     <rect>
-      <x>1110</x>
-      <y>250</y>
-      <width>41</width>
-      <height>41</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>base y</string>
-    </property>
-   </widget>
-   <widget class="QComboBox" name="comboBox_2">
-    <property name="geometry">
-     <rect>
-      <x>30</x>
-      <y>360</y>
-      <width>103</width>
-      <height>32</height>
-     </rect>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="pushButton">
-    <property name="geometry">
-     <rect>
-      <x>40</x>
-      <y>470</y>
-      <width>100</width>
-      <height>32</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Modificar</string>
-    </property>
+    <layout class="QVBoxLayout" name="verticalLayout">
+     <item>
+      <layout class="QHBoxLayout" name="horizontalLayout">
+       <item>
+        <widget class="QLabel" name="label">
+         <property name="text">
+          <string>Nome:</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLineEdit" name="lineNome">
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>40</height>
+          </size>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <widget class="QComboBox" name="comboBox">
+       <item>
+        <property name="text">
+         <string>PONTO</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>RETA</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>RETANGULO</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>POLIGONO</string>
+        </property>
+       </item>
+      </widget>
+     </item>
+     <item>
+      <widget class="QStackedWidget" name="stackedWidget">
+       <property name="autoFillBackground">
+        <bool>false</bool>
+       </property>
+       <property name="lineWidth">
+        <number>1</number>
+       </property>
+       <property name="currentIndex">
+        <number>0</number>
+       </property>
+       <widget class="QWidget" name="page">
+        <layout class="QFormLayout" name="formLayout">
+         <item row="0" column="0">
+          <widget class="QLabel" name="label_5">
+           <property name="text">
+            <string>X: </string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="1">
+          <widget class="QDoubleSpinBox" name="pontoX">
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>30</height>
+            </size>
+           </property>
+           <property name="maximum">
+            <double>9999.989999999999782</double>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="0">
+          <widget class="QLabel" name="label_2">
+           <property name="text">
+            <string>Y: </string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="1">
+          <widget class="QDoubleSpinBox" name="pontoY">
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>30</height>
+            </size>
+           </property>
+           <property name="maximum">
+            <double>9999.989999999999782</double>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="1">
+          <widget class="QPushButton" name="desenharPonto">
+           <property name="text">
+            <string>Desenhar Ponto</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+       <widget class="QWidget" name="page_2">
+        <layout class="QFormLayout" name="formLayout_3">
+         <item row="0" column="0">
+          <widget class="QLabel" name="label_17">
+           <property name="text">
+            <string>X1:</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="0">
+          <widget class="QLabel" name="label_16">
+           <property name="text">
+            <string>Y1:</string>
+           </property>
+          </widget>
+         </item>
+         <item row="4" column="1">
+          <widget class="QPushButton" name="desenharReta">
+           <property name="text">
+            <string>Desenhar Reta</string>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="0">
+          <widget class="QLabel" name="label_3">
+           <property name="text">
+            <string>X2:</string>
+           </property>
+          </widget>
+         </item>
+         <item row="3" column="0">
+          <widget class="QLabel" name="label_4">
+           <property name="text">
+            <string>Y2:</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="1">
+          <widget class="QDoubleSpinBox" name="retaX1">
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>30</height>
+            </size>
+           </property>
+           <property name="maximum">
+            <double>9999.989999999999782</double>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="1">
+          <widget class="QDoubleSpinBox" name="retaX2">
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>30</height>
+            </size>
+           </property>
+           <property name="maximum">
+            <double>9999.989999999999782</double>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="1">
+          <widget class="QDoubleSpinBox" name="retaY1">
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>30</height>
+            </size>
+           </property>
+           <property name="maximum">
+            <double>9999.989999999999782</double>
+           </property>
+          </widget>
+         </item>
+         <item row="3" column="1">
+          <widget class="QDoubleSpinBox" name="retaY2">
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>30</height>
+            </size>
+           </property>
+           <property name="maximum">
+            <double>9999.989999999999782</double>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+       <widget class="QWidget" name="page_5">
+        <layout class="QFormLayout" name="formLayout_4">
+         <item row="0" column="0">
+          <widget class="QLabel" name="label_6">
+           <property name="text">
+            <string>Comprimento</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="1">
+          <widget class="QDoubleSpinBox" name="retanguloComprimento">
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>30</height>
+            </size>
+           </property>
+           <property name="maximum">
+            <double>9999.989999999999782</double>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="0">
+          <widget class="QLabel" name="label_7">
+           <property name="text">
+            <string>Altura</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="1">
+          <widget class="QDoubleSpinBox" name="retanguloAltura">
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>30</height>
+            </size>
+           </property>
+           <property name="maximum">
+            <double>9999.989999999999782</double>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="0">
+          <widget class="QLabel" name="label_10">
+           <property name="text">
+            <string>base x</string>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="1">
+          <widget class="QDoubleSpinBox" name="retanguloBaseX">
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>30</height>
+            </size>
+           </property>
+           <property name="maximum">
+            <double>9999.989999999999782</double>
+           </property>
+          </widget>
+         </item>
+         <item row="3" column="0">
+          <widget class="QLabel" name="label_11">
+           <property name="text">
+            <string>base y</string>
+           </property>
+          </widget>
+         </item>
+         <item row="3" column="1">
+          <widget class="QDoubleSpinBox" name="retanguloBaseY">
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>30</height>
+            </size>
+           </property>
+           <property name="maximum">
+            <double>9999.989999999999782</double>
+           </property>
+          </widget>
+         </item>
+         <item row="4" column="1">
+          <widget class="QPushButton" name="desenharRetangulo">
+           <property name="text">
+            <string>Desenhar Retangulo</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+       <widget class="QWidget" name="page_6">
+        <layout class="QFormLayout" name="formLayout_5">
+         <item row="0" column="0">
+          <widget class="QLabel" name="label_8">
+           <property name="text">
+            <string>N de Lado(s):</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="1">
+          <widget class="QSpinBox" name="poligonoLado">
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>30</height>
+            </size>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="0">
+          <widget class="QLabel" name="label_9">
+           <property name="text">
+            <string>Raio:</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="1">
+          <widget class="QDoubleSpinBox" name="poligonoRaio">
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>30</height>
+            </size>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="0">
+          <widget class="QLabel" name="label_19">
+           <property name="text">
+            <string>Base X:</string>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="1">
+          <widget class="QDoubleSpinBox" name="poligonoBase">
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>30</height>
+            </size>
+           </property>
+           <property name="maximum">
+            <double>9999.989999999999782</double>
+           </property>
+          </widget>
+         </item>
+         <item row="3" column="0">
+          <widget class="QLabel" name="label_18">
+           <property name="text">
+            <string>Base Y</string>
+           </property>
+          </widget>
+         </item>
+         <item row="3" column="1">
+          <widget class="QDoubleSpinBox" name="poligonoBaseY">
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>30</height>
+            </size>
+           </property>
+           <property name="maximum">
+            <double>9999.989999999999782</double>
+           </property>
+          </widget>
+         </item>
+         <item row="4" column="1">
+          <widget class="QPushButton" name="desenharPoligono">
+           <property name="text">
+            <string>Desenhar Poligono</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="pushButton">
+       <property name="text">
+        <string>Modificar</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
@@ -413,5 +450,22 @@
   </customwidget>
  </customwidgets>
  <resources/>
- <connections/>
+ <connections>
+  <connection>
+   <sender>comboBox</sender>
+   <signal>currentIndexChanged(int)</signal>
+   <receiver>stackedWidget</receiver>
+   <slot>setCurrentIndex(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1001</x>
+     <y>47</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1009</x>
+     <y>100</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
 </ui>

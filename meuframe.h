@@ -5,6 +5,7 @@
 #include <QVector>
 #include "forma.h"
 
+
 class MeuFrame : public QFrame
 {
     Q_OBJECT
@@ -14,7 +15,7 @@ public:
 
     void adicionarPonto(QString nome, double x, double y);
     void adicionarReta(QString name, double x1, double y1, double x2, double y2);
-    void adicionarPoligono(QString name, std::list<Coordenada> pontos);
+    void adicionarPoligono(QString name, std::list<std::vector<double>> pontos);
 
     Forma* acharNome( QString nome );
 

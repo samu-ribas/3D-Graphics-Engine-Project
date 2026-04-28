@@ -347,7 +347,7 @@
      <number>0</number>
     </property>
     <widget class="QWidget" name="page_7">
-     <widget class="QWidget" name="">
+     <widget class="QWidget" name="layoutWidget">
       <property name="geometry">
        <rect>
         <x>0</x>
@@ -389,7 +389,7 @@
      </widget>
     </widget>
     <widget class="QWidget" name="page_5">
-     <widget class="QWidget" name="">
+     <widget class="QWidget" name="layoutWidget">
       <property name="geometry">
        <rect>
         <x>0</x>
@@ -431,7 +431,7 @@
      </widget>
     </widget>
     <widget class="QWidget" name="page_6">
-     <widget class="QWidget" name="">
+     <widget class="QWidget" name="layoutWidget">
       <property name="geometry">
        <rect>
         <x>1</x>
@@ -444,24 +444,6 @@
        <item>
         <layout class="QVBoxLayout" name="verticalLayout_19">
          <item>
-          <layout class="QVBoxLayout" name="verticalLayout_15">
-           <item>
-            <widget class="QLabel" name="label_20">
-             <property name="text">
-              <string>x</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QLabel" name="label_21">
-             <property name="text">
-              <string>y</string>
-             </property>
-            </widget>
-           </item>
-          </layout>
-         </item>
-         <item>
           <widget class="QLabel" name="label_22">
            <property name="text">
             <string>Ângulo</string>
@@ -472,12 +454,6 @@
        </item>
        <item>
         <layout class="QVBoxLayout" name="verticalLayout_20">
-         <item>
-          <widget class="QLineEdit" name="inputXRotacao"/>
-         </item>
-         <item>
-          <widget class="QLineEdit" name="inputYRotacao"/>
-         </item>
          <item>
           <widget class="QLineEdit" name="inputAnguloRotacao"/>
          </item>

@@ -15,7 +15,10 @@ public:
     void adicionarPonto(QString nome, double x, double y);
     void adicionarReta(QString name, double x1, double y1, double x2, double y2);
     void adicionarPoligono(QString name, std::list<Coordenada> pontos);
-    void rotacionarObjeto(QString nome, double angulo, double px, double py);
+
+    void transladarObjeto(QString n, double dx, double dy);
+    void escalarObjeto(QString n, double sx, double sy);
+    void rotacionarObjeto(QString nome, double angulo);
 
 protected:
     void paintEvent(QPaintEvent *event) override;

@@ -1,6 +1,8 @@
 #ifndef POLIGONO_H
 #define POLIGONO_H
+
 #include "forma.h"
+#include "Matriz.h"
 
 class Poligono : public Forma{
 

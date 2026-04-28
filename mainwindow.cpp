@@ -23,12 +23,20 @@ void MainWindow::inputOperacao(){
     QString nome = ui->lineNome->text();
     switch(op){
         case 0:{
+            ui->frame->transladarObjeto(ui->lineNome->text(),
+                                        ui->inputXTranslacao->text().toDouble(),
+                                        ui->inputYTranslacao->text().toDouble());
             break;
         }
         case 1:{
+            ui->frame->escalarObjeto(ui->lineNome->text(),
+                                     ui->inputXEscala->text().toDouble(),
+                                     ui->inputYEscala->text().toDouble());
             break;
         }
         case 2:{
+            ui->frame->rotacionarObjeto(ui->lineNome->text(),
+                                        ui->inputAnguloRotacao->text().toDouble());
             break;
         }
     }

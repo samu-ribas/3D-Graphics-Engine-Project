@@ -30,15 +30,43 @@ void MeuFrame::paintEvent(QPaintEvent *event){
         df->desenhar(painter);
 }
 
-void MeuFrame::rotacionarObjeto(QString nome, double angulo, double px, double py){
-    for(Forma* df:std::as_const(displayFile)){
-        if(df->getNome() == nome){
+void MeuFrame::transladarObjeto(QString n, double dx, double dy){
+    for(Forma* df : std::as_const(displayFile)){
+        if(df->getNome().compare(n) == 0){
+            Matriz t = Matriz::gerarMatrizT(dx, dy);
+            df->aplicarTransformacao(t);
+            break;
+        }
+    }
+    this->update();
+}
+
+void MeuFrame::escalarObjeto(QString n, double sx, double sy){
+    for(Forma* df : std::as_const(displayFile)){
+        if(df->getNome().compare(n) == 0){
             Coordenada centro = df->getCentroide();
-            Matriz mToOrigin = Matriz::gerarMatrizT(-px, -py);
+            Matriz mToOrigin = Matriz::gerarMatrizT(-centro.x, -centro.y);
+            Matriz escala = Matriz::gerarMatrizE(sx, sy);
+            Matriz mToReturn = Matriz::gerarMatrizT(centro.x, centro.y);
+
+            Matriz composta = mToReturn * escala * mToOrigin;
+            df->aplicarTransformacao(composta);
+            break;
+        }
+    }
+    this->update();
+}
+
+void MeuFrame::rotacionarObjeto(QString n, double angulo){
+    for(Forma* df:std::as_const(displayFile)){
+        if(df->getNome().compare(n) == 0){
+            Coordenada centro = df->getCentroide();
+            Matriz mToOrigin = Matriz::gerarMatrizT(-centro.x, -centro.y);
             Matriz mRotation = Matriz::gerarMatrizR(angulo);
-            Matriz mToReturn = Matriz::gerarMatrizT(px, py);
+            Matriz mToReturn = Matriz::gerarMatrizT(centro.x, centro.y);
 
             Matriz composta = mToReturn * mRotation * mToOrigin;
+
             df->aplicarTransformacao(composta);
             break;
         }

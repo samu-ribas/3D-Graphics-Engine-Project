@@ -2,6 +2,7 @@
 #define RETA_H
 
 #include "forma.h"
+#include "Matriz.h"
 
 class Reta : public Forma{
 public:

@@ -2,6 +2,7 @@
 #define PONTO_H
 
 #include "forma.h"
+#include "Matriz.h"
 
 class Ponto : public Forma
 {

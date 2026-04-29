@@ -57,16 +57,25 @@ void MeuFrame::escalarObjeto(QString n, double sx, double sy){
     this->update();
 }
 
-void MeuFrame::rotacionarObjeto(QString n, double angulo){
-    for(Forma* df:std::as_const(displayFile)){
-        if(df->getNome().compare(n) == 0){
-            Coordenada centro = df->getCentroide();
-            Matriz mToOrigin = Matriz::gerarMatrizT(-centro.x, -centro.y);
+void MeuFrame::rotacionarObjeto(QString n, double angulo, double x, double y, bool usarCentroide){
+    for(Forma* df : std::as_const(displayFile)){
+        if(df->getNome() == n){
+            double px, py;
+
+            //define quem é o pivô da transformação
+            if(usarCentroide){
+                Coordenada centro = df->getCentroide();
+                px = centro.x;
+                py = centro.y;
+            }else{
+                px = x;
+                py = y;
+            }
+            Matriz mToOrigin = Matriz::gerarMatrizT(-px, -py);
             Matriz mRotation = Matriz::gerarMatrizR(angulo);
-            Matriz mToReturn = Matriz::gerarMatrizT(centro.x, centro.y);
+            Matriz mToReturn = Matriz::gerarMatrizT(px, py);
 
             Matriz composta = mToReturn * mRotation * mToOrigin;
-
             df->aplicarTransformacao(composta);
             break;
         }
@@ -82,6 +91,8 @@ bool MeuFrame::contemObjeto(const QString& nome) const {
     }
     return false;
 }
+
+
 
 MeuFrame::~MeuFrame() {
     qDeleteAll(displayFile);

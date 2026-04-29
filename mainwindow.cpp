@@ -38,7 +38,10 @@ void MainWindow::inputOperacao(){
         }
         case 2:{
             ui->frame->rotacionarObjeto(ui->comboBoxDisplayFile->currentText(),
-                                        ui->inputAnguloRotacao->text().toDouble());
+                                        ui->inputAnguloRotacao->text().toDouble(),
+                                        ui->inputXRotacao->text().toDouble(),
+                                        ui->inputYRotacao->text().toDouble(),
+                                        ui->checkBox->isChecked());
             break;
         }
     }
@@ -111,5 +114,4 @@ MainWindow::~MainWindow()
 {
     delete ui;
 }
-
 

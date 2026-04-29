@@ -19,7 +19,7 @@ public:
 
     void transladarObjeto(QString n, double dx, double dy);
     void escalarObjeto(QString n, double sx, double sy);
-    void rotacionarObjeto(QString nome, double angulo);
+    void rotacionarObjeto(QString nome, double angulo,double x, double y, bool usarCentroide);
 
     bool contemObjeto(const QString& nome) const;
 protected:

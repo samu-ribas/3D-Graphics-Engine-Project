@@ -23,70 +23,64 @@ void MainWindow::inputOperacao(){
     QString nome = ui->lineNome->text();
     switch(op){
         case 0:{
-            ui->frame->transladarObjeto(ui->lineNome->text(),
+            ui->frame->transladarObjeto(ui->comboBoxDisplayFile->currentText(),
                                         ui->inputXTranslacao->text().toDouble(),
                                         ui->inputYTranslacao->text().toDouble());
             break;
         }
         case 1:{
-            ui->frame->escalarObjeto(ui->lineNome->text(),
-                                     ui->inputXEscala->text().toDouble(),
-                                     ui->inputYEscala->text().toDouble());
+            double sx = ui->inputXEscala->text().isEmpty() ? 1.0 : ui->inputXEscala->text().toDouble();
+            double sy = ui->inputYEscala->text().isEmpty() ? 1.0 : ui->inputYEscala->text().toDouble();
+            if (sx == 0.0) sx = 1.0;
+            if (sy == 0.0) sy = 1.0;
+            ui->frame->escalarObjeto(ui->comboBoxDisplayFile->currentText(),sx, sy);
             break;
         }
         case 2:{
-            ui->frame->rotacionarObjeto(ui->lineNome->text(),
+            ui->frame->rotacionarObjeto(ui->comboBoxDisplayFile->currentText(),
                                         ui->inputAnguloRotacao->text().toDouble());
             break;
         }
     }
 }
 
-void MainWindow::inputCoordenadas(){;
-    if((ui->lineNome->text()).trimmed().isEmpty()){
+void MainWindow::inputCoordenadas(){
+    if((ui->lineNome->text()).trimmed().isEmpty() || ui->frame->contemObjeto(ui->lineNome->text())){
         QMessageBox::warning(this, "Erro", "Insira o nome do objeto!");
         return;
     }
 
     int id = ui->stackedWidget->currentIndex();
     switch(id){
-        case 0:
-
-            this->processarDesenho(ui->inputX->text().toDouble(), ui->inputY->text().toDouble());
+        case 0:// ponto
+            ui->frame->adicionarPonto(ui->lineNome->text(),ui->inputX->text().toDouble(), ui->inputY->text().toDouble());
             break;
-        case 1:
-            this->processarDesenho(ui->inputXReta->text().toDouble(),
+        case 1://reta
+            ui->frame->adicionarReta(ui->lineNome->text(),
+                                    ui->inputXReta->text().toDouble(),
                                     ui->inputYReta->text().toDouble(),
                                     ui->inputXReta_2->text().toDouble(),
                                     ui->inputYReta_2->text().toDouble());
             break;
         case 2:
-            this->processarDesenho(ui->inputXPoligono->text().toDouble(), // x do centro
+            this->processarPoligono(ui->inputXPoligono->text().toDouble(), // x do centro
                                    ui->inputYPoligono->text().toDouble(), // y do centro
                                    ui->inputLados->text().toInt(),
                                    ui->inputRaio->text().toDouble());
             break;
         case 3:
-            this->processarDesenho(ui->lineNome->text(),
-                                   ui->inputXRetangulo->text().toDouble(), // x do canto
+            this->processarPoligono(ui->inputXRetangulo->text().toDouble(), // x do canto
                                    ui   ->inputYRetangulo->text().toDouble(), // y do canto
                                    ui->comprimentoRetangulo->text().toDouble(),
                                    ui->alturaRetangulo->text().toDouble());
         break;
     }
+    ui->comboBoxDisplayFile->addItem(ui->lineNome->text());
     ui->lineNome->clear();
 }
 
-// ponto
-void MainWindow::processarDesenho(double x,  double y){
-    ui->frame->adicionarPonto(ui->lineNome->text(),x, y);
-}
-//reta
-void MainWindow::processarDesenho(double x1, double y1, double x2, double y2){
-    ui->frame->adicionarReta(ui->lineNome->text(), x1, y1, x2, y2);
-}
 //polígono
-void MainWindow::processarDesenho(double x, double y, int l, double r){
+void MainWindow::processarPoligono(double x, double y, int l, double r){
     if (l< 3) return;
 
     std::list<Coordenada> listaDePontos;
@@ -102,17 +96,20 @@ void MainWindow::processarDesenho(double x, double y, int l, double r){
     ui->frame->adicionarPoligono(ui->lineNome->text(), listaDePontos);
 }
 //retângulo
-void MainWindow::processarDesenho(QString nome, double x, double y, double c, double h){
+void MainWindow::processarPoligono(double x, double y, double c, double h){
     std::list<Coordenada> listaDePontos;
     listaDePontos.push_back({x, y});
     listaDePontos.push_back({x + c, y});
     listaDePontos.push_back({x + c, y+ h});
     listaDePontos.push_back({x, y + h});
 
-    ui->frame->adicionarPoligono(nome, listaDePontos);
+    ui->frame->adicionarPoligono(ui->lineNome->text(), listaDePontos);
 }
+
 
 MainWindow::~MainWindow()
 {
     delete ui;
 }
+
+

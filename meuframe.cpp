@@ -18,7 +18,7 @@ void MeuFrame:: adicionarReta(QString name, double x1, double y1, double x2, dou
 }
 
 void MeuFrame:: adicionarPoligono(QString name, std::list<Coordenada> pontos){
-    displayFile.append(new Poligono(name, pontos));
+    displayFile.append(new Poligono(name, pontos));    
     update();
 }
 
@@ -72,6 +72,15 @@ void MeuFrame::rotacionarObjeto(QString n, double angulo){
         }
     }
     this->update();
+}
+
+bool MeuFrame::contemObjeto(const QString& nome) const {
+    for(Forma* df : std::as_const(displayFile)) {
+        if(df->getNome() == nome) {
+            return true;
+        }
+    }
+    return false;
 }
 
 MeuFrame::~MeuFrame() {

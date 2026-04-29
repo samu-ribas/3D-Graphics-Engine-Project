@@ -5,6 +5,7 @@
 #include <QVector>
 #include "forma.h"
 
+
 class MeuFrame : public QFrame
 {
     Q_OBJECT
@@ -20,6 +21,7 @@ public:
     void escalarObjeto(QString n, double sx, double sy);
     void rotacionarObjeto(QString nome, double angulo);
 
+    bool contemObjeto(const QString& nome) const;
 protected:
     void paintEvent(QPaintEvent *event) override;
 

@@ -20,11 +20,13 @@ MainWindow::MainWindow(QWidget *parent)
 void MainWindow::processarDesenho()
 {
     QString nome = ui->lineNome->text();
+    if ( nome.isEmpty() ) return;
     if ( ui->frame->acharNome( nome ) != nullptr )
     {
         mostrarPopup();
         return;
     }
+    ui->lineNome->setText("");
 
     QString tipo = ui->comboBox->currentText();
 
@@ -43,7 +45,16 @@ void MainWindow::processarDesenho()
 }
 
 void MainWindow::processarPoligono() {
+
     QString nome = ui->lineNome->text();
+    if ( nome.isEmpty() ) return;
+    if ( ui->frame->acharNome( nome ) != nullptr )
+    {
+        mostrarPopup();
+        return;
+    }
+    ui->lineNome->setText("");
+
     QString tipo = ui->comboBox->currentText();
     std::list<std::vector<double>> listaDePontos;
 

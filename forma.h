@@ -22,6 +22,7 @@ public:
 
     const QString getNome() { return nome; }
     virtual std::vector<double> getPos() = 0;
+    virtual std::vector<double> getCentroide() = 0;
     //int getTipo() { return o_tipo; }
 
 protected:

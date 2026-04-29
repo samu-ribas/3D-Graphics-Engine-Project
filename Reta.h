@@ -19,7 +19,7 @@ public:
 
     void desenhar( QPainter &painter ) override
     {
-        QPen caneta( Qt::white, 5 );
+        QPen caneta( Qt::white, 3 );
         painter.setPen(caneta);
         painter.drawLine( QLineF(
             ponto[0].at(0), ponto[0].at(1),
@@ -39,9 +39,9 @@ public:
     {
         std::vector<double> resultado = {0.0, 0.0, 1.0};
         double soma;
+
         for (int n = 0; n < 2; n++ )
         {
-
             for ( int i = 0; i < 3 ; i++ )
             {
                 soma = 0;
@@ -62,6 +62,15 @@ public:
         return ponto[0];
     }
 
+    std::vector<double> getCentroide() override
+    {
+        std::vector<double> centroide = {0.0, 0.0};
+
+        centroide.at(0) = (ponto[0].at(0) + ponto[1].at(0)) / 2.0;
+        centroide.at(1) = (ponto[0].at(1) + ponto[1].at(1)) / 2.0;
+
+        return centroide;
+    }
 };
 
 #endif // RETA_H

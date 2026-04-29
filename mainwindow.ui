@@ -57,6 +57,12 @@
            <height>40</height>
           </size>
          </property>
+         <property name="font">
+          <font>
+           <pointsize>25</pointsize>
+           <bold>true</bold>
+          </font>
+         </property>
          <property name="text">
           <string/>
          </property>
@@ -343,11 +349,20 @@
          </item>
          <item row="0" column="1">
           <widget class="QSpinBox" name="poligonoLado">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
            <property name="minimumSize">
             <size>
              <width>0</width>
              <height>30</height>
             </size>
+           </property>
+           <property name="minimum">
+            <number>0</number>
            </property>
           </widget>
          </item>
@@ -360,11 +375,20 @@
          </item>
          <item row="1" column="1">
           <widget class="QDoubleSpinBox" name="poligonoRaio">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
            <property name="minimumSize">
             <size>
              <width>0</width>
              <height>30</height>
             </size>
+           </property>
+           <property name="maximum">
+            <double>9999.989999999999782</double>
            </property>
           </widget>
          </item>
@@ -377,6 +401,12 @@
          </item>
          <item row="2" column="1">
           <widget class="QDoubleSpinBox" name="poligonoBase">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
            <property name="minimumSize">
             <size>
              <width>0</width>
@@ -397,6 +427,12 @@
          </item>
          <item row="3" column="1">
           <widget class="QDoubleSpinBox" name="poligonoBaseY">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
            <property name="minimumSize">
             <size>
              <width>0</width>
@@ -459,11 +495,11 @@
    <hints>
     <hint type="sourcelabel">
      <x>1001</x>
-     <y>47</y>
+     <y>122</y>
     </hint>
     <hint type="destinationlabel">
-     <x>1009</x>
-     <y>100</y>
+     <x>1012</x>
+     <y>213</y>
     </hint>
    </hints>
   </connection>

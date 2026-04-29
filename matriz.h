@@ -16,7 +16,9 @@ public:
     static Matriz gerarMatrizRotacao( double angulo );
 
     static Matriz multiplicar( Matriz m1, Matriz m2 );
-    static void multiplicarVM( double v[3], Matriz m );
+    //static void multiplicar( double v[3], Matriz m );
+
+
 
     void imprimir();
 };

@@ -57,9 +57,23 @@ void JanelaTranformador::on_botaoTranformar_pressed()
         double ey = ui->escalaY->value();
         Matriz escala = Matriz::gerarMatrizEscala( ex, ey );
 
-        tranfomacaoFinal = Matriz::multiplicar( tranfomacaoFinal, origem );
-        tranfomacaoFinal = Matriz::multiplicar( tranfomacaoFinal, escala );
-        tranfomacaoFinal = Matriz::multiplicar( tranfomacaoFinal, posisaoOriginal );
+        if ( ui->escalaCentroide->isChecked() )
+        {
+            std::vector<double> centroide = obj->getCentroide();
+
+            Matriz origemCentroide = Matriz::gerarMatrizTranslacao( -centroide.at(0), -centroide.at(1) );
+            Matriz voltaOriginalCentroide = Matriz::gerarMatrizTranslacao( centroide.at(0), centroide.at(1) );
+
+            tranfomacaoFinal = Matriz::multiplicar( tranfomacaoFinal, origemCentroide );
+            tranfomacaoFinal = Matriz::multiplicar( tranfomacaoFinal, escala );
+            tranfomacaoFinal = Matriz::multiplicar( tranfomacaoFinal, voltaOriginalCentroide );
+        }
+        else
+        {
+            tranfomacaoFinal = Matriz::multiplicar( tranfomacaoFinal, origem );
+            tranfomacaoFinal = Matriz::multiplicar( tranfomacaoFinal, escala );
+            tranfomacaoFinal = Matriz::multiplicar( tranfomacaoFinal, posisaoOriginal );
+        }
     }
 
     if ( ui->checkBoxRotacao->isChecked() )
@@ -67,9 +81,47 @@ void JanelaTranformador::on_botaoTranformar_pressed()
         double angulo = ui->rotacaoAngulo->value();
         Matriz rotacao = Matriz::gerarMatrizRotacao( angulo );
 
-        tranfomacaoFinal = Matriz::multiplicar( tranfomacaoFinal, origem );
-        tranfomacaoFinal = Matriz::multiplicar( tranfomacaoFinal, rotacao );
-        tranfomacaoFinal = Matriz::multiplicar( tranfomacaoFinal, posisaoOriginal );
+        //double eixoX = 0;
+        //double eixoY = 0;
+        if ( ui->rotacaoCentoride->isChecked() )
+        {
+            std::vector<double> centroide = obj->getCentroide();
+
+            Matriz origemCentroide = Matriz::gerarMatrizTranslacao( -centroide.at(0), -centroide.at(1) );
+            Matriz voltaOriginalCentroide = Matriz::gerarMatrizTranslacao( centroide.at(0), centroide.at(1) );
+
+            //eixoX = ui->rotacaoEixoX->value();
+            //eixoY = ui->rotacaoEixoY->value();
+
+            //Matriz eixo = Matriz::gerarMatrizTranslacao( eixoX, eixoY );
+            //Matriz volta = Matriz::gerarMatrizTranslacao( -eixoX, -eixoY );
+
+            tranfomacaoFinal = Matriz::multiplicar( tranfomacaoFinal, origemCentroide );
+            //tranfomacaoFinal = Matriz::multiplicar( tranfomacaoFinal, eixo );
+            tranfomacaoFinal = Matriz::multiplicar( tranfomacaoFinal, rotacao );
+            //tranfomacaoFinal = Matriz::multiplicar( tranfomacaoFinal, volta );
+            tranfomacaoFinal = Matriz::multiplicar( tranfomacaoFinal, voltaOriginalCentroide );
+
+        }
+        else if ( ui->rotacaoEspecifico->isChecked() )
+        {
+            double eixoX = ui->rotacaoEixoX->value();
+            double eixoY = ui->rotacaoEixoY->value();
+
+            Matriz eixo = Matriz::gerarMatrizTranslacao( -eixoX, -eixoY );
+            Matriz volta = Matriz::gerarMatrizTranslacao( eixoX, eixoY );
+
+            tranfomacaoFinal = Matriz::multiplicar( tranfomacaoFinal, eixo );
+            tranfomacaoFinal = Matriz::multiplicar( tranfomacaoFinal, rotacao );
+            tranfomacaoFinal = Matriz::multiplicar( tranfomacaoFinal, volta );
+        }
+        else
+        {
+            tranfomacaoFinal = Matriz::multiplicar( tranfomacaoFinal, origem );
+            tranfomacaoFinal = Matriz::multiplicar( tranfomacaoFinal, rotacao );
+            tranfomacaoFinal = Matriz::multiplicar( tranfomacaoFinal, posisaoOriginal );
+        }
+
     }
 
     if ( ui->checkBoxTraslacao->isChecked() )
@@ -81,13 +133,9 @@ void JanelaTranformador::on_botaoTranformar_pressed()
         tranfomacaoFinal = Matriz::multiplicar( tranfomacaoFinal, translacao );
     }
 
-
     //tranfomacaoFinal.imprimir()
     obj->transfomar( tranfomacaoFinal );
     (*frame).update();
-    //qDebug() << ;
-
-    //close();
 }
 
 JanelaTranformador::~JanelaTranformador()

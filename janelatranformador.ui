@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>260</width>
-    <height>300</height>
+    <width>317</width>
+    <height>634</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -44,15 +44,42 @@
            <verstretch>0</verstretch>
           </sizepolicy>
          </property>
+         <property name="font">
+          <font>
+           <pointsize>22</pointsize>
+          </font>
+         </property>
          <property name="text">
           <string>Objeto:</string>
          </property>
         </widget>
        </item>
        <item>
-        <widget class="QComboBox" name="formaBox"/>
+        <widget class="QComboBox" name="formaBox">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="font">
+          <font>
+           <pointsize>22</pointsize>
+          </font>
+         </property>
+        </widget>
        </item>
       </layout>
+     </widget>
+    </item>
+    <item>
+     <widget class="QWidget" name="widget_3" native="true">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
      </widget>
     </item>
     <item>
@@ -76,9 +103,9 @@
        <property name="geometry">
         <rect>
          <x>0</x>
-         <y>-268</y>
-         <width>219</width>
-         <height>440</height>
+         <y>0</y>
+         <width>291</width>
+         <height>461</height>
         </rect>
        </property>
        <layout class="QVBoxLayout" name="verticalLayout_3">
@@ -97,29 +124,6 @@
            <property name="bottomMargin">
             <number>0</number>
            </property>
-           <item row="0" column="0">
-            <widget class="QLabel" name="label">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="text">
-              <string>Tempo (em seg):</string>
-             </property>
-            </widget>
-           </item>
-           <item row="0" column="1">
-            <widget class="QDoubleSpinBox" name="tempo">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-            </widget>
-           </item>
           </layout>
          </widget>
         </item>
@@ -299,6 +303,22 @@
              </property>
             </widget>
            </item>
+           <item row="2" column="1">
+            <widget class="QCheckBox" name="escalaCentroide">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="text">
+              <string>Do centro?</string>
+             </property>
+             <property name="checked">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
           </layout>
          </widget>
         </item>
@@ -328,23 +348,23 @@
             <verstretch>0</verstretch>
            </sizepolicy>
           </property>
-          <layout class="QFormLayout" name="formLayout_4">
+          <property name="layoutDirection">
+           <enum>Qt::LayoutDirection::LeftToRight</enum>
+          </property>
+          <layout class="QGridLayout" name="gridLayout">
            <property name="leftMargin">
             <number>12</number>
            </property>
            <property name="topMargin">
             <number>0</number>
            </property>
-           <item row="1" column="0">
-            <widget class="QLabel" name="label_7">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
+           <item row="4" column="1">
+            <widget class="QRadioButton" name="rotacaoEspecifico">
              <property name="text">
-              <string>Angulo:</string>
+              <string>De um ponto especifico?</string>
+             </property>
+             <property name="checked">
+              <bool>true</bool>
              </property>
             </widget>
            </item>
@@ -365,13 +385,16 @@
              <property name="prefix">
               <string/>
              </property>
+             <property name="minimum">
+              <double>-360.000000000000000</double>
+             </property>
              <property name="maximum">
               <double>360.000000000000000</double>
              </property>
             </widget>
            </item>
-           <item row="3" column="0">
-            <widget class="QLabel" name="label_6">
+           <item row="1" column="0">
+            <widget class="QLabel" name="label_7">
              <property name="sizePolicy">
               <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
                <horstretch>0</horstretch>
@@ -379,11 +402,11 @@
               </sizepolicy>
              </property>
              <property name="text">
-              <string>Eixo X:</string>
+              <string>Angulo:</string>
              </property>
             </widget>
            </item>
-           <item row="3" column="1">
+           <item row="5" column="1">
             <widget class="QDoubleSpinBox" name="rotacaoEixoX">
              <property name="sizePolicy">
               <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
@@ -399,20 +422,14 @@
              </property>
             </widget>
            </item>
-           <item row="4" column="0">
-            <widget class="QLabel" name="label_10">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
+           <item row="3" column="1">
+            <widget class="QRadioButton" name="rotacaoCentoride">
              <property name="text">
-              <string>Eixo Y:</string>
+              <string>Do centro?</string>
              </property>
             </widget>
            </item>
-           <item row="4" column="1">
+           <item row="6" column="1">
             <widget class="QDoubleSpinBox" name="rotacaoEixoY">
              <property name="sizePolicy">
               <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
@@ -425,22 +442,6 @@
              </property>
              <property name="maximum">
               <double>999.990000000000009</double>
-             </property>
-            </widget>
-           </item>
-           <item row="2" column="1">
-            <widget class="QCheckBox" name="rotacaoRelativa">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="text">
-              <string>Relativo?</string>
-             </property>
-             <property name="checked">
-              <bool>true</bool>
              </property>
             </widget>
            </item>
@@ -465,7 +466,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>260</width>
+     <width>317</width>
      <height>24</height>
     </rect>
    </property>
@@ -481,12 +482,12 @@
    <slot>setVisible(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>147</x>
-     <y>315</y>
+     <x>171</x>
+     <y>147</y>
     </hint>
     <hint type="destinationlabel">
      <x>135</x>
-     <y>385</y>
+     <y>227</y>
     </hint>
    </hints>
   </connection>
@@ -497,12 +498,12 @@
    <slot>setVisible(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>117</x>
-     <y>541</y>
+     <x>129</x>
+     <y>392</y>
     </hint>
     <hint type="destinationlabel">
-     <x>154</x>
-     <y>626</y>
+     <x>166</x>
+     <y>516</y>
     </hint>
    </hints>
   </connection>
@@ -513,12 +514,44 @@
    <slot>setVisible(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>124</x>
-     <y>422</y>
+     <x>148</x>
+     <y>264</y>
     </hint>
     <hint type="destinationlabel">
      <x>141</x>
-     <y>504</y>
+     <y>355</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>rotacaoEspecifico</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>rotacaoEixoX</receiver>
+   <slot>setVisible(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>246</x>
+     <y>471</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>261</x>
+     <y>493</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>rotacaoEspecifico</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>rotacaoEixoY</receiver>
+   <slot>setVisible(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>196</x>
+     <y>464</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>244</x>
+     <y>516</y>
     </hint>
    </hints>
   </connection>

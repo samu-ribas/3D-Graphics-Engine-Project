@@ -8,6 +8,7 @@ CONFIG += c++17
 
 SOURCES += \
     Matriz.cpp \
+    janela.cpp \
     main.cpp \
     mainwindow.cpp \
     meuframe.cpp
@@ -18,6 +19,7 @@ HEADERS += \
     Ponto.h \
     Reta.h \
     forma.h \
+    janela.h \
     mainwindow.h \
     meuframe.h
 

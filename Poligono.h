@@ -6,10 +6,12 @@ class Poligono : public Forma{
 
 private:
     std::list<std::vector<double>> ponto;
+    std::list<std::vector<double>> pontoOriginal;
 public:
     explicit Poligono( QString n, std::list<std::vector<double>> vertices ) : Forma( n, TipoForma::POLIGONO )
     {
         this->ponto.assign( vertices.begin(), vertices.end() );
+        this->pontoOriginal.assign( vertices.begin(), vertices.end() );
     }
 
     void desenhar( QPainter &painter ) override
@@ -45,6 +47,29 @@ public:
         std::vector<double> resultado = {0.0, 0.0, 1.0};
         double soma;
 
+        for( auto& it : pontoOriginal )
+        {
+            for ( int i = 0; i < 3 ; i++ )
+            {
+                soma = 0;
+                for ( int j = 0; j < 3; j++ )
+                {
+                    soma += it.at(j) * mt.m[j][i];
+                }
+                resultado.at(i) = soma;
+            }
+            it.at(0) = resultado.at(0);
+            it.at(1) = resultado.at(1);
+            //next++;
+        }
+        transformacaoNaoDestrutiva( mt );
+    }
+
+    void transformacaoNaoDestrutiva( Matriz mt ) override
+    {
+        std::vector<double> resultado = {0.0, 0.0, 1.0};
+        double soma;
+
         for( auto& it : ponto )
         {
             for ( int i = 0; i < 3 ; i++ )
@@ -60,6 +85,11 @@ public:
             it.at(1) = resultado.at(1);
             //next++;
         }
+    }
+
+    void resetar()
+    {
+
     }
 
     std::vector<double> getPos() override

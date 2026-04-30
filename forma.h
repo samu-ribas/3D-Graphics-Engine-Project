@@ -14,21 +14,21 @@ enum class TipoForma {PONTO = 0, RETA = 1, POLIGONO = 2};
 
 class Forma
 {
+protected:
+    QString nome;
+    TipoForma o_tipo;
+
 public:
     Forma( QString n, TipoForma tipo ) : nome(n), o_tipo(tipo){}
     virtual ~Forma() {}
     virtual void desenhar( QPainter &painter ) = 0;
     virtual void transfomar( Matriz mt ) = 0;
+    virtual void transformacaoNaoDestrutiva( Matriz mt ) = 0;
+    virtual void resetar() = 0;
 
     const QString getNome() { return nome; }
     virtual std::vector<double> getPos() = 0;
     virtual std::vector<double> getCentroide() = 0;
-    //int getTipo() { return o_tipo; }
-
-protected:
-    QString nome;
-    TipoForma o_tipo;
-
 };
 
 #endif // FORMA_H

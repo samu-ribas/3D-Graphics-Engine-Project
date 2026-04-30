@@ -18,9 +18,19 @@ public:
 private slots:
     void on_botaoTranformar_pressed();
 
+    void on_escalaSlider_sliderPressed();
+
+    void on_escalaSlider_sliderReleased();
+
+    void on_escalaSlider_valueChanged(int value);
+
 private:
     Ui::JanelaTranformador *ui;
     MeuFrame *frame;
+
+    bool sliderEscalaPressionado = false;
+
+
 };
 
 #endif // JANELATRANFORMADOR_H

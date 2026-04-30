@@ -45,11 +45,6 @@ void JanelaTranformador::on_botaoTranformar_pressed()
         initialCods.at(0), initialCods.at(1)
         );
 
-    //tranfomacaoFinal.imprimir();
-
-    //obj->transfomar( translacaoOrigem );
-    //Matriz tranfomacaoFinal;
-
     if ( ui->checkBoxEscala->isChecked() )
     {
 
@@ -133,15 +128,53 @@ void JanelaTranformador::on_botaoTranformar_pressed()
         tranfomacaoFinal = Matriz::multiplicar( tranfomacaoFinal, translacao );
     }
 
-    //tranfomacaoFinal.imprimir()
     obj->transfomar( tranfomacaoFinal );
     (*frame).update();
+}
+
+void JanelaTranformador::on_escalaSlider_sliderPressed()
+{
+    this->sliderEscalaPressionado = true;
+}
+
+void JanelaTranformador::on_escalaSlider_sliderReleased()
+{
+    this->sliderEscalaPressionado = false;
+}
+
+void JanelaTranformador::on_escalaSlider_valueChanged( int value )
+{
+
+    QString nome = ui->formaBox->currentText();
+    Forma* obj = frame->acharNome( nome );
+    if ( obj == nullptr ) return;
+
+    std::vector<double> posisaoOriginal;
+    if ( ui->escalaCentroide->isChecked() )
+    {
+        posisaoOriginal = obj->getCentroide();
+    }
+    else
+    {
+        posisaoOriginal = obj->getPos();
+    }
+
+    Matriz tranfomacaoFinal = Matriz();
+
+    Matriz origem = Matriz::gerarMatrizTranslacao(
+        -posisaoOriginal.at(0), -posisaoOriginal.at(1)
+        );
+
+    Matriz translacaoDeVolta = Matriz::gerarMatrizTranslacao(
+        posisaoOriginal.at(0), posisaoOriginal.at(1)
+        );
 }
 
 JanelaTranformador::~JanelaTranformador()
 {
     delete ui;
 }
+
 
 
 

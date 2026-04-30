@@ -1,7 +1,7 @@
 #ifndef PONTO_H
 #define PONTO_H
 
-#include "Forma.h"
+#include "fsorma.h"
 
 class Ponto : public Forma
 {
@@ -65,7 +65,7 @@ public:
         ponto.at(1) = resultado.at(1);
     }
 
-    void incronizar
+    //void incronizar
 
     std::vector<double> getPos() override
     {

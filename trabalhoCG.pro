@@ -8,6 +8,7 @@ CONFIG += c++17
 
 SOURCES += \
     Matriz.cpp \
+    forma.cpp \
     main.cpp \
     mainwindow.cpp \
     meuframe.cpp

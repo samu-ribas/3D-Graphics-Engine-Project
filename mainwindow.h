@@ -23,9 +23,10 @@ public slots:
     void inputOperacao();
 
 private slots:
-    void inputCoordenadas();
+    void inputObjeto();
 
 private:
     Ui::MainWindow *ui;
+    double deslocamentoWindow = 50.0;
 };
 #endif // MAINWINDOW_H

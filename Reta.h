@@ -12,21 +12,33 @@ public:
         p.push_back({x2, y2});
     }
 
-    void desenhar(QPainter &painter) override{
+    void desenhar(QPainter &painter, int largura_vp, int altura_vp) override{
+        if (this->p.size() < 2) return;
+
+        auto it = this->p.begin();
+        const Coordenada& p1 = *it;
+        const Coordenada& p2 = *++it;
+
+        // qDebug() << "MUNDO P1:" << p1.x_wc << p1.y_wc << " --- P2:" << p2.x_wc << p2.y_wc;
+        // qDebug() << "SCN P1:" << p1.x_scn << p1.y_scn << " --- P2:" << p2.x_scn << p2.y_scn;
+
+        //viewport Ponto 1
+        double x1_vp = ((p1.x_scn - (-1.0)) / 2.0) * largura_vp;
+        double y1_vp = (1.0 - ((p1.y_scn - (-1.0)) / 2.0)) * altura_vp;
+        //viewport Ponto 2
+        double x2_vp = ((p2.x_scn - (-1.0)) / 2.0) * largura_vp;
+        double y2_vp = (1.0 - ((p2.y_scn - (-1.0)) / 2.0)) * altura_vp;
+
+        // qDebug() << "VIEWPORT P1:" << x1_vp << y1_vp << " --- P2:" << x2_vp << y2_vp;
+
         QPen caneta(Qt::white, 5);
         painter.setPen(caneta);
-        if(p.size()>=2){
-            auto it = p.begin();
-            Coordenada p1 = *it;
-            it++;
-            Coordenada p2 = *it;
-            painter.drawLine(QLineF(p1.x, p1.y, p2.x, p2.y));
-        }
+        painter.drawLine(x1_vp, y1_vp, x2_vp, y2_vp);
     }
+
     void aplicarTransformacao(const Matriz& m) override{
-        for(Coordenada& vertice : this->p){
+        for(Coordenada& vertice : this->p)
             vertice = m * vertice;
-        }
     }
 };
 

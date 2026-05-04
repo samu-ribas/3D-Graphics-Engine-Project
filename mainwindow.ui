@@ -431,7 +431,7 @@
      </widget>
     </widget>
     <widget class="QWidget" name="page_6">
-     <widget class="QWidget" name="">
+     <widget class="QWidget" name="layoutWidget">
       <property name="geometry">
        <rect>
         <x>10</x>
@@ -499,7 +499,7 @@
        </rect>
       </property>
       <property name="text">
-       <string>CheckBox</string>
+       <string>Centroide</string>
       </property>
      </widget>
     </widget>
@@ -591,6 +591,19 @@
      <string>Selecione o objeto:</string>
     </property>
    </widget>
+   <widget class="QCommandLinkButton" name="commandLinkButton">
+    <property name="geometry">
+     <rect>
+      <x>1210</x>
+      <y>490</y>
+      <width>31</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
@@ -598,7 +611,7 @@
      <x>0</x>
      <y>0</y>
      <width>1279</width>
-     <height>20</height>
+     <height>21</height>
     </rect>
    </property>
   </widget>

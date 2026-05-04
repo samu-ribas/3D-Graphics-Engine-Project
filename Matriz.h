@@ -13,10 +13,8 @@ public:
     static Matriz gerarMatrizE(double sx, double sy);
     static Matriz gerarMatrizR(double angulo);
 
-    //sobrecarga de operador para multiplicar matriz
     Matriz operator*(const Matriz& outra) const;
     Coordenada operator*(const Coordenada& ponto) const;
 
 };
-
 #endif // MATRIZ_H

@@ -1,33 +1,30 @@
 #include "meuframe.h"
 #include "Ponto.h"
-#include <QPainter>
 #include "Reta.h"
 #include "Poligono.h"
 #include "Matriz.h"
+#include "forma.h"
+#include <cmath>
+#include <QPainter>
 
 MeuFrame::MeuFrame(QWidget *parent) : QFrame(parent) {}
 
 void MeuFrame:: adicionarPonto(QString name, double x, double y){
     displayFile.append(new Ponto(name ,x ,y));
+    recalcularSCN();
     update();
 }
 
 void MeuFrame:: adicionarReta(QString name, double x1, double y1, double x2, double y2){
     displayFile.append(new Reta(name, x1,y1,x2,y2));
+    recalcularSCN();
     update();
 }
 
 void MeuFrame:: adicionarPoligono(QString name, std::list<Coordenada> pontos){
-    displayFile.append(new Poligono(name, pontos));    
+    displayFile.append(new Poligono(name, pontos));
+    recalcularSCN();
     update();
-}
-
-void MeuFrame::paintEvent(QPaintEvent *event){
-    QFrame::paintEvent(event);
-    QPainter painter(this);
-
-    for(Forma* df : std::as_const(displayFile))
-        df->desenhar(painter);
 }
 
 void MeuFrame::transladarObjeto(QString n, double dx, double dy){
@@ -38,6 +35,7 @@ void MeuFrame::transladarObjeto(QString n, double dx, double dy){
             break;
         }
     }
+    recalcularSCN();
     this->update();
 }
 
@@ -45,15 +43,16 @@ void MeuFrame::escalarObjeto(QString n, double sx, double sy){
     for(Forma* df : std::as_const(displayFile)){
         if(df->getNome().compare(n) == 0){
             Coordenada centro = df->getCentroide();
-            Matriz mToOrigin = Matriz::gerarMatrizT(-centro.x, -centro.y);
+            Matriz mToOrigin = Matriz::gerarMatrizT(-centro.x_wc, -centro.y_wc);
             Matriz escala = Matriz::gerarMatrizE(sx, sy);
-            Matriz mToReturn = Matriz::gerarMatrizT(centro.x, centro.y);
+            Matriz mToReturn = Matriz::gerarMatrizT(centro.x_wc, centro.y_wc);
 
             Matriz composta = mToReturn * escala * mToOrigin;
             df->aplicarTransformacao(composta);
             break;
         }
     }
+    recalcularSCN();
     this->update();
 }
 
@@ -65,14 +64,14 @@ void MeuFrame::rotacionarObjeto(QString n, double angulo, double x, double y, bo
             //define quem é o pivô da transformação
             if(usarCentroide){
                 Coordenada centro = df->getCentroide();
-                px = centro.x;
-                py = centro.y;
+                px = centro.x_wc;
+                py = centro.y_wc;
             }else{
                 px = x;
                 py = y;
             }
             Matriz mToOrigin = Matriz::gerarMatrizT(-px, -py);
-            Matriz mRotation = Matriz::gerarMatrizR(angulo);
+            Matriz mRotation = Matriz::gerarMatrizR(-angulo);
             Matriz mToReturn = Matriz::gerarMatrizT(px, py);
 
             Matriz composta = mToReturn * mRotation * mToOrigin;
@@ -80,6 +79,7 @@ void MeuFrame::rotacionarObjeto(QString n, double angulo, double x, double y, bo
             break;
         }
     }
+    recalcularSCN();
     this->update();
 }
 
@@ -92,7 +92,46 @@ bool MeuFrame::contemObjeto(const QString& nome) const {
     return false;
 }
 
+void MeuFrame::recalcularSCN(){
+    Matriz mTranslacao;
+    Matriz mRotacao;
+    Matriz mEscala;
 
+    double aspect = (double)this->width() / (double)this->height();
+
+    mTranslacao.m[0][2] = -window.centro_x;
+    mTranslacao.m[1][2] = -window.centro_y;
+
+    double rad = -window.angulo * (M_PI / 180.0);
+    mRotacao.m[0][0] = cos(rad);
+    mRotacao.m[0][1] = -sin(rad);
+    mRotacao.m[1][0] = sin(rad);
+    mRotacao.m[1][1] = cos(rad);
+    mEscala.m[0][0] = (2.0 / window.largura) / aspect;
+    mEscala.m[1][1] = 2.0 / window.altura;
+
+    Matriz mCamera = mEscala * mRotacao * mTranslacao;
+
+    for(Forma* forma : std::as_const(displayFile)){
+        for(Coordenada& c : forma->getCoordenada()){
+            Coordenada temp = mCamera * c;
+            c.x_scn = temp.x_wc;
+            c.y_scn = temp.y_wc;
+        }
+    }
+}
+
+void MeuFrame::paintEvent(QPaintEvent *event){
+    QFrame::paintEvent(event);
+    QPainter painter(this);
+    //captura as dimensões da Viewport em pixels naquele exato frame
+    int largura_vp = this->width();
+    int altura_vp = this->height();
+
+    for(Forma* df : std::as_const(displayFile)){
+        df->desenhar(painter, largura_vp, altura_vp);
+    }
+}
 
 MeuFrame::~MeuFrame() {
     qDeleteAll(displayFile);

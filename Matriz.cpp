@@ -1,4 +1,4 @@
-    #include "Matriz.h"
+#include "Matriz.h"
 #include <QDebug>
 #include <cmath>
 
@@ -42,7 +42,6 @@ Matriz Matriz::gerarMatrizR(double angulo){ // rotação
     return rotacao;
 }
 
-
 Matriz Matriz::operator*(const  Matriz& m2) const{
     Matriz resultado;
     double soma;
@@ -60,11 +59,7 @@ Matriz Matriz::operator*(const  Matriz& m2) const{
 
 Coordenada Matriz::operator*(const Coordenada& ponto) const{
     Coordenada resultado;
-    resultado.x = (this->m[0][0] * ponto.x) + (this->m[0][1] * ponto.y) + (this->m[0][2] * 1.0);
-    resultado.y = (this->m[1][0] * ponto.x) + (this->m[1][1] * ponto.y) + (this->m[1][2] * 1.0);
+    resultado.x_wc = (this->m[0][0] * ponto.x_wc) + (this->m[0][1] * ponto.y_wc) + (this->m[0][2] * 1.0);
+    resultado.y_wc = (this->m[1][0] * ponto.x_wc) + (this->m[1][1] * ponto.y_wc) + (this->m[1][2] * 1.0);
     return resultado;
 }
-
-
-
-

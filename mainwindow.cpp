@@ -14,7 +14,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->comboBox, QOverload<int>::of(&QComboBox::currentIndexChanged),ui->stackedWidget, &QStackedWidget::setCurrentIndex);
     connect(ui->comboBox_2, QOverload<int>::of(&QComboBox::currentIndexChanged),ui->stackedWidgetOperacoes, &QStackedWidget::setCurrentIndex);
 
-    connect(ui->Bt_add_forma, &QPushButton::clicked, this, &MainWindow::inputCoordenadas);
+    connect(ui->Bt_add_forma, &QPushButton::clicked, this, &MainWindow::inputObjeto);
     connect(ui->bt_op, &QPushButton::clicked, this, &MainWindow::inputOperacao);
 }
 
@@ -47,7 +47,7 @@ void MainWindow::inputOperacao(){
     }
 }
 
-void MainWindow::inputCoordenadas(){
+void MainWindow::inputObjeto(){
     if((ui->lineNome->text()).trimmed().isEmpty() || ui->frame->contemObjeto(ui->lineNome->text())){
         QMessageBox::warning(this, "Erro", "Insira o nome do objeto!");
         return;
@@ -73,7 +73,7 @@ void MainWindow::inputCoordenadas(){
             break;
         case 3:
             this->processarPoligono(ui->inputXRetangulo->text().toDouble(), // x do canto
-                                   ui   ->inputYRetangulo->text().toDouble(), // y do canto
+                                   ui->inputYRetangulo->text().toDouble(), // y do canto
                                    ui->comprimentoRetangulo->text().toDouble(),
                                    ui->alturaRetangulo->text().toDouble());
         break;
@@ -108,7 +108,6 @@ void MainWindow::processarPoligono(double x, double y, double c, double h){
 
     ui->frame->adicionarPoligono(ui->lineNome->text(), listaDePontos);
 }
-
 
 MainWindow::~MainWindow()
 {

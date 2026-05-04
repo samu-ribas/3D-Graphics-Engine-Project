@@ -50,6 +50,7 @@ void MainWindow::inputOperacao(){
 void MainWindow::inputObjeto(){
     if((ui->lineNome->text()).trimmed().isEmpty() || ui->frame->contemObjeto(ui->lineNome->text())){
         QMessageBox::warning(this, "Erro", "Insira o nome do objeto!");
+        ui->lineNome->setFocus();
         return;
     }
 
@@ -109,8 +110,55 @@ void MainWindow::processarPoligono(double x, double y, double c, double h){
     ui->frame->adicionarPoligono(ui->lineNome->text(), listaDePontos);
 }
 
+void MainWindow::on_btn_cima_clicked()
+{
+    ui->frame->window.centro_y += deslocamentoWindow;
+    ui->frame->recalcularSCN();
+    ui->frame->update();
+}
+
+
+void MainWindow::on_btn_baixo_clicked()
+{
+    ui->frame->window.centro_y -= deslocamentoWindow;
+    ui->frame->recalcularSCN();
+    ui->frame->update();
+}
+
+void MainWindow::on_btn_esquerda_clicked()
+{
+    ui->frame->window.centro_x += deslocamentoWindow;
+    ui->frame->recalcularSCN();
+    ui->frame->update();
+}
+
+
+void MainWindow::on_btn_direita_clicked()
+{
+    ui->frame->window.centro_x -= deslocamentoWindow;
+    ui->frame->recalcularSCN();
+    ui->frame->update();
+}
+
+
+void MainWindow::on_btn_zoomMais_clicked()
+{
+    ui->frame->window.altura -= deslocamentoWindow;
+    ui->frame->window.largura -= deslocamentoWindow;
+    ui->frame->recalcularSCN();
+    ui->frame->update();
+}
+
+
+void MainWindow::on_btn_zoomMenos_clicked()
+{
+    ui->frame->window.altura += deslocamentoWindow;
+    ui->frame->window.largura += deslocamentoWindow;
+    ui->frame->recalcularSCN();
+    ui->frame->update();
+}
+
 MainWindow::~MainWindow()
 {
     delete ui;
 }
-

@@ -22,8 +22,17 @@ public slots:
     void processarPoligono(double x, double y, double c, double h); // retângulo
     void inputOperacao();
 
+   // double getDeslocamento() { return deslocamentoWindow; }
+
 private slots:
     void inputObjeto();
+
+    void on_btn_cima_clicked();
+    void on_btn_baixo_clicked();
+    void on_btn_esquerda_clicked();
+    void on_btn_direita_clicked();
+    void on_btn_zoomMais_clicked();
+    void on_btn_zoomMenos_clicked();
 
 private:
     Ui::MainWindow *ui;

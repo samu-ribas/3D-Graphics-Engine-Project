@@ -10,10 +10,10 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-
+    //stacked widget
     connect(ui->comboBox, QOverload<int>::of(&QComboBox::currentIndexChanged),ui->stackedWidget, &QStackedWidget::setCurrentIndex);
     connect(ui->comboBox_2, QOverload<int>::of(&QComboBox::currentIndexChanged),ui->stackedWidgetOperacoes, &QStackedWidget::setCurrentIndex);
-
+    //botões
     connect(ui->Bt_add_forma, &QPushButton::clicked, this, &MainWindow::inputObjeto);
     connect(ui->bt_op, &QPushButton::clicked, this, &MainWindow::inputOperacao);
 }
@@ -66,13 +66,13 @@ void MainWindow::inputObjeto(){
                                     ui->inputXReta_2->text().toDouble(),
                                     ui->inputYReta_2->text().toDouble());
             break;
-        case 2:
+        case 2://poligono
             this->processarPoligono(ui->inputXPoligono->text().toDouble(), // x do centro
                                    ui->inputYPoligono->text().toDouble(), // y do centro
                                    ui->inputLados->text().toInt(),
                                    ui->inputRaio->text().toDouble());
             break;
-        case 3:
+        case 3://retangulo
             this->processarPoligono(ui->inputXRetangulo->text().toDouble(), // x do canto
                                    ui->inputYRetangulo->text().toDouble(), // y do canto
                                    ui->comprimentoRetangulo->text().toDouble(),
@@ -83,7 +83,7 @@ void MainWindow::inputObjeto(){
     ui->lineNome->clear();
 }
 
-//polígono
+//processa polígono
 void MainWindow::processarPoligono(double x, double y, int l, double r){
     if (l< 3) return;
 
@@ -99,7 +99,7 @@ void MainWindow::processarPoligono(double x, double y, int l, double r){
 
     ui->frame->adicionarPoligono(ui->lineNome->text(), listaDePontos);
 }
-//retângulo
+//processa retângulo
 void MainWindow::processarPoligono(double x, double y, double c, double h){
     std::list<Coordenada> listaDePontos;
     listaDePontos.push_back({x, y});
@@ -110,6 +110,7 @@ void MainWindow::processarPoligono(double x, double y, double c, double h){
     ui->frame->adicionarPoligono(ui->lineNome->text(), listaDePontos);
 }
 
+//métodos da window
 void MainWindow::on_btn_cima_clicked()
 {
     ui->frame->window.centro_y += deslocamentoWindow;
@@ -158,7 +159,26 @@ void MainWindow::on_btn_zoomMenos_clicked()
     ui->frame->update();
 }
 
+void MainWindow::on_btn_girarEsq_clicked()
+{
+    ui->frame->window.angulo -= 10;
+    ui->frame->recalcularSCN();
+    ui->frame->update();
+}
+
+void MainWindow::on_btn_girarDir_clicked()
+{
+    ui->frame->window.angulo += 10;
+    ui->frame->recalcularSCN();
+    ui->frame->update();
+}
+
 MainWindow::~MainWindow()
 {
     delete ui;
 }
+
+
+
+
+

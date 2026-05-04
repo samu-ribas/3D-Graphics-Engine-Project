@@ -17,15 +17,12 @@ public:
     explicit MainWindow(QWidget *parent = nullptr);
     ~MainWindow() override;
 
-public slots:
+private slots:
     void processarPoligono(double x, double y, int l, double r); // polígono
     void processarPoligono(double x, double y, double c, double h); // retângulo
-    void inputOperacao();
 
-   // double getDeslocamento() { return deslocamentoWindow; }
-
-private slots:
     void inputObjeto();
+    void inputOperacao();
 
     void on_btn_cima_clicked();
     void on_btn_baixo_clicked();
@@ -33,6 +30,10 @@ private slots:
     void on_btn_direita_clicked();
     void on_btn_zoomMais_clicked();
     void on_btn_zoomMenos_clicked();
+
+    void on_btn_girarEsq_clicked();
+
+    void on_btn_girarDir_clicked();
 
 private:
     Ui::MainWindow *ui;

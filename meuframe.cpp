@@ -85,9 +85,8 @@ void MeuFrame::rotacionarObjeto(QString n, double angulo, double x, double y, bo
 
 bool MeuFrame::contemObjeto(const QString& nome) const {
     for(Forma* df : std::as_const(displayFile)) {
-        if(df->getNome() == nome) {
+        if(df->getNome() == nome)
             return true;
-        }
     }
     return false;
 }
@@ -97,7 +96,7 @@ void MeuFrame::recalcularSCN(){
     Matriz mRotacao;
     Matriz mEscala;
 
-    double aspect = (double)this->width() / (double)this->height();
+    double distorcao = (double)this->width() / (double)this->height();
 
     mTranslacao.m[0][2] = -window.centro_x;
     mTranslacao.m[1][2] = -window.centro_y;
@@ -107,7 +106,7 @@ void MeuFrame::recalcularSCN(){
     mRotacao.m[0][1] = -sin(rad);
     mRotacao.m[1][0] = sin(rad);
     mRotacao.m[1][1] = cos(rad);
-    mEscala.m[0][0] = (2.0 / window.largura) / aspect;
+    mEscala.m[0][0] = (2.0 / window.largura) / distorcao;
     mEscala.m[1][1] = 2.0 / window.altura;
 
     Matriz mCamera = mEscala * mRotacao * mTranslacao;
@@ -124,12 +123,9 @@ void MeuFrame::recalcularSCN(){
 void MeuFrame::paintEvent(QPaintEvent *event){
     QFrame::paintEvent(event);
     QPainter painter(this);
-    //captura as dimensões da Viewport em pixels naquele exato frame
-    int largura_vp = this->width();
-    int altura_vp = this->height();
 
     for(Forma* df : std::as_const(displayFile)){
-        df->desenhar(painter, largura_vp, altura_vp);
+        df->desenhar(painter, this->width(), this->height()); //passo tambem as dimensões da Viewport em pixels naquele exato frame
     }
 }
 

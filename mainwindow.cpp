@@ -4,6 +4,7 @@
 #include <cmath>
 #include <QMessageBox>
 #include "forma.h"
+#include "janelagerenciavw.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -16,6 +17,9 @@ MainWindow::MainWindow(QWidget *parent)
 
     connect(ui->Bt_add_forma, &QPushButton::clicked, this, &MainWindow::inputCoordenadas);
     connect(ui->bt_op, &QPushButton::clicked, this, &MainWindow::inputOperacao);
+
+    JanelaViewportWindow *ahhhh = new JanelaViewportWindow(this);
+    ahhhh->show();
 }
 
 void MainWindow::inputOperacao(){
@@ -60,22 +64,22 @@ void MainWindow::inputCoordenadas(){
             break;
         case 1://reta
             ui->frame->adicionarReta(ui->lineNome->text(),
-                                    ui->inputXReta->text().toDouble(),
-                                    ui->inputYReta->text().toDouble(),
-                                    ui->inputXReta_2->text().toDouble(),
-                                    ui->inputYReta_2->text().toDouble());
+                                     ui->inputXReta->text().toDouble(),
+                                     ui->inputYReta->text().toDouble(),
+                                     ui->inputXReta_2->text().toDouble(),
+                                     ui->inputYReta_2->text().toDouble());
             break;
         case 2:
             this->processarPoligono(ui->inputXPoligono->text().toDouble(), // x do centro
-                                   ui->inputYPoligono->text().toDouble(), // y do centro
-                                   ui->inputLados->text().toInt(),
-                                   ui->inputRaio->text().toDouble());
+                                    ui->inputYPoligono->text().toDouble(), // y do centro
+                                    ui->inputLados->text().toInt(),
+                                    ui->inputRaio->text().toDouble());
             break;
         case 3:
             this->processarPoligono(ui->inputXRetangulo->text().toDouble(), // x do canto
-                                   ui   ->inputYRetangulo->text().toDouble(), // y do canto
-                                   ui->comprimentoRetangulo->text().toDouble(),
-                                   ui->alturaRetangulo->text().toDouble());
+                                    ui->inputYRetangulo->text().toDouble(), // y do canto
+                                    ui->comprimentoRetangulo->text().toDouble(),
+                                    ui->alturaRetangulo->text().toDouble());
         break;
     }
     ui->comboBoxDisplayFile->addItem(ui->lineNome->text());
@@ -108,7 +112,6 @@ void MainWindow::processarPoligono(double x, double y, double c, double h){
 
     ui->frame->adicionarPoligono(ui->lineNome->text(), listaDePontos);
 }
-
 
 MainWindow::~MainWindow()
 {

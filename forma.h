@@ -5,10 +5,7 @@
 #include <QVector>
 #include <QPoint>
 
-struct Coordenada {
-    double x;
-    double y;
-};
+#include "coordenada.h"
 
 class Matriz;
 
@@ -17,12 +14,20 @@ enum class TipoForma{PONTO, RETA, POLIGONO};
 
 class Forma
 {
-public:
+protected:
+    QString nome;
+    TipoForma o_tipo;
+    std::list<Coordenada> p;
+    std::list<Coordenada> listaCodScn;
     Forma(QString n, TipoForma tipo) : nome(n), o_tipo(tipo){}
+
+public:
+
     virtual ~Forma() {}
 
     virtual void desenhar(QPainter &painter) = 0;
     virtual void aplicarTransformacao(const Matriz& m) = 0;
+    virtual void atualizarCoordenadaScn(const Matriz& m) = 0;
 
     Coordenada getCentroide() const { // retorna o centroide do objeto
         double cx = 0.0, cy = 0.0;
@@ -39,10 +44,6 @@ public:
     QString getNome() const { return nome; }
     TipoForma getTipo() const { return o_tipo; }
 
-protected:
-    QString nome;
-    TipoForma o_tipo;
-    std::list<Coordenada>p;
 };
 
 #endif // FORMA_H

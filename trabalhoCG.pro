@@ -9,6 +9,7 @@ CONFIG += c++17
 SOURCES += \
     Matriz.cpp \
     janela.cpp \
+    janelagerenciavw.cpp \
     main.cpp \
     mainwindow.cpp \
     meuframe.cpp
@@ -18,12 +19,16 @@ HEADERS += \
     Poligono.h \
     Ponto.h \
     Reta.h \
+    coordenada.h \
     forma.h \
     janela.h \
+    janelagerenciavw.h \
     mainwindow.h \
-    meuframe.h
+    meuframe.h \
+    viewport.h
 
 FORMS += \
+    janelagerenciavw.ui \
     mainwindow.ui
 
 # Default rules for deployment.

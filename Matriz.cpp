@@ -1,4 +1,4 @@
-    #include "Matriz.h"
+#include "Matriz.h"
 #include <QDebug>
 #include <cmath>
 
@@ -23,6 +23,13 @@ Matriz Matriz::gerarMatrizT(double dx, double dy){ // transalação
     return translacao;
 }
 
+Matriz Matriz::gerarMatrizT(Coordenada cod){ // transalação
+    Matriz translacao;
+    translacao.m[0][2] = cod.x;
+    translacao.m[1][2] = cod.y;
+    return translacao;
+}
+
 Matriz Matriz::gerarMatrizE(double sx, double sy){ // escala
     Matriz escala;
     escala.m[0][0] = sx;
@@ -43,7 +50,7 @@ Matriz Matriz::gerarMatrizR(double angulo){ // rotação
 }
 
 
-Matriz Matriz::operator*(const  Matriz& m2) const{
+Matriz Matriz::operator*(const Matriz& m2) const{
     Matriz resultado;
     double soma;
     for(int i = 0 ; i<3 ; i++){

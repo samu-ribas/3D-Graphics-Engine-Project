@@ -5,65 +5,65 @@
 #include "Poligono.h"
 #include "Matriz.h"
 
-MeuFrame::MeuFrame(QWidget *parent) : QFrame(parent) {}
+MeuFrame::MeuFrame( QWidget *parent ) : QFrame( parent ) {}
 
-void MeuFrame:: adicionarPonto(QString name, double x, double y){
-    displayFile.append(new Ponto(name ,x ,y));
+void MeuFrame:: adicionarPonto( QString name, double x, double y ){
+    displayFile.append( new Ponto( name ,x ,y ));
     update();
 }
 
-void MeuFrame:: adicionarReta(QString name, double x1, double y1, double x2, double y2){
-    displayFile.append(new Reta(name, x1,y1,x2,y2));
+void MeuFrame:: adicionarReta( QString name, double x1, double y1, double x2, double y2 ){
+    displayFile.append( new Reta( name, x1,y1,x2,y2 ));
     update();
 }
 
-void MeuFrame:: adicionarPoligono(QString name, std::list<Coordenada> pontos){
-    displayFile.append(new Poligono(name, pontos));    
+void MeuFrame:: adicionarPoligono( QString name, std::list<Coordenada> pontos ){
+    displayFile.append( new Poligono( name, pontos ));
     update();
 }
 
-void MeuFrame::paintEvent(QPaintEvent *event){
-    QFrame::paintEvent(event);
-    QPainter painter(this);
+void MeuFrame::paintEvent( QPaintEvent *event ){
+    QFrame::paintEvent( event );
+    QPainter painter( this );
 
-    for(Forma* df : std::as_const(displayFile))
-        df->desenhar(painter);
+    for( Forma* df : std::as_const( displayFile ))
+        df->desenhar( painter );
 }
 
-void MeuFrame::transladarObjeto(QString n, double dx, double dy){
-    for(Forma* df : std::as_const(displayFile)){
-        if(df->getNome().compare(n) == 0){
-            Matriz t = Matriz::gerarMatrizT(dx, dy);
-            df->aplicarTransformacao(t);
+void MeuFrame::transladarObjeto( QString n, double dx, double dy ){
+    for( Forma* df : std::as_const( displayFile )){
+        if( df->getNome().compare( n ) == 0 ){
+            Matriz t = Matriz::gerarMatrizT( dx, dy );
+            df->aplicarTransformacao( t );
             break;
         }
     }
     this->update();
 }
 
-void MeuFrame::escalarObjeto(QString n, double sx, double sy){
-    for(Forma* df : std::as_const(displayFile)){
-        if(df->getNome().compare(n) == 0){
+void MeuFrame::escalarObjeto( QString n, double sx, double sy ){
+    for( Forma* df : std::as_const( displayFile )){
+        if( df->getNome().compare( n ) == 0 ){
             Coordenada centro = df->getCentroide();
-            Matriz mToOrigin = Matriz::gerarMatrizT(-centro.x, -centro.y);
-            Matriz escala = Matriz::gerarMatrizE(sx, sy);
-            Matriz mToReturn = Matriz::gerarMatrizT(centro.x, centro.y);
+            Matriz mToOrigin = Matriz::gerarMatrizT( -centro.x, -centro.y );
+            Matriz escala = Matriz::gerarMatrizE( sx, sy );
+            Matriz mToReturn = Matriz::gerarMatrizT( centro.x, centro.y );
 
             Matriz composta = mToReturn * escala * mToOrigin;
-            df->aplicarTransformacao(composta);
+            df->aplicarTransformacao( composta );
             break;
         }
     }
     this->update();
 }
 
-void MeuFrame::rotacionarObjeto(QString n, double angulo, double x, double y, bool usarCentroide){
-    for(Forma* df : std::as_const(displayFile)){
-        if(df->getNome() == n){
+void MeuFrame::rotacionarObjeto( QString n, double angulo, double x, double y, bool usarCentroide ){
+    for( Forma* df : std::as_const( displayFile )){
+        if( df->getNome() == n ){
             double px, py;
 
             //define quem é o pivô da transformação
-            if(usarCentroide){
+            if( usarCentroide ){
                 Coordenada centro = df->getCentroide();
                 px = centro.x;
                 py = centro.y;
@@ -71,30 +71,66 @@ void MeuFrame::rotacionarObjeto(QString n, double angulo, double x, double y, bo
                 px = x;
                 py = y;
             }
-            Matriz mToOrigin = Matriz::gerarMatrizT(-px, -py);
-            Matriz mRotation = Matriz::gerarMatrizR(angulo);
-            Matriz mToReturn = Matriz::gerarMatrizT(px, py);
+            Matriz mToOrigin = Matriz::gerarMatrizT( -px, -py );
+            Matriz mRotation = Matriz::gerarMatrizR( angulo );
+            Matriz mToReturn = Matriz::gerarMatrizT( px, py );
 
             Matriz composta = mToReturn * mRotation * mToOrigin;
-            df->aplicarTransformacao(composta);
+            df->aplicarTransformacao( composta );
             break;
         }
     }
     this->update();
 }
 
-bool MeuFrame::contemObjeto(const QString& nome) const {
-    for(Forma* df : std::as_const(displayFile)) {
-        if(df->getNome() == nome) {
+bool MeuFrame::contemObjeto( const QString& nome ) const {
+    for( Forma* df : std::as_const( displayFile )) {
+        if( df->getNome() == nome ) {
             return true;
         }
     }
     return false;
 }
 
+void MeuFrame::atualizarTransformada() {
+    if ( windowAtiva == nullptr || viewportAtiva == nullptr ) return;
 
+    Coordenada viewportMin = this->viewportAtiva->getMin();
+    Coordenada windowMin   = this->windowAtiva->getMin();
+
+    Matriz translacaoWindow = Matriz::gerarMatrizT( -windowMin );
+
+    Coordenada viewportMax = this->viewportAtiva->getMin();
+    Coordenada windowMax   = this->windowAtiva->getMin();
+    Matriz escala = Matriz::gerarMatrizE(
+        ( windowMax.x - windowMin.x ) / ( viewportMax.x - viewportMin.x ),
+        ( windowMax.y - windowMin.y ) / ( viewportMax.y - viewportMin.y )
+    );
+
+    Matriz translacaoViewport = Matriz::gerarMatrizT( viewportMin );
+
+    transdormadaViewport = translacaoWindow * escala * translacaoViewport;
+
+    for ( Forma* obj : std::as_const( displayFile )) {
+        obj->atualizarCoordenadaScn( transdormadaViewport );
+    }
+}
+
+void MeuFrame::setJanelaAtiva( Janela *novaJanela ) {
+    if ( novaJanela == this->windowAtiva ) return;
+
+    this->windowAtiva = novaJanela;
+    atualizarTransformada();
+}
+
+void MeuFrame::setViewportAtiva( Viewport *novaViewport ) {
+    if ( novaViewport == this->viewportAtiva ) return;
+
+    this->viewportAtiva = novaViewport;
+    atualizarTransformada();
+}
 
 MeuFrame::~MeuFrame() {
-    qDeleteAll(displayFile);
+    qDeleteAll( displayFile );
     displayFile.clear();
 }

@@ -30,11 +30,12 @@ private slots:
     void on_btn_direita_clicked();
     void on_btn_zoomMais_clicked();
     void on_btn_zoomMenos_clicked();
-
     void on_btn_girarEsq_clicked();
-
     void on_btn_girarDir_clicked();
-
+    void on_btn_diagEsqCima_clicked();
+    void on_btn_diagEsqBaixo_clicked();
+    void on_btn_diagDirCima_clicked();
+    void on_btn_diagDirBaixo_clicked();
 private:
     Ui::MainWindow *ui;
     double deslocamentoWindow = 50.0;

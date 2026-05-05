@@ -31,8 +31,8 @@ void MainWindow::inputOperacao(){
         case 1:{
             double sx = ui->inputXEscala->text().isEmpty() ? 1.0 : ui->inputXEscala->text().toDouble();
             double sy = ui->inputYEscala->text().isEmpty() ? 1.0 : ui->inputYEscala->text().toDouble();
-            if (sx == 0.0) sx = 1.0;
-            if (sy == 0.0) sy = 1.0;
+            if(sx == 0.0) sx = 1.0;
+            if(sy == 0.0) sy = 1.0;
             ui->frame->escalarObjeto(ui->comboBoxDisplayFile->currentText(),sx, sy);
             break;
         }
@@ -57,24 +57,26 @@ void MainWindow::inputObjeto(){
     int id = ui->stackedWidget->currentIndex();
     switch(id){
         case 0:// ponto
-            ui->frame->adicionarPonto(ui->lineNome->text(),ui->inputX->text().toDouble(), ui->inputY->text().toDouble());
+            ui->frame->adicionarPonto(ui->lineNome->text(),
+                                      ui->inputX->text().toDouble() + ui->frame->window.centro_x,
+                                      ui->inputY->text().toDouble() + ui->frame->window.centro_y);
             break;
         case 1://reta
             ui->frame->adicionarReta(ui->lineNome->text(),
-                                    ui->inputXReta->text().toDouble(),
-                                    ui->inputYReta->text().toDouble(),
-                                    ui->inputXReta_2->text().toDouble(),
-                                    ui->inputYReta_2->text().toDouble());
+                                    ui->inputXReta->text().toDouble() + ui->frame->window.centro_x,
+                                    ui->inputYReta->text().toDouble() + ui->frame->window.centro_y,
+                                    ui->inputXReta_2->text().toDouble() + ui->frame->window.centro_x ,
+                                    ui->inputYReta_2->text().toDouble() + ui->frame->window.centro_y );
             break;
         case 2://poligono
-            this->processarPoligono(ui->inputXPoligono->text().toDouble(), // x do centro
-                                   ui->inputYPoligono->text().toDouble(), // y do centro
+            this->processarPoligono(ui->inputXPoligono->text().toDouble() + ui->frame->window.centro_x, // x do centro
+                                   ui->inputYPoligono->text().toDouble() + ui->frame->window.centro_y, // y do centro
                                    ui->inputLados->text().toInt(),
                                    ui->inputRaio->text().toDouble());
             break;
         case 3://retangulo
-            this->processarPoligono(ui->inputXRetangulo->text().toDouble(), // x do canto
-                                   ui->inputYRetangulo->text().toDouble(), // y do canto
+            this->processarPoligono(ui->inputXRetangulo->text().toDouble() + ui->frame->window.centro_x , // x do canto
+                                   ui->inputYRetangulo->text().toDouble() + ui->frame->window.centro_y , // y do canto
                                    ui->comprimentoRetangulo->text().toDouble(),
                                    ui->alturaRetangulo->text().toDouble());
         break;
@@ -91,7 +93,7 @@ void MainWindow::processarPoligono(double x, double y, int l, double r){
     double offset = (l % 2 == 0) ? (M_PI / l) : (M_PI / 2.0);
 
     for (int i = 0; i < l; ++i){
-        double angulo = 2.0 * M_PI * i / l - offset;
+        double angulo = 2.0 * M_PI * i / l + offset;
         double xbase = x + r * cos(angulo);
         double ybase = y + r * sin(angulo);
         listaDePontos.push_back({xbase, ybase});
@@ -110,12 +112,11 @@ void MainWindow::processarPoligono(double x, double y, double c, double h){
     ui->frame->adicionarPoligono(ui->lineNome->text(), listaDePontos);
 }
 
-//métodos da window
+//métodos da ação da window
 void MainWindow::on_btn_cima_clicked()
 {
     ui->frame->window.centro_y += deslocamentoWindow;
     ui->frame->recalcularSCN();
-    ui->frame->update();
 }
 
 
@@ -123,14 +124,12 @@ void MainWindow::on_btn_baixo_clicked()
 {
     ui->frame->window.centro_y -= deslocamentoWindow;
     ui->frame->recalcularSCN();
-    ui->frame->update();
 }
 
 void MainWindow::on_btn_esquerda_clicked()
 {
     ui->frame->window.centro_x += deslocamentoWindow;
     ui->frame->recalcularSCN();
-    ui->frame->update();
 }
 
 
@@ -138,7 +137,6 @@ void MainWindow::on_btn_direita_clicked()
 {
     ui->frame->window.centro_x -= deslocamentoWindow;
     ui->frame->recalcularSCN();
-    ui->frame->update();
 }
 
 
@@ -147,7 +145,6 @@ void MainWindow::on_btn_zoomMais_clicked()
     ui->frame->window.altura -= deslocamentoWindow;
     ui->frame->window.largura -= deslocamentoWindow;
     ui->frame->recalcularSCN();
-    ui->frame->update();
 }
 
 
@@ -156,27 +153,58 @@ void MainWindow::on_btn_zoomMenos_clicked()
     ui->frame->window.altura += deslocamentoWindow;
     ui->frame->window.largura += deslocamentoWindow;
     ui->frame->recalcularSCN();
-    ui->frame->update();
 }
 
 void MainWindow::on_btn_girarEsq_clicked()
 {
     ui->frame->window.angulo -= 10;
     ui->frame->recalcularSCN();
-    ui->frame->update();
 }
 
 void MainWindow::on_btn_girarDir_clicked()
 {
     ui->frame->window.angulo += 10;
     ui->frame->recalcularSCN();
-    ui->frame->update();
+}
+
+void MainWindow::on_btn_diagEsqCima_clicked()
+{
+    ui->frame->window.centro_x -= deslocamentoWindow;
+    ui->frame->window.centro_y += deslocamentoWindow;
+    ui->frame->recalcularSCN();
+}
+
+
+
+void MainWindow::on_btn_diagEsqBaixo_clicked()
+{
+    ui->frame->window.centro_x -= deslocamentoWindow;
+    ui->frame->window.centro_y -= deslocamentoWindow;
+    ui->frame->recalcularSCN();
+}
+
+
+
+void MainWindow::on_btn_diagDirCima_clicked()
+{
+    ui->frame->window.centro_x += deslocamentoWindow;
+    ui->frame->window.centro_y += deslocamentoWindow;
+    ui->frame->recalcularSCN();
+}
+
+
+void MainWindow::on_btn_diagDirBaixo_clicked()
+{
+    ui->frame->window.centro_x += deslocamentoWindow;
+    ui->frame->window.centro_y -= deslocamentoWindow;
+    ui->frame->recalcularSCN();
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
 }
+
 
 
 

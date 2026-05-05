@@ -12,19 +12,16 @@ MeuFrame::MeuFrame(QWidget *parent) : QFrame(parent) {}
 void MeuFrame:: adicionarPonto(QString name, double x, double y){
     displayFile.append(new Ponto(name ,x ,y));
     recalcularSCN();
-    update();
 }
 
 void MeuFrame:: adicionarReta(QString name, double x1, double y1, double x2, double y2){
     displayFile.append(new Reta(name, x1,y1,x2,y2));
     recalcularSCN();
-    update();
 }
 
 void MeuFrame:: adicionarPoligono(QString name, std::list<Coordenada> pontos){
     displayFile.append(new Poligono(name, pontos));
     recalcularSCN();
-    update();
 }
 
 void MeuFrame::transladarObjeto(QString n, double dx, double dy){
@@ -36,7 +33,6 @@ void MeuFrame::transladarObjeto(QString n, double dx, double dy){
         }
     }
     recalcularSCN();
-    this->update();
 }
 
 void MeuFrame::escalarObjeto(QString n, double sx, double sy){
@@ -53,7 +49,6 @@ void MeuFrame::escalarObjeto(QString n, double sx, double sy){
         }
     }
     recalcularSCN();
-    this->update();
 }
 
 void MeuFrame::rotacionarObjeto(QString n, double angulo, double x, double y, bool usarCentroide){
@@ -80,7 +75,6 @@ void MeuFrame::rotacionarObjeto(QString n, double angulo, double x, double y, bo
         }
     }
     recalcularSCN();
-    this->update();
 }
 
 bool MeuFrame::contemObjeto(const QString& nome) const {
@@ -118,6 +112,7 @@ void MeuFrame::recalcularSCN(){
             c.y_scn = temp.y_wc;
         }
     }
+    this->update();
 }
 
 void MeuFrame::paintEvent(QPaintEvent *event){

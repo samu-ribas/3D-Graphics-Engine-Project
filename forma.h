@@ -27,7 +27,7 @@ class Forma
 {
 public:
     Forma(QString n, TipoForma tipo);
-    virtual ~Forma() {}
+    virtual ~Forma(){}
 
     virtual void desenhar(QPainter &painter, int largura_vp, int altura_vp) = 0;
     virtual void aplicarTransformacao(const Matriz& m) = 0;

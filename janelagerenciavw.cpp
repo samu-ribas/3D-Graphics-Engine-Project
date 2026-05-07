@@ -8,7 +8,7 @@ JanelaViewportWindow::JanelaViewportWindow( QWidget *parent, MeuFrame *frame )
     , frame( frame )
 {
     ui->setupUi(this);
-    qDebug() << "AHHHH";
+    qDebug() << "Ola mundo!";
     // In your widget's constructor
     //this->setWindowFlags(this->windowFlags() & ~Qt::WindowCloseButtonHint);
     this->setWindowFlags( Qt::Tool | Qt::WindowMinMaxButtonsHint );
@@ -16,25 +16,34 @@ JanelaViewportWindow::JanelaViewportWindow( QWidget *parent, MeuFrame *frame )
 
     Viewport *padraoV = new Viewport(
         "Padrao",
-        frame->width() / 2,
-        frame->height() / 2,
-        frame->width(),
-        frame->height()
+        450, 225,
+        900,
+        450
     );
     frame->setViewportAtiva( padraoV );
     listaViewport.push_back( padraoV );
-    ui->viewportAtivador->addItem( "Padrão" );
+    atualizar_display_valores_viewport(padraoV);
+
 
     Janela *padraoW = new Janela(
         "Padrao",
-        frame->width() / 2,
-        frame->height() / 2,
-        frame->width(),
-        frame->height()
+        450, 225,
+        900,
+        450
         );
-    frame->setViewportAtiva( padraoW );
-    listaViewport.push_back( padraoW );
-    ui->viewportAtivador->addItem( "Padrão" );
+    frame->setJanelaAtiva( padraoW );
+    listaJanela.push_back( padraoW );
+    ui->windowAtivador->addItem( "Padrao" );
+    atualizar_display_valores_window(padraoW);
+
+    padraoW = new Janela(
+        "CemPorCem",
+        50, 50,
+        100,
+        100
+        );
+    listaJanela.push_back( padraoW );
+    ui->windowAtivador->addItem( "CemPorCem" );
 }
 
 JanelaViewportWindow::~JanelaViewportWindow() {
@@ -68,10 +77,6 @@ void JanelaViewportWindow::on_criarWindow_pressed() {
 
     Janela *novaJanela = new Janela( nome, x, y, largura, altura );
     listaJanela.push_back( novaJanela );
-    if ( frame->hasJanelaAtiva() == false )
-    {
-        frame->setJanelaAtiva( novaJanela );
-    }
     ui->windowAtivador->addItem( nome );
     ui->windowNome->clear();
 }
@@ -98,7 +103,35 @@ void JanelaViewportWindow::on_windowAtivador_currentTextChanged(const QString &a
 
     if (novaJanela == nullptr) return;
 
-    listaJanela.push_back( novaJanela );
+    //qDebug() << "AHHHH";
     frame->setJanelaAtiva( novaJanela );
+    atualizar_display_valores_window( novaJanela );
 }
+
+void JanelaViewportWindow::on_viewportAtivador_currentTextChanged(const QString &arg1)
+{
+    Viewport *novaViewport = buscar_viewport(arg1);
+
+    if (novaViewport == nullptr) return;
+
+    frame->setViewportAtiva( novaViewport );
+    atualizar_display_valores_viewport( novaViewport );
+}
+
+void JanelaViewportWindow::atualizar_display_valores_window(Janela *window)
+{
+    ui->labelWindowCentro ->setText(tr("Centro: %1, %2").arg( window->getCentro().x ).arg( window->getCentro().y ));
+    ui->labelWindowLargura->setText(tr("Largura: %1")   .arg( window->getLargura()));
+    ui->labelWindowAltura ->setText(tr("Altura: %1")    .arg( window->getAltura()));
+    ui->labelWindowAngulo ->setText(tr("Angulo: %1º")   .arg( window->getAngulo()));
+}
+
+void JanelaViewportWindow::atualizar_display_valores_viewport(Viewport *viewport)
+{
+    ui->labelViewportCentro ->setText(tr("Centro: %1, %2").arg( viewport->getCentro().x ).arg( viewport->getCentro().y ));
+    ui->labelViewportLargura->setText(tr("Largura: %1")   .arg( viewport->getLargura()));
+    ui->labelViewportAltura ->setText(tr("Altura: %1")    .arg( viewport->getAltura()));
+}
+
+
 

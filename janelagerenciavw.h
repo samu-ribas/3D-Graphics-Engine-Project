@@ -27,6 +27,10 @@ private:
 
     Janela *buscar_window( QString nome );
 
+    void atualizar_display_valores_window(Janela *window);
+    void atualizar_display_valores_viewport(Viewport *viewport);
+
+
 public:
     explicit JanelaViewportWindow( QWidget *parent = nullptr, MeuFrame *frame = nullptr );
     ~JanelaViewportWindow();
@@ -35,6 +39,8 @@ private slots:
     void on_criarViewport_pressed();
     void on_criarWindow_pressed();
     void on_windowAtivador_currentTextChanged(const QString &arg1);
+
+    void on_viewportAtivador_currentTextChanged(const QString &arg1);
 };
 
 #endif // JANELAGERENCIAVW_H

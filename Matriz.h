@@ -20,6 +20,7 @@ public:
     Matriz operator*(const Matriz& outra) const;
     Coordenada operator*(const Coordenada& ponto) const;
 
+    void imprimir();
 };
 
 #endif // MATRIZ_H

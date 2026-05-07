@@ -4,7 +4,7 @@
 #include <cmath>
 #include <QMessageBox>
 //#include "forma.h"
-#include "janelagerenciavw.h"
+//#include "janelagerenciavw.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)

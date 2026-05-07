@@ -22,6 +22,10 @@ struct Coordenada {
     Coordenada operator- () const {
         return {-this->x, -this->y};
     }
+
+    Coordenada operator/ (const Coordenada& ponto) const {
+        return {this->x / ponto.x, this->y / ponto.y};
+    }
 };
 
 #endif // COORDENADA_H

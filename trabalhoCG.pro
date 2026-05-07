@@ -8,11 +8,12 @@ CONFIG += c++17
 
 SOURCES += \
     Matriz.cpp \
-    janela.cpp \
     janelagerenciavw.cpp \
     main.cpp \
     mainwindow.cpp \
-    meuframe.cpp
+    meuframe.cpp \
+    viewport.cpp \
+    window.cpp
 
 HEADERS += \
     Matriz.h \
@@ -21,11 +22,11 @@ HEADERS += \
     Reta.h \
     coordenada.h \
     forma.h \
-    janela.h \
     janelagerenciavw.h \
     mainwindow.h \
     meuframe.h \
-    viewport.h
+    viewport.h \
+    window.h
 
 FORMS += \
     janelagerenciavw.ui \

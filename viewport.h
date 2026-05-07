@@ -1,30 +1,28 @@
 #ifndef VIEWPORT_H
 #define VIEWPORT_H
 
-#include <list>
+//#include <list>
+#include <QString>
 #include "coordenada.h"
 
 class Viewport
 {
-private:
-    std::list<Coordenada> listaPonto;
+protected:
+    QString nome;
+    Coordenada centro = {0.0, 0.0};
+    double largura;
+    double altura;
 
 public:
-    Viewport( double largura, double altura )
-    {
-        listaPonto.push_back({0.0    , 0.0});
-        listaPonto.push_back({largura, 0.0});
-        listaPonto.push_back({0.0    , altura});
-        listaPonto.push_back({largura, altura});
-    }
+    Viewport( QString nome, double x, double y, double largura, double altura );
 
-    Coordenada getMin() {
-        return listaPonto.front();
-    }
-
-    Coordenada getMax() {
-        return listaPonto.back();
-    }
+    // Getters
+    Coordenada getCentro();
+    double getAltura();
+    double getLargura();
+    Coordenada getMin();
+    Coordenada getMax();
+    QString getNome();
 };
 
 #endif // VIEWPORT_H

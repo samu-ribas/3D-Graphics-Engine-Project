@@ -7,7 +7,7 @@
 
 #include "forma.h"
 #include "Matriz.h"
-#include "janela.h"
+#include "window.h"
 #include "viewport.h"
 //#include "coordenada.h"
 
@@ -38,6 +38,9 @@ public:
     void transladarObjeto( QString n, double dx, double dy );
     void escalarObjeto( QString n, double sx, double sy );
     void rotacionarObjeto( QString nome, double angulo, double x, double y, bool usarCentroide );
+
+    bool hasJanelaAtiva();
+    bool hasViewportAtiva();
 
     void setJanelaAtiva( Janela *novaJanela );
     void setViewportAtiva( Viewport *novaViewport );

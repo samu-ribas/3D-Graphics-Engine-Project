@@ -4,16 +4,22 @@
 #include "Reta.h"
 #include "Poligono.h"
 #include "Matriz.h"
+#include "janelagerenciavw.h"
+//#include <QDebug>
 
-MeuFrame::MeuFrame( QWidget *parent ) : QFrame( parent ) {}
+MeuFrame::MeuFrame( QWidget *parent ) : QFrame( parent ) {
+    JanelaViewportWindow *ahhhh = new JanelaViewportWindow(this, this);
+    ahhhh->show();
+
+}
 
 void MeuFrame:: adicionarPonto( QString name, double x, double y ){
-    displayFile.append( new Ponto( name ,x ,y ));
+    displayFile.append( new Ponto( name, x, y ));
     update();
 }
 
 void MeuFrame:: adicionarReta( QString name, double x1, double y1, double x2, double y2 ){
-    displayFile.append( new Reta( name, x1,y1,x2,y2 ));
+    displayFile.append( new Reta( name, x1, y1, x2, y2 ));
     update();
 }
 
@@ -95,25 +101,29 @@ bool MeuFrame::contemObjeto( const QString& nome ) const {
 void MeuFrame::atualizarTransformada() {
     if ( windowAtiva == nullptr || viewportAtiva == nullptr ) return;
 
-    Coordenada viewportMin = this->viewportAtiva->getMin();
-    Coordenada windowMin   = this->windowAtiva->getMin();
+    Janela   *window   = this->windowAtiva;
+    Viewport *viewport = this->viewportAtiva;
 
-    Matriz translacaoWindow = Matriz::gerarMatrizT( -windowMin );
+    //double distorcao = (double)this->width() / (double)this->height();
 
-    Coordenada viewportMax = this->viewportAtiva->getMin();
-    Coordenada windowMax   = this->windowAtiva->getMin();
-    Matriz escala = Matriz::gerarMatrizE(
-        ( windowMax.x - windowMin.x ) / ( viewportMax.x - viewportMin.x ),
-        ( windowMax.y - windowMin.y ) / ( viewportMax.y - viewportMin.y )
-    );
+    Matriz translacaoWindow = Matriz::gerarMatrizT( -window->getCentro() );
 
-    Matriz translacaoViewport = Matriz::gerarMatrizT( viewportMin );
+    /*Matriz escala = Matriz::gerarMatrizE(
+        ( window->getLargura() ) / ( viewport->getLargura() ),
+        ( window->getAltura() ) / ( viewport->getAltura() )
+    );*/
 
-    transdormadaViewport = translacaoWindow * escala * translacaoViewport;
+   //Matriz rotacao = Matriz::gerarMatrizR( window->getAngulo() );
+
+    //Matriz translacaoViewport = Matriz::gerarMatrizT( viewport->getCentro() );
+
+    //transdormadaViewport = translacaoWindow * escala * translacaoViewport;
+    transdormadaViewport = translacaoWindow;
 
     for ( Forma* obj : std::as_const( displayFile )) {
         obj->atualizarCoordenadaScn( transdormadaViewport );
     }
+    this->update();
 }
 
 void MeuFrame::setJanelaAtiva( Janela *novaJanela ) {
@@ -128,6 +138,15 @@ void MeuFrame::setViewportAtiva( Viewport *novaViewport ) {
 
     this->viewportAtiva = novaViewport;
     atualizarTransformada();
+}
+
+bool MeuFrame::hasJanelaAtiva() {
+    if ( this->windowAtiva != nullptr ) return true;
+    return false;
+}
+bool MeuFrame::hasViewportAtiva() {
+    if ( this->viewportAtiva != nullptr ) return true;
+    return false;
 }
 
 MeuFrame::~MeuFrame() {

@@ -18,7 +18,6 @@ protected:
     QString nome;
     TipoForma o_tipo;
     std::list<Coordenada> p;
-    std::list<Coordenada> listaCodScn;
     Forma(QString n, TipoForma tipo) : nome(n), o_tipo(tipo){}
 
 public:
@@ -26,7 +25,7 @@ public:
     virtual ~Forma() {}
 
     virtual void desenhar(QPainter &painter) = 0;
-    virtual void aplicarTransformacao(const Matriz& m) = 0;
+    virtual void aplicarTransformacao(const Matriz& m, const Matriz& m2) = 0;
     virtual void atualizarCoordenadaScn(const Matriz& m) = 0;
 
     Coordenada getCentroide() const { // retorna o centroide do objeto
@@ -34,7 +33,7 @@ public:
         if(p.empty())
             return {0.0, 0.0};
 
-        for(const auto& pt : p){
+        for (const auto& pt : p){
             cx += pt.x;
             cy += pt.y;
         }

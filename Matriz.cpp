@@ -66,7 +66,7 @@ Matriz Matriz::operator*(const Matriz& m2) const{
 }
 
 Coordenada Matriz::operator*(const Coordenada& ponto) const{
-    Coordenada resultado;
+    Coordenada resultado = {0.0, 0.0};
     resultado.x = (this->m[0][0] * ponto.x) + (this->m[0][1] * ponto.y) + (this->m[0][2] * 1.0);
     resultado.y = (this->m[1][0] * ponto.x) + (this->m[1][1] * ponto.y) + (this->m[1][2] * 1.0);
     return resultado;

@@ -3,7 +3,7 @@
 #include <list>
 #include <cmath>
 #include <QMessageBox>
-#include "forma.h"
+//#include "forma.h"
 #include "janelagerenciavw.h"
 
 MainWindow::MainWindow(QWidget *parent)
@@ -17,9 +17,6 @@ MainWindow::MainWindow(QWidget *parent)
 
     connect(ui->Bt_add_forma, &QPushButton::clicked, this, &MainWindow::inputCoordenadas);
     connect(ui->bt_op, &QPushButton::clicked, this, &MainWindow::inputOperacao);
-
-    JanelaViewportWindow *ahhhh = new JanelaViewportWindow(this);
-    ahhhh->show();
 }
 
 void MainWindow::inputOperacao(){

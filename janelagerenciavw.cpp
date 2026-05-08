@@ -149,8 +149,8 @@ void JanelaViewportWindow::on_viewportAumentar_pressed()
     Viewport *viewportAtual = buscar_viewport(ui->viewportAtivador->currentText());
     double valor = ui->viewportValorTranformacao->value();
 
-    viewportAtual->setLargura( viewportAtual->getLargura() + valor );
-    viewportAtual->setAltura( viewportAtual->getAltura() + valor );
+    viewportAtual->setLargura( viewportAtual->getLargura() * 2 );
+    viewportAtual->setAltura( viewportAtual->getAltura() * 2 );
 
     frame->atualizarTransformada();
     atualizar_display_valores_viewport( viewportAtual );
@@ -161,38 +161,12 @@ void JanelaViewportWindow::on_viewportDiminuir_pressed()
     Viewport *viewportAtual = buscar_viewport(ui->viewportAtivador->currentText());
     double valor = ui->viewportValorTranformacao->value();
 
-    viewportAtual->setLargura( viewportAtual->getLargura() - valor );
-    viewportAtual->setAltura( viewportAtual->getAltura() - valor );
+    viewportAtual->setLargura( viewportAtual->getLargura() / 2 );
+    viewportAtual->setAltura( viewportAtual->getAltura() / 2 );
 
     frame->atualizarTransformada();
     atualizar_display_valores_viewport( viewportAtual );
 }
-
-void JanelaViewportWindow::on_windowDiminuir_pressed()
-{
-    Janela *windowAtual = buscar_window(ui->windowAtivador->currentText());
-    double valor = ui->windowValorTranformacao->value();
-
-    windowAtual->setLargura( windowAtual->getLargura() - valor );
-    windowAtual->setAltura( windowAtual->getAltura() - valor );
-
-    frame->atualizarTransformada();
-    atualizar_display_valores_window( windowAtual );
-}
-
-
-void JanelaViewportWindow::on_windowAumentarTamanho_pressed()
-{
-    Janela *windowAtual = buscar_window(ui->windowAtivador->currentText());
-    double valor = ui->windowValorTranformacao->value();
-
-    windowAtual->setLargura( windowAtual->getLargura() + valor );
-    windowAtual->setAltura( windowAtual->getAltura() + valor );
-
-    frame->atualizarTransformada();
-    atualizar_display_valores_window( windowAtual );
-}
-
 
 void JanelaViewportWindow::on_viewportEsquerda_pressed()
 {
@@ -263,5 +237,99 @@ void JanelaViewportWindow::on_viewportRotacaHorario_pressed()
 
     frame->atualizarTransformada();
     atualizar_display_valores_viewport( viewportAtual );
+}
+
+void JanelaViewportWindow::on_windowDiminuir_pressed()
+{
+    Janela *windowAtual = buscar_window(ui->windowAtivador->currentText());
+    double valor = ui->windowValorTranformacao->value();
+
+    windowAtual->setLargura( windowAtual->getLargura() / 2 );
+    windowAtual->setAltura( windowAtual->getAltura() / 2 );
+
+    frame->atualizarTransformada();
+    atualizar_display_valores_window( windowAtual );
+}
+
+
+void JanelaViewportWindow::on_windowAumentarTamanho_pressed()
+{
+    Janela *windowAtual = buscar_window(ui->windowAtivador->currentText());
+    double valor = ui->windowValorTranformacao->value();
+
+    windowAtual->setLargura( windowAtual->getLargura() * 2 );
+    windowAtual->setAltura( windowAtual->getAltura() * 2 );
+
+    frame->atualizarTransformada();
+    atualizar_display_valores_window( windowAtual );
+}
+
+void JanelaViewportWindow::on_windowSubir_pressed()
+{
+    Janela *windowAtual = buscar_window(ui->windowAtivador->currentText());
+    double valor = ui->windowValorTranformacao->value();
+
+    windowAtual->setCentro({windowAtual->getCentro().x, windowAtual->getCentro().y - valor});
+
+    frame->atualizarTransformada();
+    atualizar_display_valores_window( windowAtual );
+}
+
+void JanelaViewportWindow::on_windowDecer_pressed()
+{
+    Janela *windowAtual = buscar_window(ui->windowAtivador->currentText());
+    double valor = ui->windowValorTranformacao->value();
+
+    windowAtual->setCentro({windowAtual->getCentro().x, windowAtual->getCentro().y + valor});
+
+    frame->atualizarTransformada();
+    atualizar_display_valores_window( windowAtual );
+}
+
+void JanelaViewportWindow::on_windowDireita_pressed()
+{
+    Janela *windowAtual = buscar_window(ui->windowAtivador->currentText());
+    double valor = ui->windowValorTranformacao->value();
+
+    windowAtual->setCentro({windowAtual->getCentro().x + valor, windowAtual->getCentro().y});
+
+    frame->atualizarTransformada();
+    atualizar_display_valores_window( windowAtual );
+}
+
+
+void JanelaViewportWindow::on_windowEsquerda_pressed()
+{
+    Janela *windowAtual = buscar_window(ui->windowAtivador->currentText());
+    double valor = ui->windowValorTranformacao->value();
+
+    windowAtual->setCentro({windowAtual->getCentro().x - valor, windowAtual->getCentro().y});
+
+    frame->atualizarTransformada();
+    atualizar_display_valores_window( windowAtual );
+}
+
+
+void JanelaViewportWindow::on_windowRotacaAntihorario_pressed()
+{
+    Janela *windowAtual = buscar_window(ui->windowAtivador->currentText());
+    double valor = ui->windowValorTranformacao->value();
+
+    windowAtual->setAngulo( windowAtual->getAngulo() - valor );
+
+    frame->atualizarTransformada();
+    atualizar_display_valores_window( windowAtual );
+}
+
+
+void JanelaViewportWindow::on_windowRotacaHorario_pressed()
+{
+    Janela *windowAtual = buscar_window(ui->windowAtivador->currentText());
+    double valor = ui->windowValorTranformacao->value();
+
+    windowAtual->setAngulo( windowAtual->getAngulo() + valor );
+
+    frame->atualizarTransformada();
+    atualizar_display_valores_window( windowAtual );
 }
 

@@ -14,19 +14,19 @@ MeuFrame::MeuFrame( QWidget *parent ) : QFrame( parent ) {
 
 void MeuFrame:: adicionarPonto( QString name, double x, double y ){
     displayFile.append( new Ponto( name, x, y ));
-    atualizarTransformada();
+    //atualizarTransformada();
     update();
 }
 
 void MeuFrame:: adicionarReta( QString name, double x1, double y1, double x2, double y2 ){
     displayFile.append( new Reta( name, x1, y1, x2, y2 ));
-    atualizarTransformada();
+    //atualizarTransformada();
     update();
 }
 
 void MeuFrame:: adicionarPoligono( QString name, std::list<Coordenada> pontos ){
     displayFile.append( new Poligono( name, pontos ));
-    atualizarTransformada();
+    //atualizarTransformada();
     update();
 }
 
@@ -127,11 +127,11 @@ void MeuFrame::atualizarTransformada() {
 
     Matriz rotacaoWindow = Matriz::gerarMatrizR( -window->getAngulo() );
 
-    Matriz rotacaoViewport = Matriz::gerarMatrizR( viewport->getAngulo() );
+    //Matriz rotacaoViewport = Matriz::gerarMatrizR( viewport->getAngulo() );
 
     Matriz translacaoViewport = Matriz::gerarMatrizT( viewport->getCentro() );
 
-    this->transdormadaViewport = translacaoViewport * rotacaoViewport * rotacaoWindow * escala * translacaoWindow;
+    this->transdormadaViewport = translacaoViewport * rotacaoWindow * escala * translacaoWindow;
     this->transdormadaViewport.imprimir();
 
     for ( Forma* obj : std::as_const( displayFile )) {

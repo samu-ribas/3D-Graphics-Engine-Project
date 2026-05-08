@@ -20,7 +20,7 @@ public:
             Coordenada p1 = *it;
             it++;
             Coordenada p2 = *it;
-            painter.drawLine(QLineF(p1.x, p1.y, p2.x, p2.y));
+            painter.drawLine(QLineF(p1.xScn, p1.yScn, p2.xScn, p2.yScn));
         }
     }
 

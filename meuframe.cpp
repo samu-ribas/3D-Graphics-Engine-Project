@@ -14,22 +14,34 @@ MeuFrame::MeuFrame( QWidget *parent ) : QFrame( parent ) {
 
 void MeuFrame:: adicionarPonto( QString name, double x, double y ){
     displayFile.append( new Ponto( name, x, y ));
+    atualizarTransformada();
     update();
 }
 
 void MeuFrame:: adicionarReta( QString name, double x1, double y1, double x2, double y2 ){
     displayFile.append( new Reta( name, x1, y1, x2, y2 ));
+    atualizarTransformada();
     update();
 }
 
 void MeuFrame:: adicionarPoligono( QString name, std::list<Coordenada> pontos ){
     displayFile.append( new Poligono( name, pontos ));
+    atualizarTransformada();
     update();
 }
 
 void MeuFrame::paintEvent( QPaintEvent *event ){
     QFrame::paintEvent( event );
     QPainter painter( this );
+    QPen caneta(Qt::gray, 3, Qt::SolidLine, Qt::RoundCap);
+    painter.setPen(caneta);
+
+    painter.drawRect(
+        viewportAtiva->getMin().x,
+        viewportAtiva->getMin().y,
+        viewportAtiva->getLargura(),
+        viewportAtiva->getAltura()
+    );
 
     for( Forma* df : std::as_const( displayFile ))
         df->desenhar( painter );
@@ -104,27 +116,23 @@ void MeuFrame::atualizarTransformada() {
     Janela   *window   = this->windowAtiva;
     Viewport *viewport = this->viewportAtiva;
 
-    //Coordenada ratio = wCentro / vCentro;
-
     //double distorcao = (double)this->width() / (double)this->height();
 
     Matriz translacaoWindow = Matriz::gerarMatrizT( -window->getCentro() );
-   // translacaoWindow.imprimir();
 
     Matriz escala =Matriz::gerarMatrizE(
         (viewport->getLargura()) / (window->getLargura()),
-        (viewport->getAltura()) / (window->getAltura()));
-    //escala.imprimir();
+        (viewport->getAltura()) / (window->getAltura())
+    );
 
-    //Matriz rotacao = Matriz::gerarMatrizR( window->getAngulo() );
+    Matriz rotacaoWindow = Matriz::gerarMatrizR( -window->getAngulo() );
+
+    Matriz rotacaoViewport = Matriz::gerarMatrizR( viewport->getAngulo() );
 
     Matriz translacaoViewport = Matriz::gerarMatrizT( viewport->getCentro() );
-    //translacaoViewport.imprimir();
 
-    this->transdormadaViewport = translacaoViewport * escala * translacaoWindow;
+    this->transdormadaViewport = translacaoViewport * rotacaoViewport * rotacaoWindow * escala * translacaoWindow;
     this->transdormadaViewport.imprimir();
-
-    //this->transdormadaViewport = transformada;
 
     for ( Forma* obj : std::as_const( displayFile )) {
         obj->atualizarCoordenadaScn( this->transdormadaViewport );

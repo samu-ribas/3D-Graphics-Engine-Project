@@ -22,8 +22,6 @@ private:
 
     Matriz transdormadaViewport;
 
-    void atualizarTransformada();
-
 protected:
     void paintEvent( QPaintEvent *event ) override;
 
@@ -44,6 +42,8 @@ public:
 
     void setJanelaAtiva( Janela *novaJanela );
     void setViewportAtiva( Viewport *novaViewport );
+
+    void atualizarTransformada();
 
     bool contemObjeto( const QString& nome ) const;
 };

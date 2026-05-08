@@ -21,7 +21,7 @@ public:
         auto next = std::next(it);
 
         while(next != p.end()){
-            painter.drawLine(QLineF(it->x, it->y, next->x, next->y));
+            painter.drawLine(QLineF(it->xScn, it->yScn, next->xScn, next->yScn));
             it++;
             next++;
         }
@@ -39,11 +39,6 @@ public:
     }
 
     void atualizarCoordenadaScn(const Matriz& m) override{
-        auto pontoScn = p.begin();
-        for(Coordenada& vertice : this->p){
-            vertice = m * vertice;
-            pontoScn++;
-        }
 
         for(Coordenada& vertice : this->p){
             Coordenada resultado;

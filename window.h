@@ -7,14 +7,9 @@
 
 class Janela : public Viewport
 {
-private:
-    double angulo;
-
 public:
     Janela( QString nome, double x, double y, double largura, double altura );
 
-    // Getters
-    double getAngulo();
 };
 
 #endif // WINDOW_H

@@ -22,8 +22,17 @@ JanelaViewportWindow::JanelaViewportWindow( QWidget *parent, MeuFrame *frame )
     );
     frame->setViewportAtiva( padraoV );
     listaViewport.push_back( padraoV );
+    ui->viewportAtivador->addItem( "Padrao" );
     atualizar_display_valores_viewport(padraoV);
 
+    padraoV = new Viewport(
+        "CemPorCem",
+        50, 50,
+        100,
+        100
+        );
+    listaViewport.push_back( padraoV );
+    ui->viewportAtivador->addItem( "CemPorCem" );
 
     Janela *padraoW = new Janela(
         "Padrao",
@@ -131,7 +140,128 @@ void JanelaViewportWindow::atualizar_display_valores_viewport(Viewport *viewport
     ui->labelViewportCentro ->setText(tr("Centro: %1, %2").arg( viewport->getCentro().x ).arg( viewport->getCentro().y ));
     ui->labelViewportLargura->setText(tr("Largura: %1")   .arg( viewport->getLargura()));
     ui->labelViewportAltura ->setText(tr("Altura: %1")    .arg( viewport->getAltura()));
+    ui->labelViewportAngulo ->setText(tr("Angulo: %1º")   .arg( viewport->getAngulo()));
 }
 
 
+void JanelaViewportWindow::on_viewportAumentar_pressed()
+{
+    Viewport *viewportAtual = buscar_viewport(ui->viewportAtivador->currentText());
+    double valor = ui->viewportValorTranformacao->value();
+
+    viewportAtual->setLargura( viewportAtual->getLargura() + valor );
+    viewportAtual->setAltura( viewportAtual->getAltura() + valor );
+
+    frame->atualizarTransformada();
+    atualizar_display_valores_viewport( viewportAtual );
+}
+
+void JanelaViewportWindow::on_viewportDiminuir_pressed()
+{
+    Viewport *viewportAtual = buscar_viewport(ui->viewportAtivador->currentText());
+    double valor = ui->viewportValorTranformacao->value();
+
+    viewportAtual->setLargura( viewportAtual->getLargura() - valor );
+    viewportAtual->setAltura( viewportAtual->getAltura() - valor );
+
+    frame->atualizarTransformada();
+    atualizar_display_valores_viewport( viewportAtual );
+}
+
+void JanelaViewportWindow::on_windowDiminuir_pressed()
+{
+    Janela *windowAtual = buscar_window(ui->windowAtivador->currentText());
+    double valor = ui->windowValorTranformacao->value();
+
+    windowAtual->setLargura( windowAtual->getLargura() - valor );
+    windowAtual->setAltura( windowAtual->getAltura() - valor );
+
+    frame->atualizarTransformada();
+    atualizar_display_valores_window( windowAtual );
+}
+
+
+void JanelaViewportWindow::on_windowAumentarTamanho_pressed()
+{
+    Janela *windowAtual = buscar_window(ui->windowAtivador->currentText());
+    double valor = ui->windowValorTranformacao->value();
+
+    windowAtual->setLargura( windowAtual->getLargura() + valor );
+    windowAtual->setAltura( windowAtual->getAltura() + valor );
+
+    frame->atualizarTransformada();
+    atualizar_display_valores_window( windowAtual );
+}
+
+
+void JanelaViewportWindow::on_viewportEsquerda_pressed()
+{
+    Viewport *viewportAtual = buscar_viewport(ui->viewportAtivador->currentText());
+    double valor = ui->viewportValorTranformacao->value();
+
+    viewportAtual->setCentro({viewportAtual->getCentro().x - valor, viewportAtual->getCentro().y});
+
+    frame->atualizarTransformada();
+    atualizar_display_valores_viewport( viewportAtual );
+}
+
+
+void JanelaViewportWindow::on_viewportDireita_pressed()
+{
+    Viewport *viewportAtual = buscar_viewport(ui->viewportAtivador->currentText());
+    double valor = ui->viewportValorTranformacao->value();
+
+    viewportAtual->setCentro({viewportAtual->getCentro().x + valor, viewportAtual->getCentro().y});
+
+    frame->atualizarTransformada();
+    atualizar_display_valores_viewport( viewportAtual );
+}
+
+
+void JanelaViewportWindow::on_viewportSubir_pressed()
+{
+    Viewport *viewportAtual = buscar_viewport(ui->viewportAtivador->currentText());
+    double valor = ui->viewportValorTranformacao->value();
+
+    viewportAtual->setCentro({viewportAtual->getCentro().x, viewportAtual->getCentro().y - valor});
+
+    frame->atualizarTransformada();
+    atualizar_display_valores_viewport( viewportAtual );
+}
+
+
+void JanelaViewportWindow::on_viewportDecer_pressed()
+{
+    Viewport *viewportAtual = buscar_viewport(ui->viewportAtivador->currentText());
+    double valor = ui->viewportValorTranformacao->value();
+
+    viewportAtual->setCentro({viewportAtual->getCentro().x, viewportAtual->getCentro().y + valor});
+
+    frame->atualizarTransformada();
+    atualizar_display_valores_viewport( viewportAtual );
+}
+
+
+void JanelaViewportWindow::on_viewportRotacaAntihorario_pressed()
+{
+    Viewport *viewportAtual = buscar_viewport(ui->viewportAtivador->currentText());
+    double valor = ui->viewportValorTranformacao->value();
+
+    viewportAtual->setAngulo( viewportAtual->getAngulo() + valor );
+
+    frame->atualizarTransformada();
+    atualizar_display_valores_viewport( viewportAtual );
+}
+
+
+void JanelaViewportWindow::on_viewportRotacaHorario_pressed()
+{
+    Viewport *viewportAtual = buscar_viewport(ui->viewportAtivador->currentText());
+    double valor = ui->viewportValorTranformacao->value();
+
+    viewportAtual->setAngulo( viewportAtual->getAngulo() - valor );
+
+    frame->atualizarTransformada();
+    atualizar_display_valores_viewport( viewportAtual );
+}
 

@@ -5,6 +5,7 @@
 #include <QVector>
 #include <QPoint>
 
+#include "viewport.h"
 #include "coordenada.h"
 
 class Matriz;
@@ -24,7 +25,7 @@ public:
 
     virtual ~Forma() {}
 
-    virtual void desenhar(QPainter &painter) = 0;
+    virtual void desenhar(QPainter &painter, Viewport viewport) = 0;
     virtual void aplicarTransformacao(const Matriz& m, const Matriz& m2) = 0;
     virtual void atualizarCoordenadaScn(const Matriz& m) = 0;
 

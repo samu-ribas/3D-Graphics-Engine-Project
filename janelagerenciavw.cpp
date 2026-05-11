@@ -140,14 +140,14 @@ void JanelaViewportWindow::atualizar_display_valores_viewport(Viewport *viewport
     ui->labelViewportCentro ->setText(tr("Centro: %1, %2").arg( viewport->getCentro().x ).arg( viewport->getCentro().y ));
     ui->labelViewportLargura->setText(tr("Largura: %1")   .arg( viewport->getLargura()));
     ui->labelViewportAltura ->setText(tr("Altura: %1")    .arg( viewport->getAltura()));
-    ui->labelViewportAngulo ->setText(tr("Angulo: %1º")   .arg( viewport->getAngulo()));
+    //ui->labelViewportAngulo ->setText(tr("Angulo: %1º")   .arg( viewport->getAngulo()));
 }
 
 
 void JanelaViewportWindow::on_viewportAumentar_pressed()
 {
     Viewport *viewportAtual = buscar_viewport(ui->viewportAtivador->currentText());
-    double valor = ui->viewportValorTranformacao->value();
+    //double valor = ui->viewportValorTranformacao->value();
 
     viewportAtual->setLargura( viewportAtual->getLargura() * 2 );
     viewportAtual->setAltura( viewportAtual->getAltura() * 2 );
@@ -159,7 +159,7 @@ void JanelaViewportWindow::on_viewportAumentar_pressed()
 void JanelaViewportWindow::on_viewportDiminuir_pressed()
 {
     Viewport *viewportAtual = buscar_viewport(ui->viewportAtivador->currentText());
-    double valor = ui->viewportValorTranformacao->value();
+    //double valor = ui->viewportValorTranformacao->value();
 
     viewportAtual->setLargura( viewportAtual->getLargura() / 2 );
     viewportAtual->setAltura( viewportAtual->getAltura() / 2 );
@@ -242,7 +242,7 @@ void JanelaViewportWindow::on_viewportRotacaHorario_pressed()
 void JanelaViewportWindow::on_windowDiminuir_pressed()
 {
     Janela *windowAtual = buscar_window(ui->windowAtivador->currentText());
-    double valor = ui->windowValorTranformacao->value();
+    //double valor = ui->windowValorTranformacao->value();
 
     windowAtual->setLargura( windowAtual->getLargura() / 2 );
     windowAtual->setAltura( windowAtual->getAltura() / 2 );
@@ -255,7 +255,7 @@ void JanelaViewportWindow::on_windowDiminuir_pressed()
 void JanelaViewportWindow::on_windowAumentarTamanho_pressed()
 {
     Janela *windowAtual = buscar_window(ui->windowAtivador->currentText());
-    double valor = ui->windowValorTranformacao->value();
+    //double valor = ui->windowValorTranformacao->value();
 
     windowAtual->setLargura( windowAtual->getLargura() * 2 );
     windowAtual->setAltura( windowAtual->getAltura() * 2 );

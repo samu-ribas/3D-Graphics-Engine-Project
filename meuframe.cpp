@@ -38,7 +38,7 @@ void MeuFrame::paintEvent( QPaintEvent *event ){
     QPainter painter( this );
 
     // Se a caneta para desenhar a borda
-    QPen caneta(Qt::gray, 3, Qt::SolidLine, Qt::RoundCap);
+    QPen caneta(Qt::gray, 1, Qt::SolidLine, Qt::RoundCap);
     painter.setPen(caneta);
 
     // Desenha a borda da viewport (para debug)
@@ -53,7 +53,7 @@ void MeuFrame::paintEvent( QPaintEvent *event ){
 
     // Desenha todos os objetos
     for( Forma* df : std::as_const( displayFile ))
-        df->desenhar( painter );
+        df->desenhar( painter, *viewportAtiva);
 }
 
 void MeuFrame::transladarObjeto( QString n, double dx, double dy ){

@@ -12,10 +12,15 @@ public:
         p.push_back({x,y});
     }
 
-    void desenhar(QPainter &painter) override{
+    void desenhar(QPainter &painter, Viewport viewport) override{
         if (p.empty()) return;
 
-        QPen caneta(Qt::white, 5, Qt::SolidLine, Qt::RoundCap);
+        if ( p.front().xScn < viewport.getMin().x || p.front().xScn > viewport.getMax().x || p.front().yScn < viewport.getMin().y || p.front().yScn > viewport.getMax().y)
+        {
+            return;
+        }
+
+        QPen caneta(Qt::white, 3, Qt::SolidLine, Qt::RoundCap);
         painter.setPen(caneta);
 
         Coordenada coordenada = p.front();

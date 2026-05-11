@@ -11,8 +11,8 @@ public:
         this->p = vertices;
     }
 
-    void desenhar(QPainter &painter) override{
-        QPen caneta(Qt::white, 5);
+    void desenhar(QPainter &painter, Viewport viewport) override{
+        QPen caneta(Qt::white, 1);
         painter.setPen(caneta);
 
         if(p.size()<2) return;

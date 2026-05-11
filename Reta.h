@@ -12,8 +12,8 @@ public:
         p.push_back({x2, y2});
     }
 
-    void desenhar(QPainter &painter) override{
-        QPen caneta(Qt::white, 5);
+    void desenhar(QPainter &painter, Viewport viewport) override{
+        QPen caneta(Qt::white, 1);
         painter.setPen(caneta);
         auto it = p.begin();
         if(p.size()>=2){

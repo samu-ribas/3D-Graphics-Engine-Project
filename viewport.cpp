@@ -16,29 +16,21 @@ Viewport::Viewport( QString nome, double x, double y, double largura, double alt
     this->angulo = angulo;
 }
 
-Coordenada Viewport::getCentro() {
-    return this->centro;
-}
+Coordenada Viewport::getCentro() { return this->centro; }
 
-double Viewport::getAltura() {
-    return this->altura;
-}
+double Viewport::getAltura() { return this->altura; }
 
-double Viewport::getLargura() {
-    return this->largura;
-}
+double Viewport::getLargura() { return this->largura; }
 
-Coordenada Viewport::getMin() {
-    return {centro.x - (largura / 2), centro.y - (altura / 2)};
-}
+Coordenada Viewport::getMin() { return {centro.x - (largura / 2), centro.y - (altura / 2)}; }
 
-Coordenada Viewport::getMax() {
-    return {centro.x + (largura / 2), centro.y + (altura / 2)};
-}
+Coordenada Viewport::getMax() { return {centro.x + (largura / 2), centro.y + (altura / 2)}; }
 
-double Viewport::getAngulo() {
-    return this->angulo;
-}
+double Viewport::getAngulo() { return this->angulo; }
+
+
+
+
 
 void Viewport::setCentro( Coordenada centro ) {
     this->centro = centro;

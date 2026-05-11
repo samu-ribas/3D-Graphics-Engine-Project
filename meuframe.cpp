@@ -13,28 +13,36 @@ MeuFrame::MeuFrame( QWidget *parent ) : QFrame( parent ) {
 }
 
 void MeuFrame:: adicionarPonto( QString name, double x, double y ){
-    displayFile.append( new Ponto( name, x, y ));
-    //atualizarTransformada();
+    Ponto *novo_ponto = new Ponto( name, x, y );
+    displayFile.append( novo_ponto );
+    novo_ponto->atualizarCoordenadaScn( transdormadaViewport );
     update();
 }
 
 void MeuFrame:: adicionarReta( QString name, double x1, double y1, double x2, double y2 ){
-    displayFile.append( new Reta( name, x1, y1, x2, y2 ));
-    //atualizarTransformada();
+    Reta *nova_reta = new Reta( name, x1, y1, x2, y2 );
+    displayFile.append( nova_reta );
+    nova_reta->atualizarCoordenadaScn( transdormadaViewport );
     update();
 }
 
 void MeuFrame:: adicionarPoligono( QString name, std::list<Coordenada> pontos ){
-    displayFile.append( new Poligono( name, pontos ));
-    //atualizarTransformada();
+    Poligono *novo_poligono = new Poligono( name, pontos );
+    displayFile.append( novo_poligono );
+    novo_poligono->atualizarCoordenadaScn( transdormadaViewport );
     update();
 }
 
 void MeuFrame::paintEvent( QPaintEvent *event ){
     QFrame::paintEvent( event );
     QPainter painter( this );
+
+    // Se a caneta para desenhar a borda
     QPen caneta(Qt::gray, 3, Qt::SolidLine, Qt::RoundCap);
     painter.setPen(caneta);
+
+    // Desenha a borda da viewport (para debug)
+
 
     painter.drawRect(
         viewportAtiva->getMin().x,
@@ -43,6 +51,7 @@ void MeuFrame::paintEvent( QPaintEvent *event ){
         viewportAtiva->getAltura()
     );
 
+    // Desenha todos os objetos
     for( Forma* df : std::as_const( displayFile ))
         df->desenhar( painter );
 }

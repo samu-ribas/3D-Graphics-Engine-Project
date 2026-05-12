@@ -10,6 +10,8 @@
 
 class Matriz;
 
+
+
 //conjunto de constantes
 enum class TipoForma{PONTO, RETA, POLIGONO};
 
@@ -25,9 +27,9 @@ public:
 
     virtual ~Forma() {}
 
-    virtual void desenhar(QPainter &painter, Viewport viewport) = 0;
-    virtual void aplicarTransformacao(const Matriz& m, const Matriz& m2) = 0;
-    virtual void atualizarCoordenadaScn(const Matriz& m) = 0;
+    virtual void desenhar(QPainter &painter) = 0;
+    virtual void aplicarTransformacao(const Matriz& m) = 0;
+    virtual void atualizarCoordenadaScn(const Matriz& m, Viewport viewport) = 0;
 
     Coordenada getCentroide() const { // retorna o centroide do objeto
         double cx = 0.0, cy = 0.0;

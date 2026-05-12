@@ -12,16 +12,13 @@ public:
         p.push_back({x,y});
     }
 
-    void desenhar(QPainter &painter, Viewport viewport) override{
-        if (p.empty()) return;
-
-        if ( p.front().xScn < viewport.getMin().x || p.front().xScn > viewport.getMax().x || p.front().yScn < viewport.getMin().y || p.front().yScn > viewport.getMax().y)
-        {
-            return;
-        }
+    void desenhar( QPainter &painter ) override{
+        if ( p.empty() ) return;
 
         QPen caneta(Qt::white, 3, Qt::SolidLine, Qt::RoundCap);
         painter.setPen(caneta);
+
+        if ( !( p.front().pos.none() )) return;
 
         Coordenada coordenada = p.front();
 
@@ -31,18 +28,25 @@ public:
         painter.drawPoint(coordenada.xScn, coordenada.yScn);
     }
 
-    void aplicarTransformacao(const Matriz& m, const Matriz& m2) override{
+    void aplicarTransformacao( const Matriz& m ) override{
         p.front() = m * p.front();
-
-        atualizarCoordenadaScn( m2 );
     }
 
-    void atualizarCoordenadaScn(const Matriz& m) override{
+    void atualizarCoordenadaScn(const Matriz& m, Viewport viewport) override{
         Coordenada resultado;
         resultado = m * p.front();
         qDebug() << resultado.x << resultado.y;
+
         p.front().xScn = resultado.x;
         p.front().yScn = resultado.y;
+
+        if ( p.front().xScn < viewport.getMin().x ||
+             p.front().xScn > viewport.getMax().x ||
+             p.front().yScn < viewport.getMin().y ||
+             p.front().yScn > viewport.getMax().y )
+            p.front().pos.set();
+        else
+            p.front().pos.reset();
     }
 };
 

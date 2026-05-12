@@ -80,7 +80,3 @@ void Matriz::imprimir()
         qDebug() << this->m[i][0] << this->m[i][1] << this->m[i][2];
     }
 }
-
-
-
-

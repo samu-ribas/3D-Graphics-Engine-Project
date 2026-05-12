@@ -11,7 +11,7 @@ public:
         this->p = vertices;
     }
 
-    void desenhar(QPainter &painter, Viewport viewport) override{
+    void desenhar(QPainter &painter) override{
         QPen caneta(Qt::white, 1);
         painter.setPen(caneta);
 
@@ -30,15 +30,13 @@ public:
         painter.drawLine(QLineF(ultimo.xScn, ultimo.yScn, primeiro.xScn, primeiro.yScn));
     }
 
-    void aplicarTransformacao(const Matriz& m, const Matriz& m2) override{
+    void aplicarTransformacao( const Matriz& m ) override{
         for(Coordenada& vertice : this->p){
             vertice = m * vertice;
         }
-
-        atualizarCoordenadaScn( m2 );
     }
 
-    void atualizarCoordenadaScn(const Matriz& m) override{
+    void atualizarCoordenadaScn( const Matriz& m, Viewport viewport ) override{
 
         for(Coordenada& vertice : this->p){
             Coordenada resultado;

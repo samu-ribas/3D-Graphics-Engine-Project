@@ -15,21 +15,21 @@ MeuFrame::MeuFrame( QWidget *parent ) : QFrame( parent ) {
 void MeuFrame:: adicionarPonto( QString name, double x, double y ){
     Ponto *novo_ponto = new Ponto( name, x, y );
     displayFile.append( novo_ponto );
-    novo_ponto->atualizarCoordenadaScn( transdormadaViewport );
+    novo_ponto->atualizarCoordenadaScn( transdormadaViewport, *viewportAtiva );
     update();
 }
 
 void MeuFrame:: adicionarReta( QString name, double x1, double y1, double x2, double y2 ){
     Reta *nova_reta = new Reta( name, x1, y1, x2, y2 );
     displayFile.append( nova_reta );
-    nova_reta->atualizarCoordenadaScn( transdormadaViewport );
+    nova_reta->atualizarCoordenadaScn( transdormadaViewport, *viewportAtiva );
     update();
 }
 
 void MeuFrame:: adicionarPoligono( QString name, std::list<Coordenada> pontos ){
     Poligono *novo_poligono = new Poligono( name, pontos );
     displayFile.append( novo_poligono );
-    novo_poligono->atualizarCoordenadaScn( transdormadaViewport );
+    novo_poligono->atualizarCoordenadaScn( transdormadaViewport, *viewportAtiva );
     update();
 }
 
@@ -53,14 +53,15 @@ void MeuFrame::paintEvent( QPaintEvent *event ){
 
     // Desenha todos os objetos
     for( Forma* df : std::as_const( displayFile ))
-        df->desenhar( painter, *viewportAtiva);
+        df->desenhar( painter );
 }
 
 void MeuFrame::transladarObjeto( QString n, double dx, double dy ){
     for( Forma* df : std::as_const( displayFile )){
         if( df->getNome().compare( n ) == 0 ){
             Matriz t = Matriz::gerarMatrizT( dx, dy );
-            df->aplicarTransformacao( t, transdormadaViewport);
+            df->aplicarTransformacao( t );
+            df->atualizarCoordenadaScn( transdormadaViewport, *viewportAtiva );
             break;
         }
     }
@@ -76,7 +77,8 @@ void MeuFrame::escalarObjeto( QString n, double sx, double sy ){
             Matriz mToReturn = Matriz::gerarMatrizT( centro.x, centro.y );
 
             Matriz composta = mToReturn * escala * mToOrigin;
-            df->aplicarTransformacao( composta, transdormadaViewport );
+            df->aplicarTransformacao( composta );
+            df->atualizarCoordenadaScn( transdormadaViewport, *viewportAtiva );
             break;
         }
     }
@@ -102,7 +104,8 @@ void MeuFrame::rotacionarObjeto( QString n, double angulo, double x, double y, b
             Matriz mToReturn = Matriz::gerarMatrizT( px, py );
 
             Matriz composta = mToReturn * mRotation * mToOrigin;
-            df->aplicarTransformacao( composta, transdormadaViewport );
+            df->aplicarTransformacao( composta );
+            df->atualizarCoordenadaScn( transdormadaViewport, *viewportAtiva );
             break;
         }
     }
@@ -144,7 +147,7 @@ void MeuFrame::atualizarTransformada() {
     this->transdormadaViewport.imprimir();
 
     for ( Forma* obj : std::as_const( displayFile )) {
-        obj->atualizarCoordenadaScn( this->transdormadaViewport );
+        obj->atualizarCoordenadaScn( this->transdormadaViewport, *viewportAtiva );
     }
     this->update();
 }

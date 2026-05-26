@@ -74,6 +74,7 @@ void MeuFrame::rotacionarObjeto(QString n, double angulo, double x, double y, bo
             break;
         }
     }
+    //qDebug()<< this->bit.b1.to_string();
     recalcularSCN();
 }
 
@@ -100,6 +101,7 @@ void MeuFrame::recalcularSCN(){
     mRotacao.m[0][1] = -sin(rad);
     mRotacao.m[1][0] = sin(rad);
     mRotacao.m[1][1] = cos(rad);
+
     mEscala.m[0][0] = (2.0 / window.largura) / distorcao;
     mEscala.m[1][1] = 2.0 / window.altura;
 

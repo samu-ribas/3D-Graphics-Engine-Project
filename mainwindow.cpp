@@ -8,8 +8,10 @@
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
-{
+{    
     ui->setupUi(this);
+    this->processarPoligono(0,0, (double)ui->larguraWindow->value(), (double)ui->alturaWindow->value());
+
     //stacked widget
     connect(ui->comboBox, QOverload<int>::of(&QComboBox::currentIndexChanged),ui->stackedWidget, &QStackedWidget::setCurrentIndex);
     connect(ui->comboBox_2, QOverload<int>::of(&QComboBox::currentIndexChanged),ui->stackedWidgetOperacoes, &QStackedWidget::setCurrentIndex);
@@ -204,9 +206,4 @@ MainWindow::~MainWindow()
 {
     delete ui;
 }
-
-
-
-
-
 

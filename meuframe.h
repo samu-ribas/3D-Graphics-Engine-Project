@@ -36,7 +36,6 @@ public:
     void rotacionarObjeto(QString nome, double angulo,double x, double y, bool usarCentroide);
 
     bool contemObjeto(const QString& nome) const;
-
     void recalcularSCN();
 protected:
     void paintEvent(QPaintEvent *event) override;

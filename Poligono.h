@@ -3,6 +3,7 @@
 
 #include "forma.h"
 #include "Matriz.h"
+#include "meuframe.h"
 
 class Poligono : public Forma{
 

@@ -23,6 +23,8 @@ private slots:
 
     void inputObjeto();
     void inputOperacao();
+    void processarWindow();
+    void setDeslocamento();
 
     void on_btn_cima_clicked();
     void on_btn_baixo_clicked();
@@ -36,8 +38,12 @@ private slots:
     void on_btn_diagEsqBaixo_clicked();
     void on_btn_diagDirCima_clicked();
     void on_btn_diagDirBaixo_clicked();
+    void on_pushButton_clicked();
+
 private:
     Ui::MainWindow *ui;
-    double deslocamentoWindow = 50.0;
+    double deslocamentoWindow;
+    int ultimoValorEscalaX = 50; // Assumindo 50 como o valor inicial central do slider
+    int ultimoValorEscalaY = 50;
 };
 #endif // MAINWINDOW_H

@@ -10,14 +10,17 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {    
     ui->setupUi(this);
-    this->processarPoligono(0,0, (double)ui->larguraWindow->value(), (double)ui->alturaWindow->value());
+    this->processarWindow();
+    this->setDeslocamento();
 
-    //stacked widget
+    //stacked widget + comboBox
     connect(ui->comboBox, QOverload<int>::of(&QComboBox::currentIndexChanged),ui->stackedWidget, &QStackedWidget::setCurrentIndex);
     connect(ui->comboBox_2, QOverload<int>::of(&QComboBox::currentIndexChanged),ui->stackedWidgetOperacoes, &QStackedWidget::setCurrentIndex);
     //botões
     connect(ui->Bt_add_forma, &QPushButton::clicked, this, &MainWindow::inputObjeto);
     connect(ui->bt_op, &QPushButton::clicked, this, &MainWindow::inputOperacao);
+    //spinBox
+    connect(ui->spinBoxDesloc, &QSpinBox::valueChanged, this, &MainWindow::setDeslocamento);
 }
 
 void MainWindow::inputOperacao(){
@@ -103,6 +106,7 @@ void MainWindow::processarPoligono(double x, double y, int l, double r){
 
     ui->frame->adicionarPoligono(ui->lineNome->text(), listaDePontos);
 }
+
 //processa retângulo
 void MainWindow::processarPoligono(double x, double y, double c, double h){
     std::list<Coordenada> listaDePontos;
@@ -114,91 +118,96 @@ void MainWindow::processarPoligono(double x, double y, double c, double h){
     ui->frame->adicionarPoligono(ui->lineNome->text(), listaDePontos);
 }
 
+//processa window inicial
+void MainWindow::processarWindow(){
+    double l = 1000.0;
+    double a = 500.0;
+
+    std::list<Coordenada> listaDePontos;
+    listaDePontos.push_back({-l/2.0, -a/2.0});
+    listaDePontos.push_back({ l/2.0, -a/2.0});
+    listaDePontos.push_back({ l/2.0,  a/2.0});
+    listaDePontos.push_back({-l/2.0,  a/2.0});
+
+    ui->comboBoxDisplayFile->addItem("window");
+    ui->frame->adicionarPoligono("window", listaDePontos);
+}
+
+void MainWindow::setDeslocamento(){
+    this->deslocamentoWindow = ui->spinBoxDesloc->value();
+}
+
 //métodos da ação da window
-void MainWindow::on_btn_cima_clicked()
-{
+void MainWindow::on_btn_cima_clicked(){
     ui->frame->window.centro_y += deslocamentoWindow;
     ui->frame->recalcularSCN();
 }
 
-
-void MainWindow::on_btn_baixo_clicked()
-{
+void MainWindow::on_btn_baixo_clicked(){
     ui->frame->window.centro_y -= deslocamentoWindow;
     ui->frame->recalcularSCN();
 }
 
-void MainWindow::on_btn_esquerda_clicked()
-{
+void MainWindow::on_btn_esquerda_clicked(){
     ui->frame->window.centro_x += deslocamentoWindow;
     ui->frame->recalcularSCN();
 }
 
-
-void MainWindow::on_btn_direita_clicked()
-{
+void MainWindow::on_btn_direita_clicked(){
     ui->frame->window.centro_x -= deslocamentoWindow;
     ui->frame->recalcularSCN();
 }
 
-
-void MainWindow::on_btn_zoomMais_clicked()
-{
+void MainWindow::on_btn_zoomMais_clicked(){
     ui->frame->window.altura -= deslocamentoWindow;
     ui->frame->window.largura -= deslocamentoWindow;
     ui->frame->recalcularSCN();
 }
 
-
-void MainWindow::on_btn_zoomMenos_clicked()
-{
+void MainWindow::on_btn_zoomMenos_clicked(){
     ui->frame->window.altura += deslocamentoWindow;
     ui->frame->window.largura += deslocamentoWindow;
     ui->frame->recalcularSCN();
 }
 
-void MainWindow::on_btn_girarEsq_clicked()
-{
+void MainWindow::on_btn_girarEsq_clicked(){
     ui->frame->window.angulo -= 10;
     ui->frame->recalcularSCN();
 }
 
-void MainWindow::on_btn_girarDir_clicked()
-{
+void MainWindow::on_btn_girarDir_clicked(){
     ui->frame->window.angulo += 10;
     ui->frame->recalcularSCN();
 }
 
-void MainWindow::on_btn_diagEsqCima_clicked()
-{
+void MainWindow::on_btn_diagEsqCima_clicked(){
     ui->frame->window.centro_x -= deslocamentoWindow;
     ui->frame->window.centro_y += deslocamentoWindow;
     ui->frame->recalcularSCN();
 }
 
-
-
-void MainWindow::on_btn_diagEsqBaixo_clicked()
-{
+void MainWindow::on_btn_diagEsqBaixo_clicked(){
     ui->frame->window.centro_x -= deslocamentoWindow;
     ui->frame->window.centro_y -= deslocamentoWindow;
     ui->frame->recalcularSCN();
 }
 
-
-
-void MainWindow::on_btn_diagDirCima_clicked()
-{
+void MainWindow::on_btn_diagDirCima_clicked(){
     ui->frame->window.centro_x += deslocamentoWindow;
     ui->frame->window.centro_y += deslocamentoWindow;
     ui->frame->recalcularSCN();
 }
 
-
-void MainWindow::on_btn_diagDirBaixo_clicked()
-{
+void MainWindow::on_btn_diagDirBaixo_clicked(){
     ui->frame->window.centro_x += deslocamentoWindow;
     ui->frame->window.centro_y -= deslocamentoWindow;
+    ui->frame->recalcularSCN();
+}
+
+void MainWindow::on_pushButton_clicked()
+{
+    ui->frame->window.centro_x = 0.0;
+    ui->frame->window.centro_y = 0.0;
     ui->frame->recalcularSCN();
 }
 
@@ -206,4 +215,6 @@ MainWindow::~MainWindow()
 {
     delete ui;
 }
+
+
 

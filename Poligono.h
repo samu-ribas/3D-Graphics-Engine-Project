@@ -1,9 +1,6 @@
 #ifndef POLIGONO_H
 #define POLIGONO_H
 
-#include "Forma.h"
-//#include "Matriz.h"
-
 class Poligono : public Forma{
 
 public:
@@ -17,8 +14,8 @@ public:
         QVector<QPointF> pontos_vp;
 
         for(const Coordenada& c : this->p){
-            double x_vp = ((c.x_scn - (-1.0)) / 2.0) * largura_vp;
-            double y_vp = (1.0 - ((c.y_scn - (-1.0)) / 2.0)) * altura_vp;
+            double x_vp = ((c.x_scn + 1.0) / 2.0) * largura_vp;
+            double y_vp = (1.0 - ((c.y_scn + 1.0) / 2.0)) * altura_vp;
 
             pontos_vp.append(QPointF(x_vp, y_vp));
         }
@@ -31,10 +28,5 @@ public:
 
         painter.drawLine(QLineF(pontos_vp.last(), pontos_vp.first()));
     }
-
-    // void aplicarTransformacao(const Matriz& m) override{
-    //     for(Coordenada& vertice : this->p)
-    //         vertice = m * vertice;
-    // }
 };
 #endif // POLIGONO_H

@@ -1,8 +1,6 @@
 #ifndef RETA_H
 #define RETA_H
 
-#include "Forma.h"
-//#include "Matriz.h"
 class Reta : public Forma{
 public:
     Reta(QString n, double x1, double y1, double x2, double y2): Forma(n, TipoForma::RETA){
@@ -18,21 +16,16 @@ public:
         const Coordenada& p2 = *++it;
 
         //viewport Ponto 1
-        double x1_vp = ((p1.x_scn - (-1.0)) / 2.0) * largura_vp;
-        double y1_vp = (1.0 - ((p1.y_scn - (-1.0)) / 2.0)) * altura_vp;
+        double x1_vp = ((p1.x_scn + 1.0) / 2.0) * largura_vp;
+        double y1_vp = (1.0 - ((p1.y_scn + 1.0) / 2.0)) * altura_vp;
         //viewport Ponto 2
-        double x2_vp = ((p2.x_scn - (-1.0)) / 2.0) * largura_vp;
-        double y2_vp = (1.0 - ((p2.y_scn - (-1.0)) / 2.0)) * altura_vp;
+        double x2_vp = ((p2.x_scn + 1.0) / 2.0) * largura_vp;
+        double y2_vp = (1.0 - ((p2.y_scn + 1.0) / 2.0)) * altura_vp;
 
         QPen caneta(Qt::white, 5);
         painter.setPen(caneta);
         painter.drawLine(x1_vp, y1_vp, x2_vp, y2_vp);
     }
-
-    // void aplicarTransformacao(const Matriz& m) override{
-    //     for(Coordenada& vertice : this->p)
-    //         vertice = m * vertice;
-    // }
 };
 
 #endif // RETA_H

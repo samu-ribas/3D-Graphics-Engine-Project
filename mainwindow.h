@@ -43,7 +43,5 @@ private slots:
 private:
     Ui::MainWindow *ui;
     double deslocamentoWindow;
-    int ultimoValorEscalaX = 50; // Assumindo 50 como o valor inicial central do slider
-    int ultimoValorEscalaY = 50;
 };
 #endif // MAINWINDOW_H

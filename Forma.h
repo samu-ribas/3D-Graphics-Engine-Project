@@ -29,6 +29,7 @@ public:
     virtual ~Forma(){}
 
     virtual void desenhar(QPainter &painter, int largura_vp, int altura_vp) = 0;
+    virtual bool verificarClipping () const;
     void aplicarTransformacao(const Matriz& m);
 
     Coordenada getCentroide() const;

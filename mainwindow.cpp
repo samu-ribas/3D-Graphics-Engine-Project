@@ -131,7 +131,7 @@ void MainWindow::processarWindow(){
     listaDePontos.push_back({ l/2.0,  a/2.0});
     listaDePontos.push_back({-l/2.0,  a/2.0});
 
-    ui->comboBoxDisplayFile->addItem("window");
+
     ui->frame->adicionarPoligono("window", listaDePontos);
 }
 

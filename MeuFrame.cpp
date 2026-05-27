@@ -14,7 +14,7 @@ void MeuFrame:: adicionarPonto(QString name, double x, double y){
 
     for (Forma* df : std::as_const(this->displayFile)) {
         if(df->getNome().contains(name)){
-            if(!df->verificarClipping()){
+            if(df->verificarClipping()){
                 qDebug() << "Objeto:" << df->getNome()<< " | Tipo:" << static_cast<int>(df->getTipo());
                 recalcularSCN();
             }

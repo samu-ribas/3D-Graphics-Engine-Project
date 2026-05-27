@@ -24,7 +24,7 @@ public:
     }
 
     bool verificarClipping() override{
-        qDebug()<<"deu certo";
+
         return true;
     }
 

@@ -9,6 +9,10 @@ void Forma::aplicarTransformacao(const Matriz& m){
         vertice = m * vertice;
 }
 
+bool Forma::verificarClipping(){
+    return false;
+}
+
 Coordenada Forma :: getCentroide() const { // retorna o centroide do objeto
     double cx = 0.0, cy = 0.0;
     if(p.empty())
@@ -29,13 +33,7 @@ QString Forma :: getNome() const { return nome; }
 
 TipoForma Forma :: getTipo() const { return o_tipo; }
 
-void Forma::setbitObj(std::list<Coordenada> pontos){
-    // double x_max = 0;
-    // double y_max = 0;
+void Forma::setbitObj(const std::bitset<4> bit){}
 
-    for(const auto& ponto : p){
-        qDebug() << "objeto:"<< ponto.x_scn << "| window:"<< pontos.begin()->x_scn;
-    }
-}
 
 

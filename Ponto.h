@@ -3,7 +3,7 @@
 
 #include "forma.h"
 //#include "Matriz.h"
-
+#include <QDebug>
 class Ponto : public Forma
 {
 public:
@@ -21,6 +21,11 @@ public:
         QPen caneta(Qt::white, 5, Qt::SolidLine, Qt::RoundCap);
         painter.setPen(caneta);
         painter.drawPoint(QPointF(x_vp, y_vp));
+    }
+
+    bool verificarClipping() override{
+        qDebug()<<"deu certo";
+        return true;
     }
 
     // void aplicarTransformacao(const Matriz& m) override{

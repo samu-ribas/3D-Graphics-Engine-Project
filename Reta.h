@@ -29,6 +29,7 @@ public:
         painter.drawLine(x1_vp, y1_vp, x2_vp, y2_vp);
     }
 
+
     // void aplicarTransformacao(const Matriz& m) override{
     //     for(Coordenada& vertice : this->p)
     //         vertice = m * vertice;

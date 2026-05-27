@@ -12,12 +12,15 @@ MeuFrame::MeuFrame(QWidget *parent) : QFrame(parent) {}
 void MeuFrame:: adicionarPonto(QString name, double x, double y){
     displayFile.append(new Ponto(name ,x ,y));
 
-    for(Forma* df : std::as_const(displayFile)){
-        if(df->getNome().compare("window") == 0){
-            df->setbitObj(df->getCoordenada());
+    for (Forma* df : std::as_const(this->displayFile)) {
+        if(df->getNome().contains(name)){
+            if(!df->verificarClipping()){
+                qDebug() << "Objeto:" << df->getNome()<< " | Tipo:" << static_cast<int>(df->getTipo());
+                recalcularSCN();
+            }
         }
     }
-    recalcularSCN();
+
 }
 
 void MeuFrame:: adicionarReta(QString name, double x1, double y1, double x2, double y2){
@@ -80,7 +83,6 @@ void MeuFrame::rotacionarObjeto(QString n, double angulo, double x, double y, bo
             break;
         }
     }
-    //qDebug()<< this->bit.b1.to_string();
     recalcularSCN();
 }
 

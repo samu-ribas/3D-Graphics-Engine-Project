@@ -32,6 +32,8 @@ public:
         painter.drawLine(QLineF(pontos_vp.last(), pontos_vp.first()));
     }
 
+
+
     // void aplicarTransformacao(const Matriz& m) override{
     //     for(Coordenada& vertice : this->p)
     //         vertice = m * vertice;

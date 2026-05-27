@@ -1,13 +1,11 @@
 #ifndef RETA_H
 #define RETA_H
 
-#include "forma.h"
-#include "Matriz.h"
-
+#include "Forma.h"
+//#include "Matriz.h"
 class Reta : public Forma{
 public:
-    Reta(QString n, double x1, double y1, double x2, double y2): Forma(n, TipoForma::RETA)
-    {
+    Reta(QString n, double x1, double y1, double x2, double y2): Forma(n, TipoForma::RETA){
         p.push_back({x1, y1});
         p.push_back({x2, y2});
     }
@@ -19,9 +17,6 @@ public:
         const Coordenada& p1 = *it;
         const Coordenada& p2 = *++it;
 
-        // qDebug() << "MUNDO P1:" << p1.x_wc << p1.y_wc << " --- P2:" << p2.x_wc << p2.y_wc;
-        // qDebug() << "SCN P1:" << p1.x_scn << p1.y_scn << " --- P2:" << p2.x_scn << p2.y_scn;
-
         //viewport Ponto 1
         double x1_vp = ((p1.x_scn - (-1.0)) / 2.0) * largura_vp;
         double y1_vp = (1.0 - ((p1.y_scn - (-1.0)) / 2.0)) * altura_vp;
@@ -29,17 +24,15 @@ public:
         double x2_vp = ((p2.x_scn - (-1.0)) / 2.0) * largura_vp;
         double y2_vp = (1.0 - ((p2.y_scn - (-1.0)) / 2.0)) * altura_vp;
 
-        // qDebug() << "VIEWPORT P1:" << x1_vp << y1_vp << " --- P2:" << x2_vp << y2_vp;
-
         QPen caneta(Qt::white, 5);
         painter.setPen(caneta);
         painter.drawLine(x1_vp, y1_vp, x2_vp, y2_vp);
     }
 
-    void aplicarTransformacao(const Matriz& m) override{
-        for(Coordenada& vertice : this->p)
-            vertice = m * vertice;
-    }
+    // void aplicarTransformacao(const Matriz& m) override{
+    //     for(Coordenada& vertice : this->p)
+    //         vertice = m * vertice;
+    // }
 };
 
 #endif // RETA_H

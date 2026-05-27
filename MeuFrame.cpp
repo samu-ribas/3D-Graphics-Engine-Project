@@ -1,9 +1,9 @@
-#include "meuframe.h"
+#include "MeuFrame.h"
 #include "Ponto.h"
 #include "Reta.h"
 #include "Poligono.h"
 #include "Matriz.h"
-#include "forma.h"
+#include "Forma.h"
 #include <cmath>
 #include <QPainter>
 
@@ -11,6 +11,12 @@ MeuFrame::MeuFrame(QWidget *parent) : QFrame(parent) {}
 
 void MeuFrame:: adicionarPonto(QString name, double x, double y){
     displayFile.append(new Ponto(name ,x ,y));
+
+    for(Forma* df : std::as_const(displayFile)){
+        if(df->getNome().compare("window") == 0){
+            df->setbitObj(df->getCoordenada());
+        }
+    }
     recalcularSCN();
 }
 

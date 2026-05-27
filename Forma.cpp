@@ -1,6 +1,13 @@
-#include "forma.h"
+#include "Forma.h"
+#include "Matriz.h"
+#include <qdebug>
 
 Forma::Forma(QString n, TipoForma tipo) : nome(n), o_tipo(tipo){}
+
+void Forma::aplicarTransformacao(const Matriz& m){
+    for(Coordenada& vertice : this->p)
+        vertice = m * vertice;
+}
 
 Coordenada Forma :: getCentroide() const { // retorna o centroide do objeto
     double cx = 0.0, cy = 0.0;
@@ -21,3 +28,14 @@ std::list<Coordenada>& Forma::getCoordenada(){
 QString Forma :: getNome() const { return nome; }
 
 TipoForma Forma :: getTipo() const { return o_tipo; }
+
+void Forma::setbitObj(std::list<Coordenada> pontos){
+    // double x_max = 0;
+    // double y_max = 0;
+
+    for(const auto& ponto : p){
+        qDebug() << "objeto:"<< ponto.x_scn << "| window:"<< pontos.begin()->x_scn;
+    }
+}
+
+

@@ -3,7 +3,7 @@
 #include <list>
 #include <cmath>
 #include <QMessageBox>
-#include "forma.h"
+#include "Forma.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -33,6 +33,7 @@ void MainWindow::inputOperacao(){
                                         ui->inputYTranslacao->text().toDouble());
             break;
         }
+
         case 1:{
             double sx = ui->inputXEscala->text().isEmpty() ? 1.0 : ui->inputXEscala->text().toDouble();
             double sy = ui->inputYEscala->text().isEmpty() ? 1.0 : ui->inputYEscala->text().toDouble();
@@ -41,6 +42,7 @@ void MainWindow::inputOperacao(){
             ui->frame->escalarObjeto(ui->comboBoxDisplayFile->currentText(),sx, sy);
             break;
         }
+
         case 2:{
             ui->frame->rotacionarObjeto(ui->comboBoxDisplayFile->currentText(),
                                         ui->inputAnguloRotacao->text().toDouble(),

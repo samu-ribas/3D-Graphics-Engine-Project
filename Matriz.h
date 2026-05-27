@@ -1,7 +1,7 @@
 #ifndef MATRIZ_H
 #define MATRIZ_H
 
-#include "forma.h"
+#include "Forma.h"
 
 class Matriz
 {

@@ -1,9 +1,8 @@
 #ifndef POLIGONO_H
 #define POLIGONO_H
 
-#include "forma.h"
-#include "Matriz.h"
-#include "meuframe.h"
+#include "Forma.h"
+//#include "Matriz.h"
 
 class Poligono : public Forma{
 
@@ -33,9 +32,9 @@ public:
         painter.drawLine(QLineF(pontos_vp.last(), pontos_vp.first()));
     }
 
-    void aplicarTransformacao(const Matriz& m) override{
-        for(Coordenada& vertice : this->p)
-            vertice = m * vertice;
-    }
+    // void aplicarTransformacao(const Matriz& m) override{
+    //     for(Coordenada& vertice : this->p)
+    //         vertice = m * vertice;
+    // }
 };
 #endif // POLIGONO_H

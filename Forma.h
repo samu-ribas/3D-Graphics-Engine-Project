@@ -4,6 +4,7 @@
 #include <QPainter>
 #include <QVector>
 #include <QPoint>
+#include <BitsClipping.h>
 
 struct Coordenada {
     double x_wc;
@@ -20,27 +21,29 @@ struct Coordenada {
 
 class Matriz;
 
-//conjunto de constantes
 enum class TipoForma{PONTO, RETA, POLIGONO};
 
-class Forma
-{
+class Forma{
 public:
     Forma(QString n, TipoForma tipo);
     virtual ~Forma(){}
 
     virtual void desenhar(QPainter &painter, int largura_vp, int altura_vp) = 0;
-    virtual void aplicarTransformacao(const Matriz& m) = 0;
+    void aplicarTransformacao(const Matriz& m);
 
     Coordenada getCentroide() const;
     std::list<Coordenada>& getCoordenada();
     QString getNome() const ;
     TipoForma getTipo() const ;
+    void setbitObj(const std::bitset<4> bit);
 
 protected:
     QString nome;
     TipoForma o_tipo;
     std::list<Coordenada>p;
+
+private:
+    BitsClipping bitObj;
 };
 
 #endif // FORMA_H

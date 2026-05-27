@@ -1,8 +1,8 @@
 #ifndef PONTO_H
 #define PONTO_H
 
-//#include "forma.h"
-#include "Matriz.h"
+#include "forma.h"
+//#include "Matriz.h"
 
 class Ponto : public Forma
 {
@@ -23,9 +23,9 @@ public:
         painter.drawPoint(QPointF(x_vp, y_vp));
     }
 
-    void aplicarTransformacao(const Matriz& m) override{
-        for(Coordenada& vertice : this->p)
-            vertice = m * vertice;
-    }
+    // void aplicarTransformacao(const Matriz& m) override{
+    //     for(Coordenada& vertice : this->p)
+    //         vertice = m * vertice;
+    // }
 };
 #endif // PONTO_H

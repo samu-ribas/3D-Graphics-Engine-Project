@@ -53,6 +53,7 @@ void MainWindow::inputOperacao(){
             break;
         }
     }
+    ui->frame ->recalcularSCN();
 }
 
 void MainWindow::inputObjeto(){
@@ -121,16 +122,10 @@ void MainWindow::processarPoligono(double x, double y, double c, double h){
     ui->frame->adicionarPoligono(ui->lineNome->text(), listaDePontos);
 }
 
-//processa window inicial
 void MainWindow::processarWindow(){
-
     double l = 1000.0;
     double a = 500.0;
-
-    // Inicializa a câmera matemática diretamente no Frame
-    ui->frame->window = Window(0.0, 0.0, l, a);
-
-    // Calcula a matriz inversa para o universo
+    ui->frame->window = Window(0.0, 0.0, l, a);//inicializa a câmera diretamente no Frame
     ui->frame->recalcularSCN();
 }
 

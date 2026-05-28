@@ -7,7 +7,7 @@
 #include <BitsClipping.h>
 #include "Window.h"
 
-struct Coordenada {
+struct Coordenada{
     double x_wc;
     double y_wc;
     double x_scn;
@@ -26,6 +26,11 @@ enum class TipoForma{PONTO, RETA, POLIGONO};
 
 class Forma{
 public:
+    const int INSIDE = 0; // 0000
+    const int LEFT   = 1; // 0001
+    const int RIGHT  = 2; // 0010
+    const int BOTTOM = 4; // 0100
+    const int TOP    = 8; // 1000
     Forma(QString n, TipoForma tipo);
 
     virtual ~Forma(){}
@@ -40,7 +45,7 @@ public:
     std::list<Coordenada>& getCoordenada();
     QString getNome() const ;
     TipoForma getTipo() const ;
-    void setbitObj(const std::bitset<4> bit);
+    int getOutcode(double x, double y, const LimitesWindow& limites);
 
 protected:
     QString nome;

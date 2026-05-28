@@ -14,7 +14,6 @@ SOURCES += \
     mainwindow.cpp
 
 HEADERS += \
-    BitsClipping.h \
     Forma.h \
     Matriz.h \
     MeuFrame.h \

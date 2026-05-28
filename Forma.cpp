@@ -8,7 +8,7 @@ void Forma::aplicarTransformacao(const Matriz& m){
         vertice = m * vertice;
 }
 
-Coordenada Forma :: getCentroide() const{ // retorna o centroide do objeto
+Coordenada Forma :: getCentroide() const{
     double cx = 0.0, cy = 0.0;
     if(p.empty())
         return {0.0, 0.0};
@@ -20,12 +20,24 @@ Coordenada Forma :: getCentroide() const{ // retorna o centroide do objeto
     return {cx / p.size(), cy / p.size()};
 }
 
-std::list<Coordenada>& Forma::getCoordenada(){
-    return this->p;
-}
+std::list<Coordenada>& Forma::getCoordenada(){ return this->p; }
 
 QString Forma :: getNome() const { return nome; }
 
 TipoForma Forma :: getTipo() const { return o_tipo; }
 
-void Forma::setbitObj(const std::bitset<4> bit){}
+int Forma ::getOutcode(double x, double y, const LimitesWindow& limites){
+    int code = INSIDE;
+
+    if(x < limites.x_min)
+        code |= LEFT;    // adiciona o bit da esquerda
+    else if (x > limites.x_max)
+        code |= RIGHT;   // adiciona o bit da direita
+
+    if(y < limites.y_min)
+        code |= BOTTOM;    // adiciona o bit de baixo
+    else if (y > limites.y_max)
+        code |= TOP;       // adiciona o bit de cima
+
+    return code;
+}

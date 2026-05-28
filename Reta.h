@@ -21,11 +21,8 @@ public:
         const Coordenada& p1_mundo = *it;
         const Coordenada& p2_mundo = *++it;
 
-        // 1. Aplica a Matriz da Câmera (Mundo -> SCN)
         Coordenada c1_scn = mCam * p1_mundo;
         Coordenada c2_scn = mCam * p2_mundo;
-
-        // 2. Mapeamento para Viewport (SCN -> Pixels)
         // Ponto 1
         double x1_vp = (c1_scn.x_wc + 1.0) * (larg_vp / 2.0);
         double y1_vp = (1.0 - c1_scn.y_wc) * (alt_vp / 2.0);
@@ -34,7 +31,6 @@ public:
         double x2_vp = (c2_scn.x_wc + 1.0) * (larg_vp / 2.0);
         double y2_vp = (1.0 - c2_scn.y_wc) * (alt_vp / 2.0);
 
-        // 3. Rasterização
         QPen caneta(Qt::white, 5);
         painter.setPen(caneta);
         painter.drawLine(x1_vp, y1_vp, x2_vp, y2_vp);

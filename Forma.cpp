@@ -8,8 +8,13 @@ void Forma::aplicarTransformacao(const Matriz& m){
         vertice = m * vertice;
 }
 
+<<<<<<< HEAD
 bool Forma::verificarClipping () const{
     return true;
+=======
+bool Forma::verificarClipping(){
+    return false;
+>>>>>>> refs/remotes/origin/samuel
 }
 
 Coordenada Forma :: getCentroide() const { // retorna o centroide do objeto

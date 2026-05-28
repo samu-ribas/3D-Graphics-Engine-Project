@@ -26,6 +26,7 @@ public:
         painter.setPen(caneta);
         painter.drawLine(x1_vp, y1_vp, x2_vp, y2_vp);
     }
+
 };
 
 #endif // RETA_H

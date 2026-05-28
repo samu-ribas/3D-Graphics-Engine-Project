@@ -1,6 +1,12 @@
 #ifndef PONTO_H
 #define PONTO_H
 
+<<<<<<< HEAD
+=======
+#include "forma.h"
+//#include "Matriz.h"
+#include <QDebug>
+>>>>>>> refs/remotes/origin/samuel
 class Ponto : public Forma
 {
 public:
@@ -29,5 +35,12 @@ public:
         painter.setPen(caneta);
         painter.drawPoint(QPointF(x_vp, y_vp));
     }
+
+    bool verificarClipping() override{
+
+        return true;
+    }
+
+
 };
 #endif // PONTO_H

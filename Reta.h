@@ -1,11 +1,16 @@
 #ifndef RETA_H
 #define RETA_H
+#include "Forma.h"
 
 class Reta : public Forma{
 public:
     Reta(QString n, double x1, double y1, double x2, double y2): Forma(n, TipoForma::RETA){
         p.push_back({x1, y1});
         p.push_back({x2, y2});
+    }
+
+    bool verificarClipping(const Window& win) override{
+        return true;
     }
 
     void desenhar(QPainter &painter, int largura_vp, int altura_vp) override{

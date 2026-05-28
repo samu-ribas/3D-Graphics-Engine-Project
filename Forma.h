@@ -5,6 +5,7 @@
 #include <QVector>
 #include <QPoint>
 #include <BitsClipping.h>
+#include "Window.h"
 
 struct Coordenada {
     double x_wc;
@@ -26,11 +27,12 @@ enum class TipoForma{PONTO, RETA, POLIGONO};
 class Forma{
 public:
     Forma(QString n, TipoForma tipo);
+
     virtual ~Forma(){}
 
     virtual void desenhar(QPainter &painter, int largura_vp, int altura_vp) = 0;
 
-    virtual bool verificarClipping () const;
+    virtual bool verificarClipping(const Window& win) = 0;
 
     void aplicarTransformacao(const Matriz& m);
 

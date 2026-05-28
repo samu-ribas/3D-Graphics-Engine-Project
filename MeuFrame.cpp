@@ -6,25 +6,14 @@
 #include "Forma.h"
 #include <cmath>
 #include <QPainter>
+#include <QDebug>
 
-MeuFrame::MeuFrame(QWidget *parent) : QFrame(parent) {}
+MeuFrame::MeuFrame(QWidget *parent) : QFrame(parent), window(0,0,1000,500) {}
 
 void MeuFrame:: adicionarPonto(QString name, double x, double y){
     displayFile.append(new Ponto(name ,x ,y));
-<<<<<<< HEAD
+    qDebug() << "Tamanho do displayFile:" << displayFile.size();
     recalcularSCN();
-=======
-
-    for (Forma* df : std::as_const(this->displayFile)) {
-        if(df->getNome().contains(name)){
-            if(df->verificarClipping()){
-                qDebug() << "Objeto:" << df->getNome()<< " | Tipo:" << static_cast<int>(df->getTipo());
-                recalcularSCN();
-            }
-        }
-    }
-
->>>>>>> refs/remotes/origin/samuel
 }
 
 void MeuFrame:: adicionarReta(QString name, double x1, double y1, double x2, double y2){
@@ -103,7 +92,7 @@ void MeuFrame::recalcularSCN(){
     Matriz mRotacao;
     Matriz mEscala;
 
-    double distorcao = (double)this->width() / (double)this->height();
+    //double distorcao = (double)this->width() / (double)this->height();
 
     mTranslacao.m[0][2] = -window.centro_x;
     mTranslacao.m[1][2] = -window.centro_y;
@@ -113,7 +102,7 @@ void MeuFrame::recalcularSCN(){
     mRotacao.m[0][1] = -sin(rad);
     mRotacao.m[1][0] = sin(rad);
     mRotacao.m[1][1] = cos(rad);
-    mEscala.m[0][0] = (2.0 / window.largura) / distorcao;
+    mEscala.m[0][0] = (2.0 / window.largura); /// distorcao;
     mEscala.m[1][1] = 2.0 / window.altura;
 
     Matriz mCamera = mEscala * mRotacao * mTranslacao;
@@ -128,12 +117,16 @@ void MeuFrame::recalcularSCN(){
     this->update();
 }
 
+
 void MeuFrame::paintEvent(QPaintEvent *event){
     QFrame::paintEvent(event);
     QPainter painter(this);
+    this->window.desenharViewport(painter, this->width(), this->height());
 
     for(Forma* df : std::as_const(displayFile)){
-        df->desenhar(painter, this->width(), this->height()); //passo tambem as dimensões da Viewport em pixels naquele exato frame
+        if(df->verificarClipping(this->window)){
+            df->desenhar(painter, this->width(), this->height()); //passo tambem as dimensões da Viewport em pixels naquele exato frame
+        }
     }
 }
 

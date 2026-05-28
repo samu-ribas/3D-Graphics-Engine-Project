@@ -4,6 +4,7 @@
 #include <cmath>
 #include <QMessageBox>
 #include "Forma.h"
+#include "Window.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -122,17 +123,15 @@ void MainWindow::processarPoligono(double x, double y, double c, double h){
 
 //processa window inicial
 void MainWindow::processarWindow(){
+
     double l = 1000.0;
     double a = 500.0;
 
-    std::list<Coordenada> listaDePontos;
-    listaDePontos.push_back({-l/2.0, -a/2.0});
-    listaDePontos.push_back({ l/2.0, -a/2.0});
-    listaDePontos.push_back({ l/2.0,  a/2.0});
-    listaDePontos.push_back({-l/2.0,  a/2.0});
+    // Inicializa a câmera matemática diretamente no Frame
+    ui->frame->window = Window(0.0, 0.0, l, a);
 
-
-    ui->frame->adicionarPoligono("window", listaDePontos);
+    // Calcula a matriz inversa para o universo
+    ui->frame->recalcularSCN();
 }
 
 void MainWindow::setDeslocamento(){

@@ -12,7 +12,7 @@ public:
     explicit MeuFrame(QWidget *parent = nullptr);
     ~MeuFrame();
 
-    Window window = Window(0.0, 0.0, 1000.0, 1000.0);
+    Window window;
 
     void adicionarPonto(QString nome, double x, double y);
     void adicionarReta(QString name, double x1, double y1, double x2, double y2);
@@ -27,6 +27,7 @@ public:
 
 protected:
     void paintEvent(QPaintEvent *event) override;
+
 
 private:
     QVector<Forma*> displayFile;

@@ -8,16 +8,7 @@ void Forma::aplicarTransformacao(const Matriz& m){
         vertice = m * vertice;
 }
 
-<<<<<<< HEAD
-bool Forma::verificarClipping () const{
-    return true;
-=======
-bool Forma::verificarClipping(){
-    return false;
->>>>>>> refs/remotes/origin/samuel
-}
-
-Coordenada Forma :: getCentroide() const { // retorna o centroide do objeto
+Coordenada Forma :: getCentroide() const{ // retorna o centroide do objeto
     double cx = 0.0, cy = 0.0;
     if(p.empty())
         return {0.0, 0.0};
@@ -38,6 +29,3 @@ QString Forma :: getNome() const { return nome; }
 TipoForma Forma :: getTipo() const { return o_tipo; }
 
 void Forma::setbitObj(const std::bitset<4> bit){}
-
-
-

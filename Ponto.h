@@ -1,12 +1,8 @@
 #ifndef PONTO_H
 #define PONTO_H
-
-<<<<<<< HEAD
-=======
 #include "forma.h"
-//#include "Matriz.h"
-#include <QDebug>
->>>>>>> refs/remotes/origin/samuel
+#include "Window.h"
+
 class Ponto : public Forma
 {
 public:
@@ -14,19 +10,20 @@ public:
         p.push_back({x,y});
     }
 
-    bool verificarClipping() const override{
-        if (p.empty()) return false;
+    bool verificarClipping(const Window& win) override{
+        if (this->p.empty()) return false;
 
-        const Coordenada& c = p.front();
+        const Coordenada& c = this->p.front();
 
-        return (c.x_scn >= -1.0 && c.x_scn <= 1.0 &&
-                c.y_scn >= -1.0 && c.y_scn <= 1.0);
-        return true;
+        // 1. Obtém os limites calculados pela Window
+        LimitesWindow limites = win.getLimites();
+
+        // 2. Compara as Coordenadas Originais do Mundo (WC) contra os limites
+        return (c.x_wc >= limites.x_min && c.x_wc <= limites.x_max &&
+                c.y_wc >= limites.y_min && c.y_wc <= limites.y_max);
     }
 
     void desenhar(QPainter &painter, int largura_vp, int altura_vp) override{
-        if(this->verificarClipping()) return;
-
         const Coordenada& c = this->p.front();
         double x_vp = ((c.x_scn + 1.0) / 2.0) * largura_vp;
         double y_vp = (1.0 - ((c.y_scn + 1.0) / 2.0)) * altura_vp;
@@ -35,12 +32,6 @@ public:
         painter.setPen(caneta);
         painter.drawPoint(QPointF(x_vp, y_vp));
     }
-
-    bool verificarClipping() override{
-
-        return true;
-    }
-
 
 };
 #endif // PONTO_H

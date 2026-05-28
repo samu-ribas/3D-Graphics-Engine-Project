@@ -1,5 +1,6 @@
 #ifndef POLIGONO_H
 #define POLIGONO_H
+#include "Forma.h"
 
 class Poligono : public Forma{
 
@@ -7,6 +8,11 @@ public:
     Poligono(QString n, std::list<Coordenada> vertices): Forma(n, TipoForma::POLIGONO){
         this->p = vertices;
     }
+
+    bool verificarClipping(const Window& win) override{
+        return true;
+    }
+
 
     void desenhar(QPainter &painter, int largura_vp, int altura_vp) override{
         if(this->p.size()<3) return;

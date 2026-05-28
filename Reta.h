@@ -1,5 +1,7 @@
 #ifndef RETA_H
 #define RETA_H
+#include "Forma.h"
+#include "Matriz.h"
 
 class Reta : public Forma{
 public:
@@ -8,19 +10,26 @@ public:
         p.push_back({x2, y2});
     }
 
-    void desenhar(QPainter &painter, int largura_vp, int altura_vp) override{
+    bool verificarClipping(const Window& win) override{
+        return true;
+    }
+
+    void desenhar(QPainter &painter, const Matriz& mCam, int larg_vp, int alt_vp) override{
         if (this->p.size() < 2) return;
 
         auto it = this->p.begin();
-        const Coordenada& p1 = *it;
-        const Coordenada& p2 = *++it;
+        const Coordenada& p1_mundo = *it;
+        const Coordenada& p2_mundo = *++it;
 
-        //viewport Ponto 1
-        double x1_vp = ((p1.x_scn + 1.0) / 2.0) * largura_vp;
-        double y1_vp = (1.0 - ((p1.y_scn + 1.0) / 2.0)) * altura_vp;
-        //viewport Ponto 2
-        double x2_vp = ((p2.x_scn + 1.0) / 2.0) * largura_vp;
-        double y2_vp = (1.0 - ((p2.y_scn + 1.0) / 2.0)) * altura_vp;
+        Coordenada c1_scn = mCam * p1_mundo;
+        Coordenada c2_scn = mCam * p2_mundo;
+        // Ponto 1
+        double x1_vp = (c1_scn.x_wc + 1.0) * (larg_vp / 2.0);
+        double y1_vp = (1.0 - c1_scn.y_wc) * (alt_vp / 2.0);
+
+        // Ponto 2
+        double x2_vp = (c2_scn.x_wc + 1.0) * (larg_vp / 2.0);
+        double y2_vp = (1.0 - c2_scn.y_wc) * (alt_vp / 2.0);
 
         QPen caneta(Qt::white, 5);
         painter.setPen(caneta);

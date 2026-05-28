@@ -5,8 +5,9 @@
 #include <QVector>
 #include <QPoint>
 #include <BitsClipping.h>
+#include "Window.h"
 
-struct Coordenada {
+struct Coordenada{
     double x_wc;
     double y_wc;
     double x_scn;
@@ -25,11 +26,23 @@ enum class TipoForma{PONTO, RETA, POLIGONO};
 
 class Forma{
 public:
+    const int INSIDE = 0; // 0000
+    const int LEFT   = 1; // 0001
+    const int RIGHT  = 2; // 0010
+    const int BOTTOM = 4; // 0100
+    const int TOP    = 8; // 1000
     Forma(QString n, TipoForma tipo);
+
     virtual ~Forma(){}
 
+<<<<<<< HEAD
     virtual void desenhar(QPainter &painter, int largura_vp, int altura_vp) = 0;
     virtual bool verificarClipping () const;
+=======
+    virtual void desenhar(QPainter &painter, const Matriz& mCam, int larg_vp, int alt_vp) = 0;
+
+    virtual bool verificarClipping(const Window& win) = 0;
+>>>>>>> refs/remotes/origin/samuel
 
     void aplicarTransformacao(const Matriz& m);
 
@@ -37,7 +50,7 @@ public:
     std::list<Coordenada>& getCoordenada();
     QString getNome() const ;
     TipoForma getTipo() const ;
-    void setbitObj(const std::bitset<4> bit);
+    int getOutcode(double x, double y, const LimitesWindow& limites);
 
 protected:
     QString nome;

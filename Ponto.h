@@ -1,8 +1,14 @@
 #ifndef PONTO_H
 #define PONTO_H
+<<<<<<< HEAD
 
 //#include "forma.h"
 //#include "Matriz.h"
+=======
+#include "forma.h"
+#include "Window.h"
+#include "Matriz.h"
+>>>>>>> refs/remotes/origin/samuel
 
 class Ponto : public Forma
 {
@@ -11,28 +17,36 @@ public:
         p.push_back({x,y});
     }
 
-    bool verificarClipping() const override{
-        if (p.empty()) return false;
-
-        const Coordenada& c = p.front();
-
-        return (c.x_scn >= -1.0 && c.x_scn <= 1.0 &&
-                c.y_scn >= -1.0 && c.y_scn <= 1.0);
-        return true;
-    }
-
-    void desenhar(QPainter &painter, int largura_vp, int altura_vp) override{
-        if(this->verificarClipping()) return;
+    bool verificarClipping(const Window& win) override{
+        if (this->p.empty()) return false;
 
         const Coordenada& c = this->p.front();
-        double x_vp = ((c.x_scn + 1.0) / 2.0) * largura_vp;
-        double y_vp = (1.0 - ((c.y_scn + 1.0) / 2.0)) * altura_vp;
+        LimitesWindow limites = win.getLimites();
 
-        QPen caneta(Qt::white, 5, Qt::SolidLine, Qt::RoundCap);
-        painter.setPen(caneta);
-        painter.drawPoint(QPointF(x_vp, y_vp));
+        int outcode = getOutcode(c.x_wc, c.y_wc, limites);
+
+        if(outcode == INSIDE)
+            return true;
+        else
+            return false;
     }
 
+    void desenhar(QPainter &painter, const Matriz& mCam, int larg_vp, int alt_vp) override{
+        if (this->p.empty()) return;
+        Coordenada c = this->p.front();
+        Coordenada c_scn = mCam * c;
 
+        double x_vp = (c_scn.x_wc + 1.0) * (larg_vp / 2.0);
+        double y_vp = (1.0 - c_scn.y_wc) * (alt_vp / 2.0);
+
+        QPen caneta(Qt::white, 4);
+        painter.setPen(caneta);
+        painter.drawPoint(x_vp, y_vp);
+    }
+
+<<<<<<< HEAD
+
+=======
+>>>>>>> refs/remotes/origin/samuel
 };
 #endif // PONTO_H

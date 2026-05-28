@@ -4,6 +4,7 @@
 #include <cmath>
 #include <QMessageBox>
 #include "Forma.h"
+#include "Window.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -52,6 +53,7 @@ void MainWindow::inputOperacao(){
             break;
         }
     }
+    ui->frame ->recalcularSCN();
 }
 
 void MainWindow::inputObjeto(){
@@ -120,19 +122,11 @@ void MainWindow::processarPoligono(double x, double y, double c, double h){
     ui->frame->adicionarPoligono(ui->lineNome->text(), listaDePontos);
 }
 
-//processa window inicial
 void MainWindow::processarWindow(){
     double l = 1000.0;
     double a = 500.0;
-
-    std::list<Coordenada> listaDePontos;
-    listaDePontos.push_back({-l/2.0, -a/2.0});
-    listaDePontos.push_back({ l/2.0, -a/2.0});
-    listaDePontos.push_back({ l/2.0,  a/2.0});
-    listaDePontos.push_back({-l/2.0,  a/2.0});
-
-
-    ui->frame->adicionarPoligono("window", listaDePontos);
+    ui->frame->window = Window(0.0, 0.0, l, a);//inicializa a câmera diretamente no Frame
+    ui->frame->recalcularSCN();
 }
 
 void MainWindow::setDeslocamento(){

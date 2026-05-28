@@ -1,5 +1,7 @@
 #ifndef POLIGONO_H
 #define POLIGONO_H
+#include "Forma.h"
+#include "Matriz.h"
 
 class Poligono : public Forma{
 
@@ -8,25 +10,35 @@ public:
         this->p = vertices;
     }
 
-    void desenhar(QPainter &painter, int largura_vp, int altura_vp) override{
-        if(this->p.size()<3) return;
+    bool verificarClipping(const Window& win) override{
+        return true;
+    }
 
-        QVector<QPointF> pontos_vp;
 
-        for(const Coordenada& c : this->p){
-            double x_vp = ((c.x_scn + 1.0) / 2.0) * largura_vp;
-            double y_vp = (1.0 - ((c.y_scn + 1.0) / 2.0)) * altura_vp;
+    void desenhar(QPainter &painter, const Matriz& mCam, int larg_vp, int alt_vp) override{
+        if (this->p.size() < 3) return;
 
-            pontos_vp.append(QPointF(x_vp, y_vp));
+        // vetor temporário para guardar as coordenadas já convertidas em pixels
+        std::vector<QPointF> pontos_tela;
+        pontos_tela.reserve(this->p.size());
+
+        for (const Coordenada& c : this->p) {
+            // aplica a Matriz scn (que já contém a translação/rotação/escala da câmera)
+            Coordenada c_scn = mCam * c;
+
+            double x_vp = (c_scn.x_wc + 1.0) * (larg_vp / 2.0);
+            double y_vp = (1.0 - c_scn.y_wc) * (alt_vp / 2.0);
+
+            // guarda o pixel pronto
+            pontos_tela.push_back(QPointF(x_vp, y_vp));
         }
-
-        QPen caneta(Qt::white, 5);
+        QPen caneta(Qt::white, 4);
         painter.setPen(caneta);
 
-        for(int i = 0 ; i < pontos_vp.size() - 1 ; i++)
-            painter.drawLine(QLineF(pontos_vp[i], pontos_vp[i + 1]));
-
-        painter.drawLine(QLineF(pontos_vp.last(), pontos_vp.first()));
+        for (size_t i = 0; i < pontos_tela.size() - 1; ++i) {
+            painter.drawLine(pontos_tela[i], pontos_tela[i+1]);
+        }
+        painter.drawLine(pontos_tela.back(), pontos_tela.front());
     }
 };
 #endif // POLIGONO_H

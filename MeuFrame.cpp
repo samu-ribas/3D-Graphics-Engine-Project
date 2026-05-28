@@ -92,8 +92,6 @@ void MeuFrame::recalcularSCN(){
     Matriz mRotacao;
     Matriz mEscala;
 
-    //double distorcao = (double)this->width() / (double)this->height();
-
     mTranslacao.m[0][2] = -window.centro_x;
     mTranslacao.m[1][2] = -window.centro_y;
 
@@ -102,18 +100,11 @@ void MeuFrame::recalcularSCN(){
     mRotacao.m[0][1] = -sin(rad);
     mRotacao.m[1][0] = sin(rad);
     mRotacao.m[1][1] = cos(rad);
-    mEscala.m[0][0] = (2.0 / window.largura); /// distorcao;
+
+    mEscala.m[0][0] = 2.0 / window.largura;
     mEscala.m[1][1] = 2.0 / window.altura;
 
-    Matriz mCamera = mEscala * mRotacao * mTranslacao;
-
-    for(Forma* forma : std::as_const(displayFile)){
-        for(Coordenada& c : forma->getCoordenada()){
-            Coordenada temp = mCamera * c;
-            c.x_scn = temp.x_wc;
-            c.y_scn = temp.y_wc;
-        }
-    }
+    this->mCameraAtual = mEscala * mRotacao * mTranslacao;
     this->update();
 }
 
@@ -121,11 +112,20 @@ void MeuFrame::recalcularSCN(){
 void MeuFrame::paintEvent(QPaintEvent *event){
     QFrame::paintEvent(event);
     QPainter painter(this);
+
     this->window.desenharViewport(painter, this->width(), this->height());
 
-    for(Forma* df : std::as_const(displayFile)){
-        if(df->verificarClipping(this->window)){
-            df->desenhar(painter, this->width(), this->height()); //passo tambem as dimensões da Viewport em pixels naquele exato frame
+    // Calcula a área ÚTIL do Viewport descontando as margens
+    int larg_vp = this->width() - 80;
+    int alt_vp = this->height() - 80;
+
+    for(Forma* df : std::as_const(displayFile)) {
+        // O Clipping ocorre UMA VEZ
+        if(df->verificarClipping(this->window)) {
+
+            // O objeto recebe a Matriz Pronta e a área correta
+            // A conversão SCN ocorrerá de forma volátil dentro do método desenhar
+            df->desenhar(painter, this->mCameraAtual, larg_vp, alt_vp);
         }
     }
 }

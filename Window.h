@@ -19,13 +19,20 @@ public:
 
     }
 
+    void setMargem(int novoValor) {
+        margem = novoValor;
+    }
+
+    int getMargem() {
+        return margem;
+    }
+
     void desenharViewport(QPainter& painter, int larg_tela, int alt_tela){
-        int margem = 40;
+        this->setMargem(40); //futuramente receber a margem
+        painter.translate(this->margem, this->margem);
 
-        painter.translate(margem, margem);
-
-        int larg_interna = larg_tela - (margem * 2);
-        int alt_interna  = alt_tela - (margem * 2);
+        int larg_interna = larg_tela - (this->margem * 2);
+        int alt_interna  = alt_tela - (this->margem * 2);
 
         QPen canetaVermelha(Qt::darkRed, 2);
         painter.setPen(canetaVermelha);
@@ -44,5 +51,8 @@ public:
 
         return limites;
     }
+
+private:
+    int margem;
 };
 #endif // WINDOW_H

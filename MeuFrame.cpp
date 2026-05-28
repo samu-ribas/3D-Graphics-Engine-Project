@@ -115,11 +115,12 @@ void MeuFrame::recalcularSCN(){
 void MeuFrame::paintEvent(QPaintEvent *event){
     QFrame::paintEvent(event);
     QPainter painter(this);
+    int margemDaWindow = this->window.getMargem()*2;
 
     this->window.desenharViewport(painter, this->width(), this->height());
 
-    int larg_vp = this->width() - 80;
-    int alt_vp = this->height() - 80;
+    int larg_vp = this->width() - margemDaWindow;
+    int alt_vp = this->height() - margemDaWindow;
 
     for(Forma* df : std::as_const(displayFile)){
         if(df->verificarClipping(this->window)){

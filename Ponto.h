@@ -1,7 +1,7 @@
 #ifndef PONTO_H
 #define PONTO_H
-#include "forma.h"
-#include "Window.h"
+//#include "forma.h"
+//#include "Window.h"
 #include "Matriz.h"
 
 class Ponto : public Forma

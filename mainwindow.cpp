@@ -49,7 +49,7 @@ void MainWindow::inputOperacao(){
                                         ui->inputAnguloRotacao->text().toDouble(),
                                         ui->inputXRotacao->text().toDouble(),
                                         ui->inputYRotacao->text().toDouble(),
-                                        ui->checkBox->isChecked());
+                                        ui->checkBoxCentroide->isChecked(), ui->checkBoxCoordenadasDoMundo->isChecked());
             break;
         }
     }
@@ -123,9 +123,10 @@ void MainWindow::processarPoligono(double x, double y, double c, double h){
 }
 
 void MainWindow::processarWindow(){
-    double l = 1000.0;
+    double l = 1000.0; // mudar depois com entrada do usuario
     double a = 500.0;
     ui->frame->window = Window(0.0, 0.0, l, a);//inicializa a câmera diretamente no Frame
+    ui->frame->window.setLimites();
     ui->frame->recalcularSCN();
 }
 
@@ -136,74 +137,88 @@ void MainWindow::setDeslocamento(){
 //métodos da ação da window
 void MainWindow::on_btn_cima_clicked(){
     ui->frame->window.centro_y += deslocamentoWindow;
+    ui->frame->window.setLimites();
     ui->frame->recalcularSCN();
 }
 
 void MainWindow::on_btn_baixo_clicked(){
     ui->frame->window.centro_y -= deslocamentoWindow;
+    ui->frame->window.setLimites();
     ui->frame->recalcularSCN();
 }
 
 void MainWindow::on_btn_esquerda_clicked(){
     ui->frame->window.centro_x += deslocamentoWindow;
+    ui->frame->window.setLimites();
     ui->frame->recalcularSCN();
 }
 
 void MainWindow::on_btn_direita_clicked(){
     ui->frame->window.centro_x -= deslocamentoWindow;
+    ui->frame->window.setLimites();
     ui->frame->recalcularSCN();
 }
 
 void MainWindow::on_btn_zoomMais_clicked(){
     ui->frame->window.altura -= deslocamentoWindow;
     ui->frame->window.largura -= deslocamentoWindow;
+    ui->frame->window.setLimites();
     ui->frame->recalcularSCN();
 }
 
 void MainWindow::on_btn_zoomMenos_clicked(){
     ui->frame->window.altura += deslocamentoWindow;
     ui->frame->window.largura += deslocamentoWindow;
+    ui->frame->window.setLimites();
     ui->frame->recalcularSCN();
 }
 
 void MainWindow::on_btn_girarEsq_clicked(){
     ui->frame->window.angulo -= 10;
+    ui->frame->window.setLimites();
     ui->frame->recalcularSCN();
 }
 
 void MainWindow::on_btn_girarDir_clicked(){
     ui->frame->window.angulo += 10;
+    ui->frame->window.setLimites();
     ui->frame->recalcularSCN();
 }
 
 void MainWindow::on_btn_diagEsqCima_clicked(){
     ui->frame->window.centro_x -= deslocamentoWindow;
     ui->frame->window.centro_y += deslocamentoWindow;
+    ui->frame->window.setLimites();
     ui->frame->recalcularSCN();
 }
 
 void MainWindow::on_btn_diagEsqBaixo_clicked(){
     ui->frame->window.centro_x -= deslocamentoWindow;
     ui->frame->window.centro_y -= deslocamentoWindow;
+    ui->frame->window.setLimites();
     ui->frame->recalcularSCN();
 }
 
 void MainWindow::on_btn_diagDirCima_clicked(){
     ui->frame->window.centro_x += deslocamentoWindow;
     ui->frame->window.centro_y += deslocamentoWindow;
+    ui->frame->window.setLimites();
     ui->frame->recalcularSCN();
 }
 
 void MainWindow::on_btn_diagDirBaixo_clicked(){
     ui->frame->window.centro_x += deslocamentoWindow;
     ui->frame->window.centro_y -= deslocamentoWindow;
+    ui->frame->window.setLimites();
     ui->frame->recalcularSCN();
 }
 
-void MainWindow::on_pushButton_clicked()
-{
+void MainWindow::on_btn_reset_clicked(){
     ui->frame->window.centro_x = 0.0;
     ui->frame->window.centro_y = 0.0;
+    ui->frame->window.angulo = 0.0;
+    ui->frame->window.altura = 500.0; // mudar depois com a entrada do usuario
+    ui->frame->window.setLimites();
     ui->frame->recalcularSCN();
 }
 
@@ -211,6 +226,7 @@ MainWindow::~MainWindow()
 {
     delete ui;
 }
+
 
 
 

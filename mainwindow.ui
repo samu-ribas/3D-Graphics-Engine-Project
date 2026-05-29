@@ -346,7 +346,7 @@
       <x>1080</x>
       <y>90</y>
       <width>191</width>
-      <height>161</height>
+      <height>171</height>
      </rect>
     </property>
     <property name="currentIndex">
@@ -356,8 +356,8 @@
      <widget class="QWidget" name="layoutWidget">
       <property name="geometry">
        <rect>
-        <x>0</x>
-        <y>40</y>
+        <x>40</x>
+        <y>70</y>
         <width>109</width>
         <height>66</height>
        </rect>
@@ -398,8 +398,8 @@
      <widget class="QWidget" name="layoutWidget">
       <property name="geometry">
        <rect>
-        <x>0</x>
-        <y>30</y>
+        <x>40</x>
+        <y>70</y>
         <width>109</width>
         <height>66</height>
        </rect>
@@ -495,18 +495,37 @@
        </item>
       </layout>
      </widget>
-     <widget class="QCheckBox" name="checkBox">
+     <widget class="QWidget" name="">
       <property name="geometry">
        <rect>
-        <x>90</x>
-        <y>130</y>
-        <width>82</width>
-        <height>20</height>
+        <x>30</x>
+        <y>120</y>
+        <width>155</width>
+        <height>50</height>
        </rect>
       </property>
-      <property name="text">
-       <string>Centroide</string>
-      </property>
+      <layout class="QVBoxLayout" name="verticalLayout_2">
+       <item>
+        <widget class="QCheckBox" name="checkBoxCoordenadasDoMundo">
+         <property name="layoutDirection">
+          <enum>Qt::LayoutDirection::RightToLeft</enum>
+         </property>
+         <property name="text">
+          <string>Coordenadas do mundo</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QCheckBox" name="checkBoxCentroide">
+         <property name="layoutDirection">
+          <enum>Qt::LayoutDirection::RightToLeft</enum>
+         </property>
+         <property name="text">
+          <string>Centroide</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
      </widget>
     </widget>
    </widget>
@@ -593,9 +612,9 @@
    <widget class="QLabel" name="label_20">
     <property name="geometry">
      <rect>
-      <x>1000</x>
+      <x>980</x>
       <y>20</y>
-      <width>101</width>
+      <width>121</width>
       <height>24</height>
      </rect>
     </property>
@@ -607,9 +626,9 @@
     <property name="geometry">
      <rect>
       <x>1080</x>
-      <y>430</y>
-      <width>151</width>
-      <height>81</height>
+      <y>420</y>
+      <width>161</width>
+      <height>101</height>
      </rect>
     </property>
     <layout class="QGridLayout" name="gridLayout">
@@ -619,7 +638,7 @@
         <cursorShape>PointingHandCursor</cursorShape>
        </property>
        <property name="text">
-        <string>↘</string>
+        <string>🢆</string>
        </property>
       </widget>
      </item>
@@ -629,7 +648,7 @@
         <cursorShape>PointingHandCursor</cursorShape>
        </property>
        <property name="text">
-        <string>↙</string>
+        <string>🢇</string>
        </property>
       </widget>
      </item>
@@ -639,7 +658,7 @@
         <cursorShape>PointingHandCursor</cursorShape>
        </property>
        <property name="text">
-        <string>↓</string>
+        <string>🢃</string>
        </property>
       </widget>
      </item>
@@ -649,7 +668,7 @@
         <cursorShape>PointingHandCursor</cursorShape>
        </property>
        <property name="text">
-        <string>←</string>
+        <string>🢀</string>
        </property>
       </widget>
      </item>
@@ -659,7 +678,7 @@
         <cursorShape>PointingHandCursor</cursorShape>
        </property>
        <property name="text">
-        <string>→</string>
+        <string>🢂</string>
        </property>
       </widget>
      </item>
@@ -669,7 +688,7 @@
         <cursorShape>PointingHandCursor</cursorShape>
        </property>
        <property name="text">
-        <string>↖</string>
+        <string>🢄</string>
        </property>
       </widget>
      </item>
@@ -679,7 +698,7 @@
         <cursorShape>PointingHandCursor</cursorShape>
        </property>
        <property name="text">
-        <string>↗</string>
+        <string>🢅</string>
        </property>
       </widget>
      </item>
@@ -689,12 +708,12 @@
         <cursorShape>PointingHandCursor</cursorShape>
        </property>
        <property name="text">
-        <string>↑</string>
+        <string>🢁</string>
        </property>
       </widget>
      </item>
      <item row="1" column="2">
-      <widget class="QPushButton" name="pushButton">
+      <widget class="QPushButton" name="btn_reset">
        <property name="text">
         <string>RESET</string>
        </property>
@@ -705,9 +724,9 @@
    <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
-      <x>911</x>
-      <y>510</y>
-      <width>161</width>
+      <x>901</x>
+      <y>520</y>
+      <width>171</width>
       <height>32</height>
      </rect>
     </property>
@@ -819,7 +838,6 @@
   <tabstop>btn_girarEsq</tabstop>
   <tabstop>btn_girarDir</tabstop>
   <tabstop>inputAnguloRotacao</tabstop>
-  <tabstop>checkBox</tabstop>
   <tabstop>inputLados</tabstop>
   <tabstop>inputYReta_2</tabstop>
   <tabstop>inputXReta</tabstop>

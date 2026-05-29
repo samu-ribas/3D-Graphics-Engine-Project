@@ -26,8 +26,8 @@ QString Forma :: getNome() const { return nome; }
 
 TipoForma Forma :: getTipo() const { return o_tipo; }
 
-int Forma ::getOutcode(double x, double y, const LimitesWindow& limites){
-    int code = INSIDE;
+std::bitset<4> Forma :: getOutcode(double x, double y, const LimitesWindow& limites){
+    std::bitset<4> code = INSIDE;
 
     if(x < limites.x_min)
         code |= LEFT;    // adiciona o bit da esquerda
@@ -35,7 +35,7 @@ int Forma ::getOutcode(double x, double y, const LimitesWindow& limites){
         code |= RIGHT;   // adiciona o bit da direita
 
     if(y < limites.y_min)
-        code |= BOTTOM;    // adiciona o bit de baixo
+        code |= BASE;    // adiciona o bit de baixo
     else if (y > limites.y_max)
         code |= TOP;       // adiciona o bit de cima
 

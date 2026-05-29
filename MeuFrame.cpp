@@ -50,7 +50,7 @@ void MeuFrame::escalarObjeto(QString n, double sx, double sy){
     }
 }
 
-void MeuFrame::rotacionarObjeto(QString n, double angulo, double x, double y, bool usarCentroide){
+void MeuFrame::rotacionarObjeto(QString n, double angulo, double x, double y, bool usarCentroide, bool usarCoordWindow){
     for(Forma* df : std::as_const(displayFile)){
         if(df->getNome() == n){
             double px, py;
@@ -60,16 +60,21 @@ void MeuFrame::rotacionarObjeto(QString n, double angulo, double x, double y, bo
                 px = centro.x_wc;
                 py = centro.y_wc;
             }else{
-                int larg_vp = this->width() - 80;
-                int alt_vp  = this->height() - 80;
+                if(usarCoordWindow){
+                    px = x;
+                    py = y;
+                }else{
+                    int larg_vp = this->width() - this->window.getMargem() * 2;
+                    int alt_vp  = this->height() - this->window.getMargem() * 2;
 
-                if (larg_vp <= 0 || alt_vp <= 0 || window.largura == 0 || window.altura == 0) return;
+                    if (larg_vp <= 0 || alt_vp <= 0 || window.largura == 0 || window.altura == 0) return;
 
-                double x_scn = x / (larg_vp / 2.0);
-                double y_scn = y / (alt_vp / 2.0);
+                    double x_scn = x / (larg_vp / 2.0);
+                    double y_scn = y / (alt_vp / 2.0);
 
-                px = x_scn * (window.largura / 2.0) + window.centro_x;
-                py = y_scn * (window.altura / 2.0) + window.centro_y;
+                    px = x_scn * (window.largura / 2.0) + window.centro_x;
+                    py = y_scn * (window.altura / 2.0) + window.centro_y;
+                }
             }
             Matriz mToOrigin = Matriz::gerarMatrizT(-px, -py);
             Matriz mRotation = Matriz::gerarMatrizR(-angulo);

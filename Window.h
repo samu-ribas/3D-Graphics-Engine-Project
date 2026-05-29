@@ -13,18 +13,11 @@ class Window
 {
 public:
     double centro_x, centro_y, largura, altura, angulo;
+    LimitesWindow limites;
 
     Window(double cx, double cy, double w, double h)
         : centro_x(cx), centro_y(cy), largura(w), altura(h), angulo(0.0) {
 
-    }
-
-    void setMargem(int novoValor) {
-        margem = novoValor;
-    }
-
-    int getMargem() {
-        return margem;
     }
 
     void desenharViewport(QPainter& painter, int larg_tela, int alt_tela){
@@ -41,17 +34,24 @@ public:
         painter.drawRect(0, 0, larg_interna, alt_interna);
     }
 
-    LimitesWindow getLimites() const {
-        LimitesWindow limites;
-
+    void setLimites() {
         limites.x_min = this->centro_x - (this->largura / 2.0);
         limites.x_max = this->centro_x + (this->largura / 2.0);
         limites.y_min = this->centro_y - (this->altura / 2.0);
         limites.y_max = this->centro_y + (this->altura / 2.0);
+    }
 
+    LimitesWindow getLimites() const {
         return limites;
     }
 
+    void setMargem(int novoValor) {
+        margem = novoValor;
+    }
+
+    int getMargem() {
+        return margem;
+    }
 private:
     int margem;
 };

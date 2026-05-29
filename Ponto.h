@@ -16,8 +16,7 @@ public:
         const Coordenada& c = this->p.front();
         LimitesWindow limites = win.getLimites();
 
-        int outcode = getOutcode(c.x_wc, c.y_wc, limites);
-
+        std::bitset<4> outcode = getOutcode(c.x_wc, c.y_wc, limites);
         if(outcode == INSIDE)
             return true;
         else

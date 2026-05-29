@@ -4,7 +4,7 @@
 #include <QPainter>
 #include <QVector>
 #include <QPoint>
-#include <BitsClipping.h>
+#include <bitset>
 #include "Window.h"
 
 struct Coordenada{
@@ -26,11 +26,12 @@ enum class TipoForma{PONTO, RETA, POLIGONO};
 
 class Forma{
 public:
-    const int INSIDE = 0; // 0000
-    const int LEFT   = 1; // 0001
-    const int RIGHT  = 2; // 0010
-    const int BOTTOM = 4; // 0100
-    const int TOP    = 8; // 1000
+    const std::bitset<4> INSIDE = (0b0000);
+    const std::bitset<4> LEFT   = (0b0001);
+    const std::bitset<4> RIGHT  = (0b0010);
+    const std::bitset<4> BASE   = (0b0100);
+    const std::bitset<4> TOP    = (0b1000);
+
     Forma(QString n, TipoForma tipo);
 
     virtual ~Forma(){}
@@ -45,15 +46,12 @@ public:
     std::list<Coordenada>& getCoordenada();
     QString getNome() const ;
     TipoForma getTipo() const ;
-    int getOutcode(double x, double y, const LimitesWindow& limites);
+    std::bitset<4> getOutcode(double x, double y, const LimitesWindow& limites);
 
 protected:
     QString nome;
     TipoForma o_tipo;
     std::list<Coordenada>p;
-
-private:
-    BitsClipping bitObj;
 };
 
 #endif // FORMA_H

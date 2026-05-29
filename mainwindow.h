@@ -38,7 +38,7 @@ private slots:
     void on_btn_diagEsqBaixo_clicked();
     void on_btn_diagDirCima_clicked();
     void on_btn_diagDirBaixo_clicked();
-    void on_pushButton_clicked();
+    void on_btn_reset_clicked();
 
 private:
     Ui::MainWindow *ui;

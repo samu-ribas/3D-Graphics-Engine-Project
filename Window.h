@@ -27,18 +27,21 @@ public:
         int larg_interna = larg_tela - (this->margem * 2);
         int alt_interna  = alt_tela - (this->margem * 2);
 
-        QPen canetaVermelha(Qt::darkRed, 2);
+        QPen canetaVermelha(Qt::white, 4);
         painter.setPen(canetaVermelha);
 
         //o desenho vai de 0,0 até a largura interna
         painter.drawRect(0, 0, larg_interna, alt_interna);
     }
 
-    void setLimites() {
-        limites.x_min = this->centro_x - (this->largura / 2.0);
-        limites.x_max = this->centro_x + (this->largura / 2.0);
-        limites.y_min = this->centro_y - (this->altura / 2.0);
-        limites.y_max = this->centro_y + (this->altura / 2.0);
+    void setLimites(){
+       double margem = 1.0;
+
+        limites.x_min = this->centro_x - (this->largura / 2.0) + margem;
+        limites.x_max = this->centro_x + (this->largura / 2.0) - margem;
+
+        limites.y_min = this->centro_y - (this->altura / 2.0) + margem;
+        limites.y_max = this->centro_y + (this->altura / 2.0) - margem;
     }
 
     LimitesWindow getLimites() const {

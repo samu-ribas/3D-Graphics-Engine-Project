@@ -45,12 +45,12 @@ public:
 
             if((out_fora & TOP).any()){
                 //top: X = 1/m * (Yt - Y1) + X1
-                x_int = p1_temp.x_wc + (1.0/m) * (limites.y_max - p1_temp.y_wc);
+                x_int = p1_temp.x_wc + ((limites.y_max - p1_temp.y_wc)/m);
                 y_int = limites.y_max;
             }
             else if((out_fora & BASE).any()){
                 //base: X = 1/m * (Yf - Y1) + X1
-                x_int = p1_temp.x_wc + (1.0/m) * (limites.y_min - p1_temp.y_wc);
+                x_int = p1_temp.x_wc + ((limites.y_min - p1_temp.y_wc)/m);
                 y_int = limites.y_min;
             }
             else if((out_fora & RIGHT).any()){
@@ -92,7 +92,7 @@ public:
         double x2_vp = (c2_scn.x_wc + 1.0) * (larg_vp / 2.0);
         double y2_vp = (1.0 - c2_scn.y_wc) * (alt_vp / 2.0);
 
-        QPen caneta(Qt::white, 5);
+        QPen caneta(Qt::white, 4);
         painter.setPen(caneta);
         painter.drawLine(QLineF(x1_vp, y1_vp, x2_vp, y2_vp));
     }

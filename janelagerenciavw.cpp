@@ -16,9 +16,9 @@ JanelaViewportWindow::JanelaViewportWindow( QWidget *parent, MeuFrame *frame )
 
     Viewport *padraoV = new Viewport(
         "Padrao",
-        450, 225,
-        900,
-        450
+        440, 225,
+        870,
+        440
     );
     frame->setViewportAtiva( padraoV );
     listaViewport.push_back( padraoV );
@@ -36,9 +36,9 @@ JanelaViewportWindow::JanelaViewportWindow( QWidget *parent, MeuFrame *frame )
 
     Janela *padraoW = new Janela(
         "Padrao",
-        450, 225,
-        900,
-        450
+        0, 0,
+        870,
+        440
         );
     frame->setJanelaAtiva( padraoW );
     listaJanela.push_back( padraoW );
@@ -47,7 +47,7 @@ JanelaViewportWindow::JanelaViewportWindow( QWidget *parent, MeuFrame *frame )
 
     padraoW = new Janela(
         "CemPorCem",
-        50, 50,
+        0, 0,
         100,
         100
         );
@@ -312,6 +312,7 @@ void JanelaViewportWindow::on_windowEsquerda_pressed()
 
 void JanelaViewportWindow::on_windowRotacaAntihorario_pressed()
 {
+    /*
     Janela *windowAtual = buscar_window(ui->windowAtivador->currentText());
     double valor = ui->windowValorTranformacao->value();
 
@@ -319,11 +320,13 @@ void JanelaViewportWindow::on_windowRotacaAntihorario_pressed()
 
     frame->atualizarTransformada();
     atualizar_display_valores_window( windowAtual );
+    */
 }
 
 
 void JanelaViewportWindow::on_windowRotacaHorario_pressed()
 {
+    /*
     Janela *windowAtual = buscar_window(ui->windowAtivador->currentText());
     double valor = ui->windowValorTranformacao->value();
 
@@ -331,5 +334,6 @@ void JanelaViewportWindow::on_windowRotacaHorario_pressed()
 
     frame->atualizarTransformada();
     atualizar_display_valores_window( windowAtual );
+    */
 }
 

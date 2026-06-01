@@ -4,6 +4,7 @@
 //#include <list>
 #include <QString>
 #include "coordenada.h"
+#include "Matriz.h"
 
 class Viewport
 {
@@ -13,6 +14,9 @@ protected:
     double largura;
     double altura;
     double angulo;
+
+    Coordenada getUnprocessedMin();
+    Coordenada getUnprocessedMax();
 
 public:
     Viewport( QString nome, double x, double y, double largura, double altura );
@@ -26,6 +30,11 @@ public:
     Coordenada getMax();
     QString getNome();
     double getAngulo();
+
+    Linha getTopo();
+    Linha getFundo();
+    Linha getDireita();
+    Linha getEsquerda();
 
     // Setters
     void setCentro( Coordenada centro );

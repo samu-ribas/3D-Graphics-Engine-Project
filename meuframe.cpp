@@ -15,21 +15,21 @@ MeuFrame::MeuFrame( QWidget *parent ) : QFrame( parent ) {
 void MeuFrame:: adicionarPonto( QString name, double x, double y ){
     Ponto *novo_ponto = new Ponto( name, x, y );
     displayFile.append( novo_ponto );
-    novo_ponto->atualizarCoordenadaScn( transdormadaViewport, *viewportAtiva );
+    novo_ponto->atualizarCoordenadaScn( transdormadaViewport, *windowAtiva );
     update();
 }
 
 void MeuFrame:: adicionarReta( QString name, double x1, double y1, double x2, double y2 ){
     Reta *nova_reta = new Reta( name, x1, y1, x2, y2 );
     displayFile.append( nova_reta );
-    nova_reta->atualizarCoordenadaScn( transdormadaViewport, *viewportAtiva );
+    nova_reta->atualizarCoordenadaScn( transdormadaViewport, *windowAtiva );
     update();
 }
 
 void MeuFrame:: adicionarPoligono( QString name, std::list<Coordenada> pontos ){
     Poligono *novo_poligono = new Poligono( name, pontos );
     displayFile.append( novo_poligono );
-    novo_poligono->atualizarCoordenadaScn( transdormadaViewport, *viewportAtiva );
+    novo_poligono->atualizarCoordenadaScn( transdormadaViewport, *windowAtiva );
     update();
 }
 
@@ -38,7 +38,7 @@ void MeuFrame::paintEvent( QPaintEvent *event ){
     QPainter painter( this );
 
     // Se a caneta para desenhar a borda
-    QPen caneta(Qt::gray, 1, Qt::SolidLine, Qt::RoundCap);
+    QPen caneta(Qt::red, 1, Qt::SolidLine, Qt::RoundCap);
     painter.setPen(caneta);
 
     // Desenha a borda da viewport (para debug)
@@ -53,7 +53,7 @@ void MeuFrame::paintEvent( QPaintEvent *event ){
 
     // Desenha todos os objetos
     for( Forma* df : std::as_const( displayFile ))
-        df->desenhar( painter );
+        df->desenhar( painter, *viewportAtiva );
 }
 
 void MeuFrame::transladarObjeto( QString n, double dx, double dy ){
@@ -61,7 +61,7 @@ void MeuFrame::transladarObjeto( QString n, double dx, double dy ){
         if( df->getNome().compare( n ) == 0 ){
             Matriz t = Matriz::gerarMatrizT( dx, dy );
             df->aplicarTransformacao( t );
-            df->atualizarCoordenadaScn( transdormadaViewport, *viewportAtiva );
+            df->atualizarCoordenadaScn( transdormadaViewport, *windowAtiva );
             break;
         }
     }
@@ -78,7 +78,7 @@ void MeuFrame::escalarObjeto( QString n, double sx, double sy ){
 
             Matriz composta = mToReturn * escala * mToOrigin;
             df->aplicarTransformacao( composta );
-            df->atualizarCoordenadaScn( transdormadaViewport, *viewportAtiva );
+            df->atualizarCoordenadaScn( transdormadaViewport, *windowAtiva );
             break;
         }
     }
@@ -105,7 +105,7 @@ void MeuFrame::rotacionarObjeto( QString n, double angulo, double x, double y, b
 
             Matriz composta = mToReturn * mRotation * mToOrigin;
             df->aplicarTransformacao( composta );
-            df->atualizarCoordenadaScn( transdormadaViewport, *viewportAtiva );
+            df->atualizarCoordenadaScn( transdormadaViewport, *windowAtiva );
             break;
         }
     }
@@ -144,10 +144,11 @@ void MeuFrame::atualizarTransformada() {
     Matriz translacaoViewport = Matriz::gerarMatrizT( viewport->getCentro() );
 
     this->transdormadaViewport = translacaoViewport * rotacaoWindow * escala * translacaoWindow;
-    this->transdormadaViewport.imprimir();
+
+    //this->transdormadaViewport.imprimir();
 
     for ( Forma* obj : std::as_const( displayFile )) {
-        obj->atualizarCoordenadaScn( this->transdormadaViewport, *viewportAtiva );
+        obj->atualizarCoordenadaScn( this->transdormadaViewport, *windowAtiva );
     }
     this->update();
 }

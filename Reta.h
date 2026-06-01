@@ -3,6 +3,7 @@
 
 #include "forma.h"
 #include "Matriz.h"
+#include <QDebug>
 
 class Reta : public Forma{
 public:
@@ -12,22 +13,28 @@ public:
         p.push_back({x2, y2});
     }
 
-    void desenhar(QPainter &painter) override{
+    void desenhar(QPainter &painter, Viewport viewport) override{
         QPen caneta(Qt::white, 1);
         painter.setPen(caneta);
         auto it = p.begin();
+
         if( p.size()>=2 ){
 
             Coordenada p1 = *it;
             it++;
             Coordenada p2 = *it;
 
-            if ( ( p1.pos.any() && p2.pos.any() )) // Ambas para fora
-                return;
+            if (( p1.pos | p2.pos ).none() ) {
+                // Ambos os pontos estao pra dentro
+                painter.drawLine(QLineF( p1.xScn, p1.yScn, p2.xScn, p2.yScn )); // Desenha a reta completa
+            }
+            else if (( p1.pos & p2.pos ).any() ) {
+            }
+            else {
+                Linha *l = recorte(&p1, &p2, viewport);
 
-            if ( p1.pos.none() && p1.pos.none() )
-                painter.drawLine(QLineF( p1.xScn, p1.yScn, p2.xScn, p2.yScn ));
-            //else ()
+                painter.drawLine(QLineF( l->p1.x, l->p1.y, l->p2.x, l->p2.y ));
+            }
         }
     }
 
@@ -37,19 +44,20 @@ public:
         }
     }
 
-    void atualizarCoordenadaScn(const Matriz& m, Viewport viewport) override{
-        for(Coordenada& vertice : this->p){
+    void atualizarCoordenadaScn(const Matriz& m, Janela window) override{
+        for( Coordenada& vertice : this->p ){
+
             Coordenada resultado;
             resultado = m * vertice;
 
             vertice.xScn = resultado.x;
             vertice.yScn = resultado.y;
 
-            vertice.pos.set( 0, vertice.xScn < viewport.getMin().x );
-            vertice.pos.set( 1, vertice.xScn > viewport.getMax().x );
+            vertice.pos.set( 0, ( vertice.x <= window.getMin().x ));
+            vertice.pos.set( 1, ( vertice.x >= window.getMax().x ));
 
-            vertice.pos.set( 2, vertice.yScn < viewport.getMin().y );
-            vertice.pos.set( 3, vertice.yScn > viewport.getMax().y );
+            vertice.pos.set( 2, ( vertice.y <= window.getMin().y ));
+            vertice.pos.set( 3, ( vertice.y >= window.getMax().y ));
         }
     }
 };

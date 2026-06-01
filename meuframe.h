@@ -25,6 +25,8 @@ private:
 protected:
     void paintEvent( QPaintEvent *event ) override;
 
+
+
 public:
     explicit MeuFrame( QWidget *parent = nullptr );
     ~MeuFrame();

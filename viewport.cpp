@@ -16,19 +16,97 @@ Viewport::Viewport( QString nome, double x, double y, double largura, double alt
     this->angulo = angulo;
 }
 
-Coordenada Viewport::getCentro() { return this->centro; }
+Coordenada Viewport::getUnprocessedMin() {
+    return {centro.x - (largura / 2), centro.y - (altura / 2)};
+}
+Coordenada Viewport::getUnprocessedMax() {
+    return {centro.x + (largura / 2), centro.y + (altura / 2)};
+}
 
-double Viewport::getAltura() { return this->altura; }
+Coordenada Viewport::getCentro() {
+    return this->centro;
+}
+
+double Viewport::getAltura() {
+    return this->altura;
+}
 
 double Viewport::getLargura() { return this->largura; }
 
-Coordenada Viewport::getMin() { return {centro.x - (largura / 2), centro.y - (altura / 2)}; }
+Coordenada Viewport::getMin() {
 
-Coordenada Viewport::getMax() { return {centro.x + (largura / 2), centro.y + (altura / 2)}; }
+    Coordenada resultado = getUnprocessedMin();
+
+    Matriz rotacao = Matriz::gerarMatrizR(getAngulo());
+    Matriz translasao = Matriz::gerarMatrizT(getCentro());
+    Matriz translasaoVolta = Matriz::gerarMatrizT(-getCentro());
+
+    translasao = translasaoVolta * rotacao * translasao;
+    resultado = translasao * resultado;
+
+    return resultado;
+}
+
+Coordenada Viewport::getMax() {
+
+    Coordenada resultado = getUnprocessedMax();
+
+    Matriz rotacao = Matriz::gerarMatrizR(getAngulo());
+    Matriz translasao = Matriz::gerarMatrizT(getCentro());
+    Matriz translasaoVolta = Matriz::gerarMatrizT(-getCentro());
+
+    translasao = translasaoVolta * rotacao * translasao;
+    resultado = translasao * resultado;
+
+    return resultado;
+}
 
 double Viewport::getAngulo() { return this->angulo; }
 
 
+Linha Viewport::getTopo() {
+    Coordenada ponto1;
+    Coordenada ponto2;
+
+    ponto1 = {getMax()};
+
+    ponto2 = {getMin().x, getMax().y};
+
+    return {ponto1, ponto2};
+}
+
+Linha Viewport::getFundo() {
+    Coordenada ponto1;
+    Coordenada ponto2;
+
+    ponto1 = {getMin()};
+
+    ponto2 = {getMax().x, getMin().y};
+
+    return {ponto1, ponto2};
+}
+
+Linha Viewport::getDireita() {
+    Coordenada ponto1;
+    Coordenada ponto2;
+
+    ponto1 = {getMin()};
+
+    ponto2 = {getMin().x, getMax().y};
+
+    return {ponto1, ponto2};
+}
+
+Linha Viewport::getEsquerda() {
+    Coordenada ponto1;
+    Coordenada ponto2;
+
+    ponto1 = {getMax()};
+
+    ponto2 = {getMax().x, getMin().y};
+
+    return {ponto1, ponto2};
+}
 
 
 

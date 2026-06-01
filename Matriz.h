@@ -7,6 +7,7 @@ class Matriz
 {
 public:
     double m[3][3];
+    //double m[4][4];
     Matriz();
 
     static Matriz gerarMatrizT(double dx, double dy);

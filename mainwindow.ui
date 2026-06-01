@@ -17,9 +17,9 @@
    <widget class="MeuFrame" name="frame">
     <property name="geometry">
      <rect>
-      <x>180</x>
+      <x>199</x>
       <y>10</y>
-      <width>900</width>
+      <width>880</width>
       <height>450</height>
      </rect>
     </property>
@@ -513,8 +513,8 @@
      <rect>
       <x>10</x>
       <y>10</y>
-      <width>161</width>
-      <height>286</height>
+      <width>179</width>
+      <height>321</height>
      </rect>
     </property>
     <layout class="QVBoxLayout" name="verticalLayout_2">

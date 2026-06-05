@@ -18,7 +18,6 @@ public:
     }
 
     void desenharViewport(QPainter& painter, int larg_tela, int alt_tela){
-        this->setMargem(40); //futuramente receber a margem
         painter.translate(this->margem, this->margem);
 
         int larg_interna = larg_tela - (this->margem * 2);
@@ -32,13 +31,12 @@ public:
     }
 
     void setLimites(){
-       double margem = 1.0;
 
-        limites.x_min = this->centro_x - (this->largura / 2.0) + margem;
-        limites.x_max = this->centro_x + (this->largura / 2.0) - margem;
+        limites.x_min = this->centro_x - (this->largura / 2.0) ;
+        limites.x_max = this->centro_x + (this->largura / 2.0) ;
 
-        limites.y_min = this->centro_y - (this->altura / 2.0) + margem;
-        limites.y_max = this->centro_y + (this->altura / 2.0) - margem;
+        limites.y_min = this->centro_y - (this->altura / 2.0) ;
+        limites.y_max = this->centro_y + (this->altura / 2.0) ;
     }
 
     LimitesWindow getLimites() const {return limites;}

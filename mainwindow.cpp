@@ -10,7 +10,9 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {    
     ui->setupUi(this);
-    this->processarWindow();
+    ui->frame->window = Window(0.0, 0.0, 1000, 500);//inicializa a câmera diretamente no Frame
+    ui->frame->window.setLimites();
+    ui->frame->recalcularSCN();
     this->setDeslocamento();
 
     //stacked widget + comboBox
@@ -122,11 +124,7 @@ void MainWindow::processarPoligono(double x, double y, double c, double h){
 }
 
 void MainWindow::processarWindow(){
-    double l = 1000.0; // mudar depois com entrada do usuario
-    double a = 500.0;
-    ui->frame->window = Window(0.0, 0.0, l, a);//inicializa a câmera diretamente no Frame
-    ui->frame->window.setLimites();
-    ui->frame->recalcularSCN();
+
 }
 
 void MainWindow::setDeslocamento(){

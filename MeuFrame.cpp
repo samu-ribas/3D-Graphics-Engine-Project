@@ -2,11 +2,8 @@
 #include "Ponto.h"
 #include "Reta.h"
 #include "Poligono.h"
-#include "Matriz.h"
-#include "Forma.h"
 #include <cmath>
 #include <QPainter>
-#include <QDebug>
 
 MeuFrame::MeuFrame(QWidget *parent) : QFrame(parent), window(0,0,1000,500) {}
 

@@ -1,5 +1,4 @@
 #include "Matriz.h"
-#include <QDebug>
 #include <cmath>
 
 Matriz::Matriz()

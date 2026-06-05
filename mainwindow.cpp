@@ -4,7 +4,6 @@
 #include <cmath>
 #include <QMessageBox>
 #include "Forma.h"
-#include "Window.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)

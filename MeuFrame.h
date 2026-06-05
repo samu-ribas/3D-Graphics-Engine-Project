@@ -2,8 +2,6 @@
 #define MEUFRAME_H
 #include <QFrame>
 #include <QVector>
-#include "Forma.h"
-#include "Window.h"
 #include "Matriz.h"
 
 class MeuFrame : public QFrame

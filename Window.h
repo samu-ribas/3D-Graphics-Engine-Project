@@ -12,7 +12,6 @@ struct LimitesWindow {
 class Window
 {
 public:
-
     Window(double cx, double cy, double w, double h)
         : margem(80), centro_x(cx), centro_y(cy), largura(w), altura(h), angulo(0.0){
     }
@@ -28,14 +27,12 @@ public:
     LimitesWindow getLimites() const {return limites;}
 
     int getMargem(){return margem;}
-    double getCentro_x(){ return this->centro_x;}
-    double getCentro_y(){ return this->centro_y;}
-    double getLargura(){ return this->largura;}
-    double getAltura(){ return this->altura;}
-    double getAngulo(){ return this->angulo;}
+    double getCentro_x() const { return this->centro_x;}
+    double getCentro_y() const { return this->centro_y;}
+    double getLargura() const { return this->largura;}
+    double getAltura() const { return this->altura;}
+    double getAngulo() const { return this->angulo;}
 
-    void setCentro_x(double valor){this->centro_x=valor;}
-    void setCentro_y(double valor){this->centro_y=valor;}
     void setLargura(double valor){
         if(valor>0.0)
             this->largura=valor;
@@ -44,6 +41,8 @@ public:
         if(valor>0.0)
             this->altura=valor;
     }
+    void setCentro_x(double valor){this->centro_x=valor;}
+    void setCentro_y(double valor){this->centro_y=valor;}
     void setAngulo(double valor){this->angulo=valor;}
     void setMargem(int valor){ this->margem = valor;}
 

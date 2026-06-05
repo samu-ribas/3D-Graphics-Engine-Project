@@ -123,22 +123,21 @@ void MeuFrame::paintEvent(QPaintEvent *event){
     int x_canto = (this->width() - largura ) / 2;
     int y_canto = (this->height() - altura) / 2;
 
-    //move a origem para esse canto centralizado
+    //move a origem para esse canto centralizad
     painter.translate(x_canto, y_canto);
+    for(Forma* df : std::as_const(displayFile)){
+        if(df->verificarClipping(this->window)){
+            df->desenhar(painter, this->mCameraAtual, this->window.getLargura(), this->window.getAltura());
+        }
+    }
 
-    QPen canetaVermelha(Qt::red, 4);
+    QPen canetaVermelha(Qt::darkRed, 6);
     painter.setPen(canetaVermelha);
 
     painter.drawLine(0, 0, largura, 0);
     painter.drawLine(largura, 0, largura, altura);
     painter.drawLine(largura, altura, 0, altura);
     painter.drawLine(0, altura, 0, 0);
-
-    for(Forma* df : std::as_const(displayFile)){
-        if(df->verificarClipping(this->window)){
-            df->desenhar(painter, this->mCameraAtual, this->window.getLargura(), this->window.getAltura());
-        }
-    }
 }
 
 MeuFrame::~MeuFrame() {

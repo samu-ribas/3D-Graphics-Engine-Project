@@ -124,8 +124,17 @@ void MainWindow::processarPoligono(double x, double y, double c, double h){
     ui->frame->adicionarPoligono(ui->lineNome->text(), listaDePontos);
 }
 
-void MainWindow::processarWindow(){
-
+void MainWindow::on_btn_winConfig_pressed()
+{
+    DialogConfigWindow winConfig = DialogConfigWindow(this);
+    winConfig.setDisplay(ui->frame->window.getLargura(), ui->frame->window.getAltura());
+    ;
+    if(winConfig.exec() == QDialog::Accepted){
+        ui->frame->window.setLargura(winConfig.getLarguraDigitada());
+        ui->frame->window.setAltura(winConfig.getAlturaDigitada());
+        ui->frame->window.setLimites();
+        ui->frame->recalcularSCN();
+    }
 }
 
 void MainWindow::setDeslocamento(){
@@ -219,22 +228,11 @@ void MainWindow::on_btn_reset_clicked(){
     ui->frame->window.setCentro_x(0.0);
     ui->frame->window.setCentro_y(0.0);
     ui->frame->window.setAngulo(0.0);
-    ui->frame->window.setAltura(500.0) ;// mudar depois com a entrada do usuario
+    // DialogConfigWindow winConfig = DialogConfigWindow(this);
+    // ui->frame->window.setAltura(winConfig.getAlturaDigitada());
+    // ui->frame->window.setLargura(winConfig.getLarguraDigitada());
     ui->frame->window.setLimites();
     ui->frame->recalcularSCN();
-}
-
-void MainWindow::on_btn_winConfig_pressed()
-{
-    DialogConfigWindow winConfig = DialogConfigWindow(this);
-    winConfig.setDisplay(ui->frame->window.getLargura(), ui->frame->window.getAltura());
-;
-    if(winConfig.exec() == QDialog::Accepted){
-        ui->frame->window.setLargura(winConfig.getLarguraDigitada());
-        ui->frame->window.setAltura(winConfig.getAlturaDigitada());
-        ui->frame->window.setLimites();
-        ui->frame->recalcularSCN();
-    }
 }
 
 MainWindow::~MainWindow()

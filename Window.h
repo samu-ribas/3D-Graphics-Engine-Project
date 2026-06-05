@@ -12,12 +12,9 @@ struct LimitesWindow {
 class Window
 {
 public:
-    double centro_x, centro_y, largura, altura, angulo;
-    LimitesWindow limites;
 
     Window(double cx, double cy, double w, double h)
-        : centro_x(cx), centro_y(cy), largura(w), altura(h), angulo(0.0) {
-
+        : margem(40), centro_x(cx), centro_y(cy), largura(w), altura(h), angulo(0.0){
     }
 
     void desenharViewport(QPainter& painter, int larg_tela, int alt_tela){
@@ -44,18 +41,25 @@ public:
         limites.y_max = this->centro_y + (this->altura / 2.0) - margem;
     }
 
-    LimitesWindow getLimites() const {
-        return limites;
-    }
+    LimitesWindow getLimites() const {return limites;}
 
-    void setMargem(int novoValor) {
-        margem = novoValor;
-    }
+    int getMargem(){return margem;}
+    double getCentro_x(){ return this->centro_x;}
+    double getCentro_y(){ return this->centro_y;}
+    double getLargura(){ return this->largura;}
+    double getAltura(){ return this->altura;}
+    double getAngulo(){ return this->angulo;}
 
-    int getMargem() {
-        return margem;
-    }
+    void setCentro_x(double valor){this->centro_x=valor;}
+    void setCentro_y(double valor){this->centro_y=valor;}
+    void setLargura(double valor){this->largura=valor;}
+    void setAltura(double valor){this->altura=valor;}
+    void setAngulo(double valor){this->angulo=valor;}
+    void setMargem(int valor){ this->margem = valor;}
+
 private:
     int margem;
+    double centro_x, centro_y, largura, altura, angulo;
+        LimitesWindow limites;
 };
 #endif // WINDOW_H

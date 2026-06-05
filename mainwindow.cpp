@@ -67,25 +67,25 @@ void MainWindow::inputObjeto(){
     switch(id){
         case 0:// ponto
             ui->frame->adicionarPonto(ui->lineNome->text(),
-                                      ui->inputX->text().toDouble() + ui->frame->window.centro_x,
-                                      ui->inputY->text().toDouble() + ui->frame->window.centro_y);
+                                      ui->inputX->text().toDouble() + ui->frame->window.getCentro_x(),
+                                      ui->inputY->text().toDouble() + ui->frame->window.getCentro_y());
             break;
         case 1://reta
             ui->frame->adicionarReta(ui->lineNome->text(),
-                                    ui->inputXReta->text().toDouble() + ui->frame->window.centro_x,
-                                    ui->inputYReta->text().toDouble() + ui->frame->window.centro_y,
-                                    ui->inputXReta_2->text().toDouble() + ui->frame->window.centro_x ,
-                                    ui->inputYReta_2->text().toDouble() + ui->frame->window.centro_y );
+                                    ui->inputXReta->text().toDouble() + ui->frame->window.getCentro_x(),
+                                     ui->inputYReta->text().toDouble() + ui->frame->window.getCentro_y(),
+                                    ui->inputXReta_2->text().toDouble() + ui->frame->window.getCentro_x (),
+                                     ui->inputYReta_2->text().toDouble() + ui->frame->window.getCentro_y() );
             break;
         case 2://poligono
-            this->processarPoligono(ui->inputXPoligono->text().toDouble() + ui->frame->window.centro_x, // x do centro
-                                   ui->inputYPoligono->text().toDouble() + ui->frame->window.centro_y, // y do centro
+            this->processarPoligono(ui->inputXPoligono->text().toDouble() + ui->frame->window.getCentro_x(), // x do centro
+                                    ui->inputYPoligono->text().toDouble() + ui->frame->window.getCentro_y(), // y do centro
                                    ui->inputLados->text().toInt(),
                                    ui->inputRaio->text().toDouble());
             break;
         case 3://retangulo
-            this->processarPoligono(ui->inputXRetangulo->text().toDouble() + ui->frame->window.centro_x , // x do canto
-                                   ui->inputYRetangulo->text().toDouble() + ui->frame->window.centro_y , // y do canto
+            this->processarPoligono(ui->inputXRetangulo->text().toDouble() + ui->frame->window.getCentro_x (), // x do canto
+                                    ui->inputYRetangulo->text().toDouble() + ui->frame->window.getCentro_y() , // y do canto
                                    ui->comprimentoRetangulo->text().toDouble(),
                                    ui->alturaRetangulo->text().toDouble());
         break;
@@ -136,88 +136,88 @@ void MainWindow::setDeslocamento(){
 
 //métodos da ação da window
 void MainWindow::on_btn_cima_clicked(){
-    ui->frame->window.centro_y += deslocamentoWindow;
+    ui->frame->window.setCentro_y(ui->frame->window.getCentro_y() + deslocamentoWindow);
     ui->frame->window.setLimites();
     ui->frame->recalcularSCN();
 }
 
 void MainWindow::on_btn_baixo_clicked(){
-    ui->frame->window.centro_y -= deslocamentoWindow;
+     ui->frame->window.setCentro_y(ui->frame->window.getCentro_y() - deslocamentoWindow);
     ui->frame->window.setLimites();
     ui->frame->recalcularSCN();
 }
 
 void MainWindow::on_btn_esquerda_clicked(){
-    ui->frame->window.centro_x += deslocamentoWindow;
+    ui->frame->window.setCentro_x(ui->frame->window.getCentro_x() + deslocamentoWindow);
     ui->frame->window.setLimites();
     ui->frame->recalcularSCN();
 }
 
 void MainWindow::on_btn_direita_clicked(){
-    ui->frame->window.centro_x -= deslocamentoWindow;
+    ui->frame->window.setCentro_x(ui->frame->window.getCentro_x() - deslocamentoWindow);
     ui->frame->window.setLimites();
     ui->frame->recalcularSCN();
 }
 
 void MainWindow::on_btn_zoomMais_clicked(){
-    ui->frame->window.altura -= deslocamentoWindow;
-    ui->frame->window.largura -= deslocamentoWindow;
+    ui->frame->window.setAltura(ui->frame->window.getAltura() - deslocamentoWindow);
+    ui->frame->window.setLargura(ui->frame->window.getLargura() - deslocamentoWindow);
     ui->frame->window.setLimites();
     ui->frame->recalcularSCN();
 }
 
 void MainWindow::on_btn_zoomMenos_clicked(){
-    ui->frame->window.altura += deslocamentoWindow;
-    ui->frame->window.largura += deslocamentoWindow;
+    ui->frame->window.setAltura(ui->frame->window.getAltura() + deslocamentoWindow);
+    ui->frame->window.setLargura(ui->frame->window.getLargura() + deslocamentoWindow);
     ui->frame->window.setLimites();
     ui->frame->recalcularSCN();
 }
 
-void MainWindow::on_btn_girarEsq_clicked(){
-    ui->frame->window.angulo -= 10;
+void MainWindow::on_btn_girarEsq_clicked(){;
+    ui->frame->window.setAngulo(ui->frame->window.getAngulo()-10);
     ui->frame->window.setLimites();
     ui->frame->recalcularSCN();
 }
 
 void MainWindow::on_btn_girarDir_clicked(){
-    ui->frame->window.angulo += 10;
+    ui->frame->window.setAngulo(ui->frame->window.getAngulo()+10);
     ui->frame->window.setLimites();
     ui->frame->recalcularSCN();
 }
 
 void MainWindow::on_btn_diagEsqCima_clicked(){
-    ui->frame->window.centro_x -= deslocamentoWindow;
-    ui->frame->window.centro_y += deslocamentoWindow;
+    ui->frame->window.setCentro_x(ui->frame->window.getCentro_x() - deslocamentoWindow);
+    ui->frame->window.setCentro_y(ui->frame->window.getCentro_y() + deslocamentoWindow);
     ui->frame->window.setLimites();
     ui->frame->recalcularSCN();
 }
 
 void MainWindow::on_btn_diagEsqBaixo_clicked(){
-    ui->frame->window.centro_x -= deslocamentoWindow;
-    ui->frame->window.centro_y -= deslocamentoWindow;
+    ui->frame->window.setCentro_x(ui->frame->window.getCentro_x() - deslocamentoWindow);
+    ui->frame->window.setCentro_y(ui->frame->window.getCentro_y() - deslocamentoWindow);
     ui->frame->window.setLimites();
     ui->frame->recalcularSCN();
 }
 
 void MainWindow::on_btn_diagDirCima_clicked(){
-    ui->frame->window.centro_x += deslocamentoWindow;
-    ui->frame->window.centro_y += deslocamentoWindow;
+    ui->frame->window.setCentro_x(ui->frame->window.getCentro_x() + deslocamentoWindow);
+    ui->frame->window.setCentro_y(ui->frame->window.getCentro_y() + deslocamentoWindow);
     ui->frame->window.setLimites();
     ui->frame->recalcularSCN();
 }
 
 void MainWindow::on_btn_diagDirBaixo_clicked(){
-    ui->frame->window.centro_x += deslocamentoWindow;
-    ui->frame->window.centro_y -= deslocamentoWindow;
+    ui->frame->window.setCentro_x(ui->frame->window.getCentro_x() + deslocamentoWindow);
+    ui->frame->window.setCentro_y(ui->frame->window.getCentro_y() - deslocamentoWindow);
     ui->frame->window.setLimites();
     ui->frame->recalcularSCN();
 }
 
 void MainWindow::on_btn_reset_clicked(){
-    ui->frame->window.centro_x = 0.0;
-    ui->frame->window.centro_y = 0.0;
-    ui->frame->window.angulo = 0.0;
-    ui->frame->window.altura = 500.0; // mudar depois com a entrada do usuario
+    ui->frame->window.setCentro_x(0.0);
+    ui->frame->window.setCentro_y(0.0);
+    ui->frame->window.setAngulo(0.0);
+    ui->frame->window.setAltura(500.0) ;// mudar depois com a entrada do usuario
     ui->frame->window.setLimites();
     ui->frame->recalcularSCN();
 }

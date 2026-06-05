@@ -67,13 +67,13 @@ void MeuFrame::rotacionarObjeto(QString n, double angulo, double x, double y, bo
                     int larg_vp = this->width() - this->window.getMargem() * 2;
                     int alt_vp  = this->height() - this->window.getMargem() * 2;
 
-                    if (larg_vp <= 0 || alt_vp <= 0 || window.largura == 0 || window.altura == 0) return;
+                    if (larg_vp <= 0 || alt_vp <= 0 || window.getLargura()== 0 || window.getAltura() == 0) return;
 
                     double x_scn = x / (larg_vp / 2.0);
                     double y_scn = y / (alt_vp / 2.0);
 
-                    px = x_scn * (window.largura / 2.0) + window.centro_x;
-                    py = y_scn * (window.altura / 2.0) + window.centro_y;
+                    px = x_scn * (window.getLargura() / 2.0) + window.getCentro_x();
+                    py = y_scn * (window.getAltura() / 2.0) + window.getCentro_y();
                 }
             }
             Matriz mToOrigin = Matriz::gerarMatrizT(-px, -py);
@@ -100,17 +100,17 @@ void MeuFrame::recalcularSCN(){
     Matriz mRotacao;
     Matriz mEscala;
 
-    mTranslacao.m[0][2] = -window.centro_x;
-    mTranslacao.m[1][2] = -window.centro_y;
+    mTranslacao.m[0][2] = -window.getCentro_x();
+    mTranslacao.m[1][2] = -window.getCentro_y();
 
-    double rad = -window.angulo * (M_PI/180.0);
+    double rad = -window.getAngulo() * (M_PI/180.0);
     mRotacao.m[0][0] = cos(rad);
     mRotacao.m[0][1] = -sin(rad);
     mRotacao.m[1][0] = sin(rad);
     mRotacao.m[1][1] = cos(rad);
 
-    mEscala.m[0][0] = 2.0/window.largura;
-    mEscala.m[1][1] = 2.0/window.altura;
+    mEscala.m[0][0] = 2.0/window.getLargura();
+    mEscala.m[1][1] = 2.0/window.getAltura();
 
     this->mCameraAtual = mEscala * mRotacao * mTranslacao;
     this->update();

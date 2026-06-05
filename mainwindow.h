@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 
+
 QT_BEGIN_NAMESPACE
 namespace Ui {
 class MainWindow;
@@ -39,6 +40,8 @@ private slots:
     void on_btn_diagDirCima_clicked();
     void on_btn_diagDirBaixo_clicked();
     void on_btn_reset_clicked();
+
+    void on_btn_winConfig_pressed();
 
 private:
     Ui::MainWindow *ui;

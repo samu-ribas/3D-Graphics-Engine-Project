@@ -10,6 +10,7 @@ SOURCES += \
     Forma.cpp \
     Matriz.cpp \
     MeuFrame.cpp \
+    dialogconfigwindow.cpp \
     main.cpp \
     mainwindow.cpp
 
@@ -21,9 +22,11 @@ HEADERS += \
     Ponto.h \
     Reta.h \
     Window.h \
+    dialogconfigwindow.h \
     mainwindow.h
 
 FORMS += \
+    dialogconfigwindow.ui \
     mainwindow.ui
 
 # Default rules for deployment.

@@ -4,13 +4,14 @@
 #include <cmath>
 #include <QMessageBox>
 #include "Forma.h"
+#include "dialogconfigwindow.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
-{    
+{
     ui->setupUi(this);
-    ui->frame->window = Window(0.0, 0.0, 1000, 500);//inicializa a câmera diretamente no Frame
+    ui->frame->window = Window(0.0, 0.0, 500, 250);//inicializa a câmera diretamente no Frame
     ui->frame->window.setLimites();
     ui->frame->recalcularSCN();
     this->setDeslocamento();
@@ -128,7 +129,11 @@ void MainWindow::processarWindow(){
 }
 
 void MainWindow::setDeslocamento(){
-    this->deslocamentoWindow = ui->spinBoxDesloc->value();
+    double valor = ui->spinBoxDesloc->value();
+    if(valor>500){
+        valor = 500;
+    }
+    this->deslocamentoWindow = valor;
 }
 
 //métodos da ação da window
@@ -219,10 +224,26 @@ void MainWindow::on_btn_reset_clicked(){
     ui->frame->recalcularSCN();
 }
 
+void MainWindow::on_btn_winConfig_pressed()
+{
+    DialogConfigWindow winConfig = DialogConfigWindow(this);
+    winConfig.setDisplay(ui->frame->window.getLargura(), ui->frame->window.getAltura());
+;
+    if(winConfig.exec() == QDialog::Accepted){
+        ui->frame->window.setLargura(winConfig.getLarguraDigitada());
+        ui->frame->window.setAltura(winConfig.getAlturaDigitada());
+        ui->frame->window.setLimites();
+        ui->frame->recalcularSCN();
+    }
+}
+
 MainWindow::~MainWindow()
 {
     delete ui;
 }
+
+
+
 
 
 

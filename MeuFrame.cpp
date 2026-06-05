@@ -4,7 +4,7 @@
 #include "Poligono.h"
 #include <cmath>
 #include <QPainter>
-
+#include <QDebug>
 MeuFrame::MeuFrame(QWidget *parent) : QFrame(parent), window(0,0,1000,500) {}
 
 void MeuFrame:: adicionarPonto(QString name, double x, double y){
@@ -117,16 +117,26 @@ void MeuFrame::recalcularSCN(){
 void MeuFrame::paintEvent(QPaintEvent *event){
     QFrame::paintEvent(event);
     QPainter painter(this);
-    int margemDaWindow = this->window.getMargem()*2;
 
-    this->window.desenharViewport(painter, this->width(), this->height());
+    double altura = this->window.getAltura();
+    double largura = this->window.getLargura();
+    int x_canto = (this->width() - largura ) / 2;
+    int y_canto = (this->height() - altura) / 2;
 
-    int larg_vp = this->width() - margemDaWindow;
-    int alt_vp = this->height() - margemDaWindow;
+    //move a origem para esse canto centralizado
+    painter.translate(x_canto, y_canto);
+
+    QPen canetaVermelha(Qt::red, 4);
+    painter.setPen(canetaVermelha);
+
+    painter.drawLine(0, 0, largura, 0);
+    painter.drawLine(largura, 0, largura, altura);
+    painter.drawLine(largura, altura, 0, altura);
+    painter.drawLine(0, altura, 0, 0);
 
     for(Forma* df : std::as_const(displayFile)){
         if(df->verificarClipping(this->window)){
-            df->desenhar(painter, this->mCameraAtual, larg_vp, alt_vp);
+            df->desenhar(painter, this->mCameraAtual, this->window.getLargura(), this->window.getAltura());
         }
     }
 }

@@ -64,7 +64,7 @@ public:
                 x_int = limites.x_min;
             }
 
-            if (out_fora == outcode1) {
+            if(out_fora == outcode1){
                 p1_temp.x_wc = x_int;
                 p1_temp.y_wc = y_int;
                 outcode1 = getOutcode(p1_temp.x_wc, p1_temp.y_wc, limites);

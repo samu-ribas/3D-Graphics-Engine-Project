@@ -14,24 +14,10 @@ class Window
 public:
 
     Window(double cx, double cy, double w, double h)
-        : margem(40), centro_x(cx), centro_y(cy), largura(w), altura(h), angulo(0.0){
-    }
-
-    void desenharViewport(QPainter& painter, int larg_tela, int alt_tela){
-        painter.translate(this->margem, this->margem);
-
-        int larg_interna = larg_tela - (this->margem * 2);
-        int alt_interna  = alt_tela - (this->margem * 2);
-
-        QPen canetaVermelha(Qt::white, 4);
-        painter.setPen(canetaVermelha);
-
-        //o desenho vai de 0,0 até a largura interna
-        painter.drawRect(0, 0, larg_interna, alt_interna);
+        : margem(80), centro_x(cx), centro_y(cy), largura(w), altura(h), angulo(0.0){
     }
 
     void setLimites(){
-
         limites.x_min = this->centro_x - (this->largura / 2.0) ;
         limites.x_max = this->centro_x + (this->largura / 2.0) ;
 
@@ -50,14 +36,20 @@ public:
 
     void setCentro_x(double valor){this->centro_x=valor;}
     void setCentro_y(double valor){this->centro_y=valor;}
-    void setLargura(double valor){this->largura=valor;}
-    void setAltura(double valor){this->altura=valor;}
+    void setLargura(double valor){
+        if(valor>0.0)
+            this->largura=valor;
+    }
+    void setAltura(double valor){
+        if(valor>0.0)
+            this->altura=valor;
+    }
     void setAngulo(double valor){this->angulo=valor;}
     void setMargem(int valor){ this->margem = valor;}
 
 private:
     int margem;
     double centro_x, centro_y, largura, altura, angulo;
-        LimitesWindow limites;
+    LimitesWindow limites;
 };
 #endif // WINDOW_H

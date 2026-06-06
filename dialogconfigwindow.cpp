@@ -40,6 +40,7 @@ void DialogConfigWindow::setDimensoes() {
         QMessageBox::warning(this, "Erro: Dimensões inválidas.", "Dimensão máx: 891x431");
     }
 }
+
 void DialogConfigWindow::cancelar(){
     this->reject();
 }

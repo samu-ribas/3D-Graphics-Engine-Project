@@ -67,7 +67,7 @@
      </font>
     </property>
     <property name="title">
-     <string>Mover Viewport</string>
+     <string>Mover Câmera</string>
     </property>
     <widget class="QSpinBox" name="spinBoxDesloc">
      <property name="geometry">

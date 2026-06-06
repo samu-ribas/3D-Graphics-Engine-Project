@@ -34,8 +34,11 @@ public:
     double getAngulo() const { return this->angulo;}
 
     void setLargura(double valor){
-        if(valor>0.0)
+        if(valor>0.0){
+            if(valor>891)
+                valor = 891;
             this->largura=valor;
+        }
     }
     void setAltura(double valor){
         if(valor>0.0)

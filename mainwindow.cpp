@@ -171,15 +171,15 @@ void MainWindow::on_btn_direita_clicked(){
 }
 
 void MainWindow::on_btn_zoomMais_clicked(){
-    ui->frame->window.setAltura(ui->frame->window.getAltura() - deslocamentoWindow);
-    ui->frame->window.setLargura(ui->frame->window.getLargura() - deslocamentoWindow);
+    ui->frame->window.setAltura(ui->frame->window.getAltura() + deslocamentoWindow);
+    ui->frame->window.setLargura(ui->frame->window.getLargura() + deslocamentoWindow);
     ui->frame->window.setLimites();
     ui->frame->recalcularSCN();
 }
 
 void MainWindow::on_btn_zoomMenos_clicked(){
-    ui->frame->window.setAltura(ui->frame->window.getAltura() + deslocamentoWindow);
-    ui->frame->window.setLargura(ui->frame->window.getLargura() + deslocamentoWindow);
+    ui->frame->window.setAltura(ui->frame->window.getAltura() - deslocamentoWindow);
+    ui->frame->window.setLargura(ui->frame->window.getLargura() - deslocamentoWindow);
     ui->frame->window.setLimites();
     ui->frame->recalcularSCN();
 }
@@ -215,13 +215,13 @@ void MainWindow::on_btn_diagDirBaixo_clicked(){
 
 void MainWindow::on_btn_girarEsq_clicked(){;
     ui->frame->window.setAngulo(ui->frame->window.getAngulo()-10);
-    ui->frame->window.setLimites();
+    //ui->frame->window.setLimites();
     ui->frame->recalcularSCN();
 }
 
 void MainWindow::on_btn_girarDir_clicked(){
     ui->frame->window.setAngulo(ui->frame->window.getAngulo()+10);
-    ui->frame->window.setLimites();
+    //ui->frame->window.setLimites();
     ui->frame->recalcularSCN();
 }
 

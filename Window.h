@@ -40,10 +40,15 @@ public:
             this->largura=valor;
         }
     }
+
     void setAltura(double valor){
-        if(valor>0.0)
+        if(valor>0.0){
+            if(valor>431)
+                valor = 431;
             this->altura=valor;
+        }
     }
+
     void setCentro_x(double valor){this->centro_x=valor;}
     void setCentro_y(double valor){this->centro_y=valor;}
     void setAngulo(double valor){this->angulo=valor;}

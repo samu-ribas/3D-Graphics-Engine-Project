@@ -73,7 +73,7 @@ public:
     }
 
     bool verificarClipping(const Window& win) override {
-        if (this->p.size() < 3) return false;
+        if(this->p.size() < 3) return false;
 
         this->p_clip.clear();
 
@@ -84,7 +84,7 @@ public:
         double cy = win.getCentro_y();
         double ang = win.getAngulo();
 
-        // construir matriz mundo -> câmera: T(-cx,-cy) * R(-ang)
+        //construir matriz mundo     câmera: T(-cx,-cy) * R(-ang)
         Matriz translacao;
         translacao.m[0][2] = -cx;
         translacao.m[1][2] = -cy;
@@ -96,7 +96,7 @@ public:
         rotacao.m[1][1] = cos(rad);
         Matriz mundo_para_camera = rotacao * translacao;
 
-        // construir matriz inversa (câmera -> mundo): T(cx,cy) * R(ang)
+        // construir matriz inversa    câmera -> mundo: T(cx,cy) * R(ang)
         Matriz translacao_inv;
         translacao_inv.m[0][2] = cx;
         translacao_inv.m[1][2] = cy;
@@ -108,13 +108,12 @@ public:
         rotacao_inv.m[1][1] = cos(rad_inv);
         Matriz camera_para_mundo = translacao_inv * rotacao_inv;
 
-        // converter todos os vértices para coordenadas de câmera
+        //converter todos os vértices para coordenadas de câmera
         std::list<Coordenada> entrada_cam;
-        for (const Coordenada& v : this->p) {
+        for(const Coordenada& v : this->p)
             entrada_cam.push_back(mundo_para_camera * v);
-        }
 
-        // limites no espaço da câmera (janela centralizada na origem)
+        //limites no espaço da câmera, janela centralizada na origem
         double x_min_cam = -larg / 2.0;
         double x_max_cam = larg / 2.0;
         double y_min_cam = -alt / 2.0;
@@ -124,50 +123,50 @@ public:
         std::list<Coordenada> entrada = entrada_cam;
         std::list<Coordenada> saida;
 
-        for (int lado = 0; lado < 4; ++lado) {
+        for(int lado = 0; lado < 4; ++lado){
             saida.clear();
             if (entrada.empty()) break;
             Coordenada S = entrada.back();
-            for (const Coordenada& E : entrada) {
+            for(const Coordenada& E : entrada){
                 // Teste "dentro" inline
                 bool S_dentro, E_dentro;
                 // lado 0: esquerda
-                if (lado == 0) {
+                if(lado == 0){
                     S_dentro = (S.x_wc >= x_min_cam);
                     E_dentro = (E.x_wc >= x_min_cam);
                 }
                 // lado 1: direita
-                else if (lado == 1) {
+                else if(lado == 1){
                     S_dentro = (S.x_wc <= x_max_cam);
                     E_dentro = (E.x_wc <= x_max_cam);
                 }
                 // lado 2: baixo
-                else if (lado == 2) {
+                else if(lado == 2){
                     S_dentro = (S.y_wc >= y_min_cam);
                     E_dentro = (E.y_wc >= y_min_cam);
                 }
                 // lado 3: topo
-                else {
+                else{
                     S_dentro = (S.y_wc <= y_max_cam);
                     E_dentro = (E.y_wc <= y_max_cam);
                 }
 
-                if (E_dentro) {
-                    if (!S_dentro) {
+                if(E_dentro){
+                    if(!S_dentro){
                         // Calcular interseção inline
                         Coordenada i;
                         double dx = E.x_wc - S.x_wc;
                         double dy = E.y_wc - S.y_wc;
-                        if (lado == 0) { // esquerda
+                        if(lado == 0){ // esquera
                             i.x_wc = x_min_cam;
                             i.y_wc = (dx == 0.0) ? S.y_wc : S.y_wc + dy * (x_min_cam - S.x_wc) / dx;
-                        } else if (lado == 1) { // direita
+                        }else if(lado == 1){ // direia
                             i.x_wc = x_max_cam;
                             i.y_wc = (dx == 0.0) ? S.y_wc : S.y_wc + dy * (x_max_cam - S.x_wc) / dx;
-                        } else if (lado == 2) { // baixo
+                        }else if(lado == 2){ // baixo
                             i.y_wc = y_min_cam;
                             i.x_wc = (dy == 0.0) ? S.x_wc : S.x_wc + dx * (y_min_cam - S.y_wc) / dy;
-                        } else { // topo
+                        }else{ // topo
                             i.y_wc = y_max_cam;
                             i.x_wc = (dy == 0.0) ? S.x_wc : S.x_wc + dx * (y_max_cam - S.y_wc) / dy;
                         }
@@ -175,21 +174,21 @@ public:
                     }
                     saida.push_back(E);
                 }
-                else if (S_dentro) {
-                    // Calcular interseção (mesmo código acima)
+                else if(S_dentro){
+                    //calcular interseção
                     Coordenada i;
                     double dx = E.x_wc - S.x_wc;
                     double dy = E.y_wc - S.y_wc;
-                    if (lado == 0) {
+                    if(lado == 0){
                         i.x_wc = x_min_cam;
                         i.y_wc = (dx == 0.0) ? S.y_wc : S.y_wc + dy * (x_min_cam - S.x_wc) / dx;
-                    } else if (lado == 1) {
+                    }else if(lado == 1){
                         i.x_wc = x_max_cam;
                         i.y_wc = (dx == 0.0) ? S.y_wc : S.y_wc + dy * (x_max_cam - S.x_wc) / dx;
-                    } else if (lado == 2) {
+                    }else if(lado == 2){
                         i.y_wc = y_min_cam;
                         i.x_wc = (dy == 0.0) ? S.x_wc : S.x_wc + dx * (y_min_cam - S.y_wc) / dy;
-                    } else {
+                    }else{
                         i.y_wc = y_max_cam;
                         i.x_wc = (dy == 0.0) ? S.x_wc : S.x_wc + dx * (y_max_cam - S.y_wc) / dy;
                     }
@@ -200,8 +199,8 @@ public:
             entrada = saida;
         }
 
-        if (entrada.empty()) return false;
-        for (const Coordenada& c : entrada) {
+        if(entrada.empty()) return false;
+        for(const Coordenada& c : entrada){
             this->p_clip.push_back(camera_para_mundo * c);
         }
         return true;

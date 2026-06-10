@@ -36,7 +36,7 @@ public:
 
     virtual ~Forma(){}
 
-    virtual void desenhar(QPainter &painter, const Matriz& mCam, int larg_vp, int alt_vp) = 0;
+    virtual void desenhar(QPainter &painter, const Matriz& mCam, int larg_vp, int alt_vp, const Window& win) = 0;
 
     virtual bool verificarClipping(const Window& win) = 0;
 

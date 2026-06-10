@@ -127,7 +127,7 @@ void MeuFrame::paintEvent(QPaintEvent *event){
     painter.translate(x_canto, y_canto);
     for(Forma* df : std::as_const(displayFile)){
         if(df->verificarClipping(this->window)){
-            df->desenhar(painter, this->mCameraAtual, this->window.getLargura(), this->window.getAltura());
+            df->desenhar(painter, this->mCameraAtual, this->window.getLargura(), this->window.getAltura(), this->window);
         }
     }
 

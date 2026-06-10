@@ -39,6 +39,8 @@ private slots:
     void on_btn_diagDirCima_clicked();
     void on_btn_diagDirBaixo_clicked();
     void on_btn_reset_clicked();
+    void on_btn_zoomViewportMais_clicked();
+    void on_btn_zoomViewportMenos_clicked();
 
 private:
     Ui::MainWindow *ui;

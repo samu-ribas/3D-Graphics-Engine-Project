@@ -13,8 +13,7 @@ class Window
 {
 public:
     Window(double cx, double cy, double w, double h)
-        : margem(80), centro_x(cx), centro_y(cy), largura(w), altura(h), angulo(0.0){
-    }
+        : margem(80), centro_x(cx), centro_y(cy), largura(w), altura(h), angulo(0.0), zoomViewport(1.0){}
 
     void setLimites(){
         limites.x_min = this->centro_x - (this->largura / 2.0) ;
@@ -32,6 +31,22 @@ public:
     double getLargura() const { return this->largura;}
     double getAltura() const { return this->altura;}
     double getAngulo() const { return this->angulo;}
+
+    double getZoomViewport() const { return zoomViewport;}
+    void setZoomViewport(double z) {
+        if (z > 0.0)
+            zoomViewport = z;
+    }
+    void aumentarZoom(){
+        zoomViewport *= 1.1;
+        if (zoomViewport > 5.0)
+            zoomViewport = 5.0;
+    }
+    void diminuirZoom(){
+        zoomViewport /= 1.1;
+        if (zoomViewport < 0.2)
+            zoomViewport = 0.2;
+    }
 
     void setLargura(double valor){
         if(valor>0.0){
@@ -57,6 +72,7 @@ public:
 private:
     int margem;
     double centro_x, centro_y, largura, altura, angulo;
+    double zoomViewport;  // fator de zoom da viewport (1.0 = sem zoom)
     LimitesWindow limites;
 };
 #endif // WINDOW_H

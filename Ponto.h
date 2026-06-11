@@ -11,7 +11,7 @@ public:
     }
 
     bool verificarClipping(const Window& win) override {
-        if (this->p.empty()) return false;
+        if(this->p.empty()) return false;
 
         double larg = win.getLargura();
         double alt = win.getAltura();
@@ -19,7 +19,6 @@ public:
         double cy = win.getCentro_y();
         double ang = win.getAngulo();
 
-        // Matriz mundo -> câmera
         Matriz translacao;
         translacao.m[0][2] = -cx;
         translacao.m[1][2] = -cy;
@@ -47,7 +46,7 @@ public:
         Coordenada c = this->p.front();
         Coordenada c_scn = mCam * c;
 
-        double zoom = win.getZoomViewport(); // você precisa passar a Window ou acessar via this? Veja abaixo.
+        double zoom = win.getZoomViewport();
         double larg_vp_zoom = larg_vp * zoom;
         double alt_vp_zoom  = alt_vp * zoom;
         double x_vp = (c_scn.x_wc + 1.0) * (larg_vp_zoom / 2.0) + (larg_vp - larg_vp_zoom) / 2.0;

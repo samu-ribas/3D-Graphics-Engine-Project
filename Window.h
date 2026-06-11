@@ -72,7 +72,7 @@ public:
 private:
     int margem;
     double centro_x, centro_y, largura, altura, angulo;
-    double zoomViewport;  // fator de zoom da viewport (1.0 = sem zoom)
+    double zoomViewport;
     LimitesWindow limites;
 };
 #endif // WINDOW_H

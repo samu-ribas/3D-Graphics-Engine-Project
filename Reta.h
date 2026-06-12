@@ -50,7 +50,6 @@ public:
         double y_min_cam = -alt  / 2.0;
         double y_max_cam =  alt  / 2.0;
 
-        // Função local para obter outcode (usando limites da câmera)
         auto getOutcodeCam = [&](const Coordenada& p) -> std::bitset<4> {
             std::bitset<4> code = INSIDE;
             if (p.x_wc < x_min_cam) code |= LEFT;
@@ -115,7 +114,7 @@ public:
         double larg_vp_zoom = larg_vp * zoom;
         double alt_vp_zoom  = alt_vp * zoom;
         // Ponto 1
-        double x1_vp = (c1_scn.x_wc + 1.0) * (larg_vp_zoom/2.0) + (larg_vp - larg_vp_zoom) / 2.0; //offset centraliza a imagem ampliada dentro da viewport original
+        double x1_vp = (c1_scn.x_wc + 1.0) * (larg_vp_zoom/2.0) + (larg_vp - larg_vp_zoom) / 2.0;
         double y1_vp = (1.0 - c1_scn.y_wc) * (alt_vp_zoom / 2.0) + (alt_vp - alt_vp_zoom) / 2.0;
 
         // Ponto 2

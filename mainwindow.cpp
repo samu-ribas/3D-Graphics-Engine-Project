@@ -236,18 +236,16 @@ void MainWindow::on_btn_reset_clicked(){
     ui->frame->recalcularSCN();
 }
 
-
-
 void MainWindow::on_btn_zoomViewportMenos_clicked()
 {
     ui->frame->window.diminuirZoom();
-     // ui->frame->window.setLimites();
+    //ui->frame->window.setLimites();
     ui->frame->update();
 }
 void MainWindow::on_btn_zoomViewportMais_clicked()
 {
     ui->frame->window.aumentarZoom();
-    //  ui->frame->window.setLimites();
+    //ui->frame->window.setLimites();
     ui->frame->update(); // ou apenas update(), pois o zoom não altera a matriz de câmera
 }
 

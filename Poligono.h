@@ -128,24 +128,23 @@ public:
             if (entrada.empty()) break;
             Coordenada S = entrada.back();
             for(const Coordenada& E : entrada){
-                // Teste "dentro" inline
                 bool S_dentro, E_dentro;
-                // lado 0: esquerda
+                // lado 0 esquerda
                 if(lado == 0){
                     S_dentro = (S.x_wc >= x_min_cam);
                     E_dentro = (E.x_wc >= x_min_cam);
                 }
-                // lado 1: direita
+                // lado 1 direita
                 else if(lado == 1){
                     S_dentro = (S.x_wc <= x_max_cam);
                     E_dentro = (E.x_wc <= x_max_cam);
                 }
-                // lado 2: baixo
+                // lado 2 baixo
                 else if(lado == 2){
                     S_dentro = (S.y_wc >= y_min_cam);
                     E_dentro = (E.y_wc >= y_min_cam);
                 }
-                // lado 3: topo
+                // lado 3 topo
                 else{
                     S_dentro = (S.y_wc <= y_max_cam);
                     E_dentro = (E.y_wc <= y_max_cam);
@@ -153,7 +152,6 @@ public:
 
                 if(E_dentro){
                     if(!S_dentro){
-                        // Calcular interseção inline
                         Coordenada i;
                         double dx = E.x_wc - S.x_wc;
                         double dy = E.y_wc - S.y_wc;
@@ -208,23 +206,21 @@ public:
 
     void desenhar(QPainter &painter, const Matriz& mCam, int larg_vp, int alt_vp, const Window& win) override{
         const std::list<Coordenada>& lista = (this->p_clip.empty() ? this->p : this->p_clip);
+
         if(lista.size() < 3) return;
-        double zoom;
-        double larg_vp_zoom;
-        double alt_vp_zoom;
+
+        double zoom = win.getZoomViewport();
+        double larg_vp_zoom = larg_vp * zoom;
+        double alt_vp_zoom = alt_vp * zoom;
+
         std::vector<QPointF> pontos_tela;
         pontos_tela.reserve(lista.size());
 
         for(const Coordenada& c : lista){
             Coordenada c_scn = mCam * c;
 
-            zoom = win.getZoomViewport(); // você precisa passar a Window ou acessar via this? Veja abaixo.
-            larg_vp_zoom = larg_vp * zoom;
-            alt_vp_zoom  = alt_vp * zoom;
             double x_vp = (c_scn.x_wc + 1.0) * (larg_vp_zoom/2.0) + (larg_vp - larg_vp_zoom) / 2.0;
             double y_vp = (1.0 - c_scn.y_wc) * (alt_vp_zoom / 2.0) + (alt_vp - alt_vp_zoom) / 2.0;
-
-
 
             pontos_tela.push_back(QPointF(x_vp, y_vp));
         }

@@ -12,7 +12,8 @@ SOURCES += \
     MeuFrame.cpp \
     dialogconfigwindow.cpp \
     main.cpp \
-    mainwindow.cpp
+    mainwindow.cpp \
+    modelo3d.cpp
 
 HEADERS += \
     Forma.h \
@@ -23,7 +24,8 @@ HEADERS += \
     Reta.h \
     Window.h \
     dialogconfigwindow.h \
-    mainwindow.h
+    mainwindow.h \
+    modelo3d.h
 
 FORMS += \
     dialogconfigwindow.ui \
@@ -33,3 +35,6 @@ FORMS += \
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
+
+RESOURCES += \
+    arquivo_de_recursos.qrc

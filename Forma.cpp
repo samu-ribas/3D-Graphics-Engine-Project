@@ -10,9 +10,9 @@ void Forma::aplicarTransformacao(const Matriz& m){
 
 Coordenada Forma :: getCentroide() const { // retorna o centroide do objeto
     double cx = 0.0, cy = 0.0;
-    if(p.empty())
+    if(p.empty()){
         return {0.0, 0.0};
-
+    }
     for(const auto& pt : p){
         cx += pt.x_wc;
         cy += pt.y_wc;

@@ -13,17 +13,21 @@ public:
     bool dentro(const Coordenada& c,int lado,const LimitesWindow& limites){
         std::bitset<4> code = getOutcode(c.x_wc, c.y_wc, limites);
 
-        if(lado == 0)
+        if(lado == 0){
             return !code.test(0); // LEFT
+        }
 
-        if(lado == 1)
+        if(lado == 1){
             return !code.test(1); // RIGHT
+        }
 
-        if(lado == 2)
+        if(lado == 2){
             return !code.test(2); // BASE
+        }
 
-        if(lado == 3)
+        if(lado == 3){
             return !code.test(3); // TOP
+        }
 
         return false;
     }
@@ -37,34 +41,42 @@ public:
         if(lado == 0){  // esquerda
             r.x_wc = limites.x_min;
 
-            if (dx == 0.0)
+            if (dx == 0.0){
                 r.y_wc = a.y_wc;
-            else
+            }
+            else{
                 r.y_wc = a.y_wc + dy * (limites.x_min - a.x_wc) / dx;
+            }
         }
         else if(lado == 1){ // direita
             r.x_wc = limites.x_max;
 
-            if(dx == 0.0)
+            if(dx == 0.0){
                 r.y_wc = a.y_wc;
-            else
+            }
+            else{
                 r.y_wc = a.y_wc + dy * (limites.x_max - a.x_wc) / dx;
+            }
         }
         else if(lado == 2){ // baixo
             r.y_wc = limites.y_min;
 
-            if(dy == 0.0)
+            if(dy == 0.0){
                 r.x_wc = a.x_wc;
-            else
+            }
+            else{
                 r.x_wc = a.x_wc +dx * (limites.y_min - a.y_wc) / dy;
+            }
         }
         else{   // cima
             r.y_wc = limites.y_max;
 
-            if(dy == 0.0)
+            if(dy == 0.0){
                 r.x_wc = a.x_wc;
-            else
+            }
+            else{
                 r.x_wc = a.x_wc +dx * (limites.y_max - a.y_wc) / dy;
+            }
         }
         r.x_scn = r.x_wc;
         r.y_scn = r.y_wc;
@@ -73,8 +85,9 @@ public:
     }
 
     bool verificarClipping(const Window& win) override {
-        if(this->p.size() < 3) return false;
-
+        if(this->p.size() < 3){
+            return false;
+        }
         this->p_clip.clear();
 
         //obter parâmetros da janela
@@ -96,7 +109,7 @@ public:
         rotacao.m[1][1] = cos(rad);
         Matriz mundo_para_camera = rotacao * translacao;
 
-        // construir matriz inversa    câmera -> mundo: T(cx,cy) * R(ang)
+        //construir matriz inversa    câmera -> mundo: T(cx,cy) * R(ang)
         Matriz translacao_inv;
         translacao_inv.m[0][2] = cx;
         translacao_inv.m[1][2] = cy;
@@ -110,9 +123,9 @@ public:
 
         //converter todos os vértices para coordenadas de câmera
         std::list<Coordenada> entrada_cam;
-        for(const Coordenada& v : this->p)
+        for(const Coordenada& v : this->p){
             entrada_cam.push_back(mundo_para_camera * v);
-
+        }
         //limites no espaço da câmera, janela centralizada na origem
         double x_min_cam = -larg / 2.0;
         double x_max_cam = larg / 2.0;
@@ -197,7 +210,9 @@ public:
             entrada = saida;
         }
 
-        if(entrada.empty()) return false;
+        if(entrada.empty()){
+            return false;
+        }
         for(const Coordenada& c : entrada){
             this->p_clip.push_back(camera_para_mundo * c);
         }
@@ -228,9 +243,9 @@ public:
         QPen caneta(Qt::white, 4);
         painter.setPen(caneta);
 
-        for (size_t i = 0; i < pontos_tela.size() - 1; ++i)
+        for(size_t i = 0 ; i < pontos_tela.size() - 1 ; ++i){
             painter.drawLine(pontos_tela[i], pontos_tela[i + 1]);
-
+        }
         painter.drawLine(pontos_tela.back(), pontos_tela.front());
     }
 

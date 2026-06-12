@@ -11,7 +11,8 @@ public:
     }
 
     bool verificarClipping(const Window& win) override {
-        if(this->p.empty()) return false;
+        if(this->p.empty())
+            return false;
 
         double larg = win.getLargura();
         double alt = win.getAltura();
@@ -42,7 +43,9 @@ public:
     }
 
     void desenhar(QPainter &painter, const Matriz& mCam, int larg_vp, int alt_vp,  const Window& win) override{
-        if (this->p.empty()) return;
+        if (this->p.empty())
+            return;
+
         Coordenada c = this->p.front();
         Coordenada c_scn = mCam * c;
 

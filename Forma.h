@@ -7,22 +7,24 @@
 #include <bitset>
 #include "Window.h"
 
-struct Coordenada{
+struct Coordenada{ // classe alterada com coordenada z, lembrar caso der bug
     double x_wc;
     double y_wc;
+    double z_wc;
+
     double x_scn;
     double y_scn;
 
-    Coordenada(double x = 0.0, double y = 0.0) : x_wc(x), y_wc(y), x_scn(x), y_scn(y) {}
+    Coordenada(double x = 0.0, double y = 0.0/*, double z = 0.0*/) : x_wc(x), y_wc(y), /*z_wc(z),*/ x_scn(x), y_scn(y) {}
 
     Coordenada operator*(const Coordenada& ponto) const{
-        return {this->x_wc * ponto.x_wc, this->y_wc * ponto.y_wc};
+        return {this->x_wc * ponto.x_wc, this->y_wc * ponto.y_wc/*, this->z_wc * ponto.z_wc*/}; //add coordenada aqui!!!!!!!!!!
     }
 };
 
 class Matriz;
 
-enum class TipoForma{PONTO, RETA, POLIGONO};
+enum class TipoForma{PONTO, RETA, POLIGONO, MODELO3D};
 
 class Forma{
 public:

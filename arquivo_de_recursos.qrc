@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/objs">
+        <file>Objetos/PokeBall.obj</file>
+    </qresource>
+</RCC>

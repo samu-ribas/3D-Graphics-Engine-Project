@@ -5,6 +5,7 @@
 #include <cmath>
 #include <QPainter>
 #include <QDebug>
+
 MeuFrame::MeuFrame(QWidget *parent) : QFrame(parent), window(0,0,1000,500) {}
 
 void MeuFrame:: adicionarPonto(QString name, double x, double y){

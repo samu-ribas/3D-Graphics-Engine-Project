@@ -7,7 +7,7 @@
 *.core
 *.moc
 *.o
-*.obj
+#*.obj
 *.orig
 *.rej
 *.so
@@ -76,7 +76,7 @@ CMakeLists.txt.user*
 
 # Directories with generated files
 .moc/
-.obj/
+#.obj/
 .pch/
 .rcc/
 .uic/

@@ -7,7 +7,7 @@
 #include <bitset>
 #include "Window.h"
 
-struct Coordenada{ // classe alterada com coordenada z, lembrar caso der bug
+struct Coordenada{
     double x_wc;
     double y_wc;
     double z_wc;
@@ -15,10 +15,10 @@ struct Coordenada{ // classe alterada com coordenada z, lembrar caso der bug
     double x_scn;
     double y_scn;
 
-    Coordenada(double x = 0.0, double y = 0.0/*, double z = 0.0*/) : x_wc(x), y_wc(y), /*z_wc(z),*/ x_scn(x), y_scn(y) {}
+    Coordenada(double x = 0.0, double y = 0.0, double z = 0.0) : x_wc(x), y_wc(y), z_wc(z), x_scn(x), y_scn(y) {}
 
     Coordenada operator*(const Coordenada& ponto) const{
-        return {this->x_wc * ponto.x_wc, this->y_wc * ponto.y_wc/*, this->z_wc * ponto.z_wc*/}; //add coordenada aqui!!!!!!!!!!
+        return {this->x_wc * ponto.x_wc, this->y_wc * ponto.y_wc, this->z_wc * ponto.z_wc};
     }
 };
 
@@ -38,9 +38,7 @@ public:
 
     virtual ~Forma(){}
 
-    virtual void desenhar(QPainter &painter, const Matriz& mCam, int larg_vp, int alt_vp, const Window& win) = 0;
-
-    virtual bool verificarClipping(const Window& win) = 0;
+    virtual void desenhar(QPainter &painter, const Matriz& mCam, const Window& win) = 0;
 
     void aplicarTransformacao(const Matriz& m);
 

@@ -1,5 +1,6 @@
 <RCC>
     <qresource prefix="/objs">
-        <file>Objetos/PokeBall.obj</file>
+        <file>Objetos/cube.obj</file>
+        <file>Objetos/Charizard.obj</file>
     </qresource>
 </RCC>

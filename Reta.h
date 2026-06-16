@@ -6,130 +6,83 @@
 class Reta : public Forma{
 public:
     Reta(QString n, double x1, double y1, double x2, double y2): Forma(n, TipoForma::RETA){
-        p.push_back({x1, y1});
-        p.push_back({x2, y2});
+        p.push_back({x1, y1, 0.0});
+        p.push_back({x2, y2, 0.0});
     }
 
-    bool verificarClipping(const Window& win) override {
-        if(this->p.size() < 2) return false;
 
-        double larg = win.getLargura();
-        double alt = win.getAltura();
-        double cx = win.getCentro_x();
-        double cy = win.getCentro_y();
-        double ang = win.getAngulo();
+    void desenhar(QPainter &painter, const Matriz& mCam, const Window& win) override{
+        auto it = p.begin();
+        Coordenada p1_mundo = *it;
+        Coordenada p2_mundo = *(++it);
 
-        Matriz translacao;
-        translacao.m[0][2] = -cx;
-        translacao.m[1][2] = -cy;
-        double rad = -ang * (M_PI / 180.0);
-        Matriz rotacao;
-        rotacao.m[0][0] = cos(rad);
-        rotacao.m[0][1] = -sin(rad);
-        rotacao.m[1][0] = sin(rad);
-        rotacao.m[1][1] = cos(rad);
-        Matriz mundo_para_camera = rotacao * translacao;
+        Coordenada p1_scn = mCam * p1_mundo;
+        Coordenada p2_scn = mCam * p2_mundo;
 
-        Matriz translacao_inv;
-        translacao_inv.m[0][2] = cx;
-        translacao_inv.m[1][2] = cy;
-        double rad_inv = ang * (M_PI / 180.0);
-        Matriz rotacao_inv;
-        rotacao_inv.m[0][0] = cos(rad_inv);
-        rotacao_inv.m[0][1] = -sin(rad_inv);
-        rotacao_inv.m[1][0] = sin(rad_inv);
-        rotacao_inv.m[1][1] = cos(rad_inv);
-        Matriz camera_para_mundo = translacao_inv * rotacao_inv;
+        LimitesWindow limitesSCN = Window::getLimitesSCN();
 
-        auto it = this->p.begin();
-        Coordenada p1_cam = mundo_para_camera * (*it);
-        Coordenada p2_cam = mundo_para_camera * (*(++it));
+        std::bitset<4> outcode1 = this->getOutcode(p1_scn.x_wc, p1_scn.y_wc, limitesSCN);
+        std::bitset<4> outcode2 = this->getOutcode(p2_scn.x_wc, p2_scn.y_wc, limitesSCN);
+        bool accept = false;
 
-        double x_min_cam = -larg / 2.0;
-        double x_max_cam =  larg / 2.0;
-        double y_min_cam = -alt  / 2.0;
-        double y_max_cam =  alt  / 2.0;
-
-        auto getOutcodeCam = [&](const Coordenada& p) -> std::bitset<4> {
-            std::bitset<4> code = INSIDE;
-            if (p.x_wc < x_min_cam) code |= LEFT;
-            else if (p.x_wc > x_max_cam) code |= RIGHT;
-            if (p.y_wc < y_min_cam) code |= BASE;
-            else if (p.y_wc > y_max_cam) code |= TOP;
-            return code;
-        };
-
-        std::bitset<4> outcode1 = getOutcodeCam(p1_cam);
-        std::bitset<4> outcode2 = getOutcodeCam(p2_cam);
-        bool aceito = false;
-
-        while (true) {
-            if ((outcode1 | outcode2).none()) {
-                aceito = true;
+        while(true){
+            if((outcode1 | outcode2).none()){
+                accept = true;
                 break;
             }
-            if ((outcode1 & outcode2).any()) break;
+            if((outcode1 & outcode2).any()){
+                break;
+            }
 
             std::bitset<4> out_fora = outcode1.any() ? outcode1 : outcode2;
             double x_int = 0.0, y_int = 0.0;
-            double m = (p2_cam.y_wc - p1_cam.y_wc) / (p2_cam.x_wc - p1_cam.x_wc);
 
-            if ((out_fora & TOP).any()) {
-                x_int = p1_cam.x_wc + (y_max_cam - p1_cam.y_wc) / m;
-                y_int = y_max_cam;
-            } else if ((out_fora & BASE).any()) {
-                x_int = p1_cam.x_wc + (y_min_cam - p1_cam.y_wc) / m;
-                y_int = y_min_cam;
-            } else if ((out_fora & RIGHT).any()) {
-                y_int = m * (x_max_cam - p1_cam.x_wc) + p1_cam.y_wc;
-                x_int = x_max_cam;
-            } else if ((out_fora & LEFT).any()) {
-                y_int = m * (x_min_cam - p1_cam.x_wc) + p1_cam.y_wc;
-                x_int = x_min_cam;
+            if(out_fora.test(3)){ // TOP
+                x_int = p1_scn.x_wc + (p2_scn.x_wc - p1_scn.x_wc) * (limitesSCN.y_max - p1_scn.y_wc) / (p2_scn.y_wc - p1_scn.y_wc);
+                y_int = limitesSCN.y_max;
+            }else if(out_fora.test(2)){ // BASE
+                x_int = p1_scn.x_wc + (p2_scn.x_wc - p1_scn.x_wc) * (limitesSCN.y_min - p1_scn.y_wc) / (p2_scn.y_wc - p1_scn.y_wc);
+                y_int = limitesSCN.y_min;
+            }else if(out_fora.test(1)){ // RIGHT
+                y_int = p1_scn.y_wc + (p2_scn.y_wc - p1_scn.y_wc) * (limitesSCN.x_max - p1_scn.x_wc) / (p2_scn.x_wc - p1_scn.x_wc);
+                x_int = limitesSCN.x_max;
+            }else if(out_fora.test(0)){ // LEFT
+                y_int = p1_scn.y_wc + (p2_scn.y_wc - p1_scn.y_wc) * (limitesSCN.x_min - p1_scn.x_wc) / (p2_scn.x_wc - p1_scn.x_wc);
+                x_int = limitesSCN.x_min;
             }
 
-            if (out_fora == outcode1) {
-                p1_cam.x_wc = x_int;
-                p1_cam.y_wc = y_int;
-                outcode1 = getOutcodeCam(p1_cam);
-            } else {
-                p2_cam.x_wc = x_int;
-                p2_cam.y_wc = y_int;
-                outcode2 = getOutcodeCam(p2_cam);
+            if(out_fora == outcode1){
+                p1_scn.x_wc = x_int;
+                p1_scn.y_wc = y_int;
+                outcode1 = this->getOutcode(p1_scn.x_wc, p1_scn.y_wc, limitesSCN);
+            }else{
+                p2_scn.x_wc = x_int;
+                p2_scn.y_wc = y_int;
+                outcode2 = this->getOutcode(p2_scn.x_wc, p2_scn.y_wc, limitesSCN);
             }
         }
 
-        if (aceito) {
-            this->p1_clip = camera_para_mundo * p1_cam;
-            this->p2_clip = camera_para_mundo * p2_cam;
+        if (accept) {
+            double zoom = win.getZoomViewport();
+            double larg_vp_zoom = win.getLargura() * zoom;
+            double alt_vp_zoom  = win.getAltura() * zoom;
+
+            double offX = (win.getLargura() - larg_vp_zoom) / 2.0;
+            double offY = (win.getAltura() - alt_vp_zoom) / 2.0;
+
+
+            double x1_vp = (p1_scn.x_wc + 1.0) * (larg_vp_zoom / 2.0) + offX;
+            double y1_vp = (1.0 - p1_scn.y_wc) * (alt_vp_zoom / 2.0) + offY;
+
+            double x2_vp = (p2_scn.x_wc + 1.0) * (larg_vp_zoom / 2.0) + offX;
+            double y2_vp = (1.0 - p2_scn.y_wc) * (alt_vp_zoom / 2.0) + offY;
+
+            QPen caneta(Qt::white, 4);
+            painter.setPen(caneta);
+            painter.drawLine(QPointF(x1_vp, y1_vp), QPointF(x2_vp, y2_vp));
         }
-        return aceito;
     }
 
-    void desenhar(QPainter &painter, const Matriz& mCam, int larg_vp, int alt_vp, const Window& win) override{
-        Coordenada c1_scn = mCam * this->p1_clip;
-        Coordenada c2_scn = mCam * this->p2_clip;
-
-        double zoom = win.getZoomViewport();
-        double larg_vp_zoom = larg_vp * zoom;
-        double alt_vp_zoom  = alt_vp * zoom;
-        // Ponto 1
-        double x1_vp = (c1_scn.x_wc + 1.0) * (larg_vp_zoom/2.0) + (larg_vp - larg_vp_zoom) / 2.0;
-        double y1_vp = (1.0 - c1_scn.y_wc) * (alt_vp_zoom / 2.0) + (alt_vp - alt_vp_zoom) / 2.0;
-
-        // Ponto 2
-        double x2_vp = (c2_scn.x_wc + 1.0) * (larg_vp_zoom/2.0) + (larg_vp - larg_vp_zoom) / 2.0;
-        double y2_vp = (1.0 - c2_scn.y_wc) * (alt_vp_zoom / 2.0) + (alt_vp - alt_vp_zoom) / 2.0;
-
-
-        QPen caneta(Qt::white, 4);
-        painter.setPen(caneta);
-        painter.drawLine(QLineF(x1_vp, y1_vp, x2_vp, y2_vp));
-    }
-
-private:
-    Coordenada p1_clip;
-    Coordenada p2_clip;
 };
 
 #endif // RETA_H

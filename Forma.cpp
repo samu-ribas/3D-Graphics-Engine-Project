@@ -9,15 +9,19 @@ void Forma::aplicarTransformacao(const Matriz& m){
 }
 
 Coordenada Forma :: getCentroide() const { // retorna o centroide do objeto
-    double cx = 0.0, cy = 0.0;
+    double cx = 0.0;
+    double cy = 0.0;
+    double cz = 0.0;
+
     if(p.empty()){
-        return {0.0, 0.0};
+        return {0.0, 0.0, 0.0};
     }
     for(const auto& pt : p){
         cx += pt.x_wc;
         cy += pt.y_wc;
+        cz += pt.z_wc;
     }
-    return {cx / p.size(), cy / p.size()};
+    return {cx/p.size(), cy/p.size(), cz/p.size()};
 }
 
 std::list<Coordenada>& Forma::getCoordenada(){ return this->p; }

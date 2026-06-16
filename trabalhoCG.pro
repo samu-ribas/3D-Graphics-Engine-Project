@@ -10,6 +10,7 @@ SOURCES += \
     Forma.cpp \
     Matriz.cpp \
     MeuFrame.cpp \
+    Window.cpp \
     dialogconfigwindow.cpp \
     main.cpp \
     mainwindow.cpp \

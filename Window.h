@@ -12,62 +12,29 @@ struct LimitesWindow {
 class Window
 {
 public:
-    Window(double cx, double cy, double w, double h)
-        : margem(80), centro_x(cx), centro_y(cy), largura(w), altura(h), angulo(0.0), zoomViewport(1.0){}
+    Window(double cx, double cy, double w, double h);
 
-    void setLimites(){
-        limites.x_min = this->centro_x - (this->largura / 2.0) ;
-        limites.x_max = this->centro_x + (this->largura / 2.0) ;
+    void setLimites();
 
-        limites.y_min = this->centro_y - (this->altura / 2.0) ;
-        limites.y_max = this->centro_y + (this->altura / 2.0) ;
-    }
+    LimitesWindow getLimites() const;
 
-    LimitesWindow getLimites() const {return limites;}
-
-    int getMargem(){return margem;}
-    double getCentro_x() const { return this->centro_x;}
-    double getCentro_y() const { return this->centro_y;}
-    double getLargura() const { return this->largura;}
-    double getAltura() const { return this->altura;}
-    double getAngulo() const { return this->angulo;}
-
-    double getZoomViewport() const { return zoomViewport;}
-    void setZoomViewport(double z) {
-        if (z > 0.0)
-            zoomViewport = z;
-    }
-    void aumentarZoom(){
-        zoomViewport *= 1.1;
-        if (zoomViewport > 5.0)
-            zoomViewport = 5.0;
-    }
-    void diminuirZoom(){
-        zoomViewport /= 1.1;
-        if (zoomViewport < 0.2)
-            zoomViewport = 0.2;
-    }
-
-    void setLargura(double valor){
-        if(valor>0.0){
-            if(valor>891)
-                valor = 891;
-            this->largura=valor;
-        }
-    }
-
-    void setAltura(double valor){
-        if(valor>0.0){
-            if(valor>431)
-                valor = 431;
-            this->altura=valor;
-        }
-    }
-
-    void setCentro_x(double valor){this->centro_x=valor;}
-    void setCentro_y(double valor){this->centro_y=valor;}
-    void setAngulo(double valor){this->angulo=valor;}
-    void setMargem(int valor){ this->margem = valor;}
+    static LimitesWindow getLimitesSCN();
+    int getMargem();
+    double getCentro_x() const;
+    double getCentro_y() const;
+    double getLargura() const;
+    double getAltura() const;
+    double getAngulo() const;
+    double getZoomViewport() const;
+    void setZoomViewport(double z);
+    void aumentarZoom();
+    void diminuirZoom();
+    void setLargura(double valor);
+    void setAltura(double valor);
+    void setCentro_x(double valor);
+    void setCentro_y(double valor);
+    void setAngulo(double valor);
+    void setMargem(int valor);
 
 private:
     int margem;

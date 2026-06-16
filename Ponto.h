@@ -7,53 +7,25 @@ class Ponto : public Forma
 {
 public:
     Ponto(QString n, double x, double y) : Forma(n, TipoForma::PONTO){
-        p.push_back({x,y});
+        p.push_back({x,y,0.0});
     }
 
-    bool verificarClipping(const Window& win) override {
-        if(this->p.empty())
-            return false;
 
-        double larg = win.getLargura();
-        double alt = win.getAltura();
-        double cx = win.getCentro_x();
-        double cy = win.getCentro_y();
-        double ang = win.getAngulo();
 
-        Matriz translacao;
-        translacao.m[0][2] = -cx;
-        translacao.m[1][2] = -cy;
-        double rad = -ang * (M_PI / 180.0);
-        Matriz rotacao;
-        rotacao.m[0][0] = cos(rad);
-        rotacao.m[0][1] = -sin(rad);
-        rotacao.m[1][0] = sin(rad);
-        rotacao.m[1][1] = cos(rad);
-        Matriz mundo_para_camera = rotacao * translacao;
-
-        Coordenada c_cam = mundo_para_camera * this->p.front();
-
-        double x_min_cam = -larg / 2.0;
-        double x_max_cam = larg / 2.0;
-        double y_min_cam = -alt / 2.0;
-        double y_max_cam = alt / 2.0;
-
-        return (c_cam.x_wc >= x_min_cam && c_cam.x_wc <= x_max_cam &&
-                c_cam.y_wc >= y_min_cam && c_cam.y_wc <= y_max_cam);
-    }
-
-    void desenhar(QPainter &painter, const Matriz& mCam, int larg_vp, int alt_vp,  const Window& win) override{
+    void desenhar(QPainter &painter, const Matriz& mCam, const Window& win) override {
         if (this->p.empty())
             return;
 
         Coordenada c = this->p.front();
         Coordenada c_scn = mCam * c;
 
-        double zoom = win.getZoomViewport();
-        double larg_vp_zoom = larg_vp * zoom;
-        double alt_vp_zoom  = alt_vp * zoom;
-        double x_vp = (c_scn.x_wc + 1.0) * (larg_vp_zoom / 2.0) + (larg_vp - larg_vp_zoom) / 2.0;
-        double y_vp = (1.0 - c_scn.y_wc) * (alt_vp_zoom / 2.0) + (alt_vp - alt_vp_zoom) / 2.0;
+        if(c_scn.x_wc < -1.0 || c_scn.x_wc > 1.0 || c_scn.y_wc < -1.0 || c_scn.y_wc > 1.0) {
+            return;
+        }
+
+
+        double x_vp = (c_scn.x_wc + 1.0) * ((win.getLargura()*win.getZoomViewport()) / 2.0) + (win.getLargura() - (win.getLargura()*win.getZoomViewport())) / 2.0;
+        double y_vp = (1.0 - c_scn.y_wc) * ((win.getAltura()*win.getZoomViewport()) / 2.0) + (win.getAltura() - (win.getAltura()*win.getZoomViewport())) / 2.0;
 
         QPen caneta(Qt::white, 4);
         painter.setPen(caneta);

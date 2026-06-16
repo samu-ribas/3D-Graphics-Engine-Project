@@ -33,16 +33,25 @@ void MainWindow::inputOperacao(){
         case 0:{
             ui->frame->transladarObjeto(ui->comboBoxDisplayFile->currentText(),
                                         ui->inputXTranslacao->text().toDouble(),
-                                        ui->inputYTranslacao->text().toDouble());
+                                        ui->inputYTranslacao->text().toDouble(),
+                                        ui->inputZTranslacao->text().toDouble());
             break;
         }
 
         case 1:{
             double sx = ui->inputXEscala->text().isEmpty() ? 1.0 : ui->inputXEscala->text().toDouble();
             double sy = ui->inputYEscala->text().isEmpty() ? 1.0 : ui->inputYEscala->text().toDouble();
-            if(sx == 0.0) sx = 1.0;
-            if(sy == 0.0) sy = 1.0;
-            ui->frame->escalarObjeto(ui->comboBoxDisplayFile->currentText(),sx, sy);
+            double sz = ui->inputZEscala->text().isEmpty() ? 1.0 : ui->inputZEscala->text().toDouble();
+            if(sx == 0.0){
+                sx = 1.0;
+            }
+            if(sy == 0.0){
+                sy = 1.0;
+            }
+            if(sz == 0.0){
+                sz = 1.0;
+            }
+            ui->frame->escalarObjeto(ui->comboBoxDisplayFile->currentText(),sx, sy, sz);
             break;
         }
 
@@ -51,6 +60,8 @@ void MainWindow::inputOperacao(){
                                         ui->inputAnguloRotacao->text().toDouble(),
                                         ui->inputXRotacao->text().toDouble(),
                                         ui->inputYRotacao->text().toDouble(),
+                                        ui->inputZRotacao->text().toDouble(),
+                                        ui->comboBoxEixo->currentText().toUpper().at(0).toLatin1(),
                                         ui->checkBoxCentroide->isChecked(), ui->checkBoxCoordenadasDoMundo->isChecked());
             break;
         }
@@ -246,13 +257,21 @@ void MainWindow::on_btn_zoomViewportMais_clicked()
 {
     ui->frame->window.aumentarZoom();
     //ui->frame->window.setLimites();
-    ui->frame->update(); // ou apenas update(), pois o zoom não altera a matriz de câmera
+    ui->frame->update();
+}
+
+void MainWindow::on_btn_carregarModelo_clicked()
+{
+    ui->frame->adicionarModelo3D("CHARIZARD",":/objs/Objetos/Charizard.obj");
+    ui->comboBoxDisplayFile->addItem("CHARIZARD");
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
 }
+
+
 
 
 

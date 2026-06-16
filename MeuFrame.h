@@ -17,10 +17,10 @@ public:
     void adicionarPonto(QString nome, double x, double y);
     void adicionarReta(QString name, double x1, double y1, double x2, double y2);
     void adicionarPoligono(QString name, std::list<Coordenada> pontos);
-
-    void transladarObjeto(QString n, double dx, double dy);
-    void escalarObjeto(QString n, double sx, double sy);
-    void rotacionarObjeto(QString nome, double angulo,double x, double y, bool usarCentroide, bool usarCoordWindow);
+    void adicionarModelo3D(QString nome, QString caminhoRecurso);
+    void transladarObjeto(QString n, double dx, double dy, double dz);
+    void escalarObjeto(QString n, double sx, double sy, double sz);
+    void rotacionarObjeto(QString nome, double angulo,double x, double y, double z, char eixo, bool usarCentroide, bool usarCoordWindow);
 
     bool contemObjeto(const QString& nome) const;
     void recalcularSCN();

@@ -23,7 +23,7 @@ Modelo3D* Modelo3D::carregarOBJ(const QString& nome, const QString& caminho)
     QString line;
 
     QTextStream stream(&file);
-    while(!stream.atEnd()){ //Retorna verdadeiro se não houver mais dados para serem lidos do QTextStream;
+    while(!stream.atEnd()){ //retorna verdadeiro se não houver mais dados para serem lidos do QTextStream;
         line = stream.readLine().trimmed();
 
         if(line.isEmpty() || line.startsWith('#')){//pula se for vazia ou comentario
@@ -49,10 +49,10 @@ Modelo3D* Modelo3D::carregarOBJ(const QString& nome, const QString& caminho)
             std::vector<int> faceIndices;
             std::string token;
             while(iss >> token){
-                // Extrai apenas o primeiro número (índice do vértice)
+                //extrai apenas o primeiro número (índice do vértice)
                 size_t slashPos = token.find('/');
                 std::string idxStr = (slashPos == std::string::npos) ? token : token.substr(0, slashPos);
-                // Converte para inteiro
+                //converte para inteiro
                 char* end;
                 long idx = std::strtol(idxStr.c_str(), &end, 10);
                 if (*end != '\0') {
@@ -76,7 +76,7 @@ Modelo3D* Modelo3D::carregarOBJ(const QString& nome, const QString& caminho)
                     qDebug() << "Índice fora dos limites:" << idx;
                 }
             }
-            // Triangula a face (se tiver mais de 3 vértices)
+            //triangula a face (se tiver mais de 3 vértices)
             if(faceIndices.size() >= 3){
                 for(size_t i = 1; i + 1 < faceIndices.size(); ++i){
                     faces.push_back({ faceIndices[0], faceIndices[i], faceIndices[i + 1] });
@@ -117,9 +117,6 @@ void Modelo3D::desenhar(QPainter &painter, const Matriz& mCam, const Window& win
     }
     // Converte a lista de vértices para vetor para acesso por índice
     std::vector<Coordenada> vertices(p.begin(), p.end());
-
-    double offX = (win.getLargura() - (win.getLargura() * win.getZoomViewport())) / 2.0;
-    double offY = (win.getAltura() - (win.getAltura() * win.getZoomViewport())) / 2.0;
 
     QPen caneta(Qt::white, 1);
     painter.setPen(caneta);
@@ -185,11 +182,11 @@ void Modelo3D::desenhar(QPainter &painter, const Matriz& mCam, const Window& win
             }
 
             if(accept){
-                double x_vp0 = (x0 + 1.0) * ((win.getLargura() * win.getZoomViewport()) / 2.0) + offX;
-                double y_vp0 = (1.0 - y0) * ((win.getAltura() * win.getZoomViewport()) / 2.0) + offY;
+                double x_vp0 = (x0 + 1.0) * (win.getLargura() / 2.0);
+                double y_vp0 = (1.0 - y0) * (win.getAltura() / 2.0);
 
-                double x_vp1 = (x1 + 1.0) * ((win.getLargura() * win.getZoomViewport()) / 2.0) + offX;
-                double y_vp1 = (1.0 - y1) * ((win.getAltura() * win.getZoomViewport()) / 2.0) + offY;
+                double x_vp1 = (x1 + 1.0) * (win.getLargura() / 2.0);
+                double y_vp1 = (1.0 - y1) * (win.getAltura() / 2.0);
 
                 painter.drawLine(QPointF(x_vp0, y_vp0), QPointF(x_vp1, y_vp1));
             }

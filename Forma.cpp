@@ -8,20 +8,38 @@ void Forma::aplicarTransformacao(const Matriz& m){
         vertice = m * vertice;
 }
 
-Coordenada Forma :: getCentroide() const { // retorna o centroide do objeto
-    double cx = 0.0;
-    double cy = 0.0;
-    double cz = 0.0;
-
+Coordenada Forma::getCentroide() const {
     if(p.empty()){
         return {0.0, 0.0, 0.0};
     }
+
+    //algoritmo de Bounding Box em 3D
+    double minX = 1e9, maxX = -1e9;
+    double minY = 1e9, maxY = -1e9;
+    double minZ = 1e9, maxZ = -1e9;
+
     for(const auto& pt : p){
-        cx += pt.x_wc;
-        cy += pt.y_wc;
-        cz += pt.z_wc;
+        if(pt.x_wc < minX){
+            minX = pt.x_wc;
+        }
+        if(pt.x_wc > maxX){
+            maxX = pt.x_wc;
+        }
+        if(pt.y_wc < minY){
+            minY = pt.y_wc;
+        }
+        if(pt.y_wc > maxY){
+            maxY = pt.y_wc;
+        }
+        if(pt.z_wc < minZ){
+            minZ = pt.z_wc;
+        }
+        if(pt.z_wc > maxZ){
+            maxZ = pt.z_wc;
+        }
     }
-    return {cx/p.size(), cy/p.size(), cz/p.size()};
+
+    return {(minX + maxX) / 2.0, (minY + maxY) / 2.0, (minZ + maxZ) / 2.0};
 }
 
 std::list<Coordenada>& Forma::getCoordenada(){ return this->p; }

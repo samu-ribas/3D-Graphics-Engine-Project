@@ -10,7 +10,6 @@ public:
         p.push_back({x2, y2, 0.0});
     }
 
-
     void desenhar(QPainter &painter, const Matriz& mCam, const Window& win) override{
         auto it = p.begin();
         Coordenada p1_mundo = *it;
@@ -63,19 +62,12 @@ public:
         }
 
         if (accept) {
-            double zoom = win.getZoomViewport();
-            double larg_vp_zoom = win.getLargura() * zoom;
-            double alt_vp_zoom  = win.getAltura() * zoom;
+            // Mapeamento puro para a Viewport: o zoom e as margens são tratados pela matriz SCN (mCam)
+            double x1_vp = (p1_scn.x_wc + 1.0) * (win.getLargura() / 2.0);
+            double y1_vp = (1.0 - p1_scn.y_wc) * (win.getAltura() / 2.0);
 
-            double offX = (win.getLargura() - larg_vp_zoom) / 2.0;
-            double offY = (win.getAltura() - alt_vp_zoom) / 2.0;
-
-
-            double x1_vp = (p1_scn.x_wc + 1.0) * (larg_vp_zoom / 2.0) + offX;
-            double y1_vp = (1.0 - p1_scn.y_wc) * (alt_vp_zoom / 2.0) + offY;
-
-            double x2_vp = (p2_scn.x_wc + 1.0) * (larg_vp_zoom / 2.0) + offX;
-            double y2_vp = (1.0 - p2_scn.y_wc) * (alt_vp_zoom / 2.0) + offY;
+            double x2_vp = (p2_scn.x_wc + 1.0) * (win.getLargura() / 2.0);
+            double y2_vp = (1.0 - p2_scn.y_wc) * (win.getAltura() / 2.0);
 
             QPen caneta(Qt::white, 4);
             painter.setPen(caneta);

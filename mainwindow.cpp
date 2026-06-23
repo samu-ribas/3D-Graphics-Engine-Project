@@ -225,13 +225,13 @@ void MainWindow::on_btn_diagDirBaixo_clicked(){
 }
 
 void MainWindow::on_btn_girarEsq_clicked(){;
-    ui->frame->window.setAngulo(ui->frame->window.getAngulo()-10);
+    ui->frame->window.setAngulo(ui->frame->window.getAngulo()+10);
     //ui->frame->window.setLimites();
     ui->frame->recalcularSCN();
 }
 
 void MainWindow::on_btn_girarDir_clicked(){
-    ui->frame->window.setAngulo(ui->frame->window.getAngulo()+10);
+    ui->frame->window.setAngulo(ui->frame->window.getAngulo()-10);
     //ui->frame->window.setLimites();
     ui->frame->recalcularSCN();
 }
@@ -251,13 +251,13 @@ void MainWindow::on_btn_zoomViewportMenos_clicked()
 {
     ui->frame->window.diminuirZoom();
     //ui->frame->window.setLimites();
-    ui->frame->update();
+    ui->frame->recalcularSCN();
 }
 void MainWindow::on_btn_zoomViewportMais_clicked()
 {
     ui->frame->window.aumentarZoom();
     //ui->frame->window.setLimites();
-    ui->frame->update();
+    ui->frame->recalcularSCN();
 }
 
 void MainWindow::on_btn_carregarModelo_clicked()

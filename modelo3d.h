@@ -4,9 +4,6 @@
 #include "Forma.h"
 #include "Matriz.h"
 
-struct FaceVertex {
-    int vertex_index;   // índice do vértice
-};
 class Modelo3D : public Forma
 {
 public:

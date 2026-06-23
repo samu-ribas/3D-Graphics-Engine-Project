@@ -31,7 +31,6 @@ void MeuFrame::adicionarModelo3D( QString nome, QString caminhoRecurso) {
         return;
     }
     displayFile.append(modelo);
-    qDebug() << "Modelo carregado com sucesso";
     recalcularSCN();
 }
 
@@ -136,8 +135,9 @@ void MeuFrame::recalcularSCN(){
     mRotacao.m[1][1] = cos(rad);
     mRotacao.m[2][2] = 1.0;
 
-    mEscala.m[0][0] = 2.0/window.getLargura();
-    mEscala.m[1][1] = 2.0/window.getAltura();
+    double zoom = window.getZoomViewport();
+    mEscala.m[0][0] = (2.0/window.getLargura()) * zoom;
+    mEscala.m[1][1] = (2.0/window.getAltura()) * zoom;
     mEscala.m[2][2] = 1.0;
 
     this->mCameraAtual = mEscala * mRotacao * mTranslacao;

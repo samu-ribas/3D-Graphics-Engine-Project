@@ -28,7 +28,7 @@ Matriz Matriz::gerarMatrizE(double sx, double sy, double sz){ // escala
 
 Matriz Matriz::gerarMatrizRx(double angulo){ // rotação x
     Matriz rotacao;
-    double rad = angulo * (M_PI/180);
+    double rad = angulo * (M_PI/180.0);
     rotacao.m[1][1] = cos(rad);
     rotacao.m[1][2] = -sin(rad);
     rotacao.m[2][1] = sin(rad);
@@ -39,7 +39,7 @@ Matriz Matriz::gerarMatrizRx(double angulo){ // rotação x
 
 Matriz Matriz::gerarMatrizRy(double angulo){ // rotação y
     Matriz rotacao;
-    double rad = angulo * (M_PI/180);
+    double rad = angulo * (M_PI/180.0);
     rotacao.m[0][0] = cos(rad);
     rotacao.m[0][2] = sin(rad);
     rotacao.m[2][0] = -sin(rad);
@@ -50,7 +50,7 @@ Matriz Matriz::gerarMatrizRy(double angulo){ // rotação y
 
 Matriz Matriz::gerarMatrizRz(double angulo){ // rotação z
     Matriz rotacao;
-    double rad = angulo * (M_PI/180);
+    double rad = angulo * (M_PI/180.0);
     rotacao.m[0][0] = cos(rad);
     rotacao.m[0][1] = -sin(rad);
     rotacao.m[1][0] = sin(rad);

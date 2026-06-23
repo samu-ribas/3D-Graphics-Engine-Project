@@ -2,5 +2,6 @@
     <qresource prefix="/objs">
         <file>Objetos/cube.obj</file>
         <file>Objetos/Charizard.obj</file>
+        <file>Objetos/mew.obj</file>
     </qresource>
 </RCC>

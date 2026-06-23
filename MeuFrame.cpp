@@ -30,7 +30,11 @@ void MeuFrame::adicionarModelo3D( QString nome, QString caminhoRecurso) {
         qDebug() << "Falha ao carregar OBJ";
         return;
     }
+    Matriz t = Matriz::gerarMatrizT(window.getCentro_x(), window.getCentro_y(), 0.0);
+    modelo->aplicarTransformacao(t);
+
     displayFile.append(modelo);
+    qDebug() << "Modelo carregado com sucesso";
     recalcularSCN();
 }
 

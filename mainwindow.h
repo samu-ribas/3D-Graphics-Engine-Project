@@ -44,6 +44,10 @@ private slots:
 
     void on_btn_carregarModelo_clicked();
 
+    void on_btn_carregarModelo_2_clicked();
+
+    void on_btn_carregarModelo_3_clicked();
+
 private:
     Ui::MainWindow *ui;
     double deslocamentoWindow;

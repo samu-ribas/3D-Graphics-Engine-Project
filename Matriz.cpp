@@ -12,8 +12,8 @@ Matriz::Matriz()
 
 Matriz Matriz::gerarMatrizT(double dx, double dy, double dz){ // transalação
     Matriz translacao;
-    translacao.m[0][2] = dx;
-    translacao.m[1][2] = dy;
+    translacao.m[0][3] = dx;
+    translacao.m[1][3] = dy;
     translacao.m[2][3] = dz;
     return translacao;
 }
@@ -22,7 +22,7 @@ Matriz Matriz::gerarMatrizE(double sx, double sy, double sz){ // escala
     Matriz escala;
     escala.m[0][0] = sx;
     escala.m[1][1] = sy;
-    escala.m[2][3] = sz;
+    escala.m[2][2] = sz;
     return escala;
 }
 
@@ -33,7 +33,6 @@ Matriz Matriz::gerarMatrizRx(double angulo){ // rotação x
     rotacao.m[1][2] = -sin(rad);
     rotacao.m[2][1] = sin(rad);
     rotacao.m[2][2] = cos(rad);
-
     return rotacao;
 }
 
@@ -44,7 +43,6 @@ Matriz Matriz::gerarMatrizRy(double angulo){ // rotação y
     rotacao.m[0][2] = sin(rad);
     rotacao.m[2][0] = -sin(rad);
     rotacao.m[2][2] = cos(rad);
-
     return rotacao;
 }
 
@@ -55,7 +53,6 @@ Matriz Matriz::gerarMatrizRz(double angulo){ // rotação z
     rotacao.m[0][1] = -sin(rad);
     rotacao.m[1][0] = sin(rad);
     rotacao.m[1][1] = cos(rad);
-
     return rotacao;
 }
 

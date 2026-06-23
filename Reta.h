@@ -71,7 +71,7 @@ public:
 
             QPen caneta(Qt::white, 4);
             painter.setPen(caneta);
-            painter.drawLine(QPointF(x1_vp, y1_vp), QPointF(x2_vp, y2_vp));
+            painter.drawLine(x1_vp, y1_vp, x2_vp, y2_vp);
         }
     }
 

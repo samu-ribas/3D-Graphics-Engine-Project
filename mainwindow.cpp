@@ -266,23 +266,19 @@ void MainWindow::on_btn_carregarModelo_clicked()
     ui->comboBoxDisplayFile->addItem("CHARIZARD");
 }
 
+void MainWindow::on_btn_carregarModelo_2_clicked()
+{
+    ui->frame->adicionarModelo3D("MEW", ":/objs/Objetos/mew.obj");
+    ui->comboBoxDisplayFile->addItem("MEW");
+}
+
+void MainWindow::on_btn_carregarModelo_3_clicked()
+{
+    ui->frame->adicionarModelo3D("Cubo", ":/objs/Objetos/cube.obj");
+    ui->comboBoxDisplayFile->addItem("Cubo");
+}
+
 MainWindow::~MainWindow()
 {
     delete ui;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

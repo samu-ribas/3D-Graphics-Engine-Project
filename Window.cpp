@@ -1,19 +1,7 @@
 #include "Window.h"
-
+#include <QDebug>
 Window::Window(double cx, double cy, double w, double h)
     : margem(80), centro_x(cx), centro_y(cy), largura(w), altura(h), angulo(0.0), zoomViewport(1.0){}
-
-void Window::setLimites(){
-    limites.x_min = this->centro_x - (this->largura / 2.0) ;
-    limites.x_max = this->centro_x + (this->largura / 2.0) ;
-
-    limites.y_min = this->centro_y - (this->altura / 2.0) ;
-    limites.y_max = this->centro_y + (this->altura / 2.0) ;
-}
-
-LimitesWindow Window:: getLimites() const {
-    return limites;
-}
 
 LimitesWindow Window:: getLimitesSCN(){
     return {-1.0, 1.0, -1.0, 1.0};
@@ -54,14 +42,14 @@ void Window:: setZoomViewport(double z) {
 
 void Window:: aumentarZoom(){
     zoomViewport *= 1.1;
-    if (zoomViewport > 5.0)
-        zoomViewport = 5.0;
+    if (zoomViewport > 20.0)
+        zoomViewport = 20.0;
 }
 
 void Window:: diminuirZoom(){
     zoomViewport /= 1.1;
-    if (zoomViewport < 0.2)
-        zoomViewport = 0.2;
+    if (zoomViewport < 0.0)
+        zoomViewport = 0.0;
 }
 
 void Window:: setLargura(double valor){
@@ -90,8 +78,4 @@ void Window::setCentro_y(double valor){
 
 void Window::setAngulo(double valor){
     this->angulo=valor;
-}
-
-void Window::setMargem(int valor){
-    this->margem = valor;
 }

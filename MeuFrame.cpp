@@ -130,7 +130,7 @@ void MeuFrame::recalcularSCN(){
 
     mTranslacao.m[0][3] = -window.getCentro_x();
     mTranslacao.m[1][3] = -window.getCentro_y();
-    mTranslacao.m[2][3] = 0.0; // Câmera estática no eixo Z por enquanto
+    mTranslacao.m[2][3] = 0.0; // câmera estática no eixo Z por enquanto
 
     double rad = -window.getAngulo() * (M_PI/180.0);
     mRotacao.m[0][0] = cos(rad);

@@ -62,14 +62,13 @@ public:
         }
 
         if (accept) {
-            // Mapeamento puro para a Viewport: o zoom e as margens são tratados pela matriz SCN (mCam)
             double x1_vp = (p1_scn.x_wc + 1.0) * (win.getLargura() / 2.0);
             double y1_vp = (1.0 - p1_scn.y_wc) * (win.getAltura() / 2.0);
 
             double x2_vp = (p2_scn.x_wc + 1.0) * (win.getLargura() / 2.0);
             double y2_vp = (1.0 - p2_scn.y_wc) * (win.getAltura() / 2.0);
 
-            QPen caneta(Qt::white, 4);
+            QPen caneta(Qt::white, 3);
             painter.setPen(caneta);
             painter.drawLine(x1_vp, y1_vp, x2_vp, y2_vp);
         }

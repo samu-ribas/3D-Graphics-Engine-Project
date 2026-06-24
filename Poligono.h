@@ -15,18 +15,18 @@ public:
             return;
         }
 
-        // 1. Converter todos os vértices originais para o SCN
+        // converter todos os vértices originais para o SCN
         std::list<Coordenada> entrada;
         for(const Coordenada& v : this->p){
             entrada.push_back(mCam * v);
         }
 
-        // 2. Limites Absolutos do SCN para guilhotina e interseções
+        // limites Absolutos do SCN para guilhotina e interseções
         LimitesWindow limitesSCN = Window::getLimitesSCN();
 
         std::list<Coordenada> saida;
 
-        // 3. Algoritmo Sutherland-Hodgman no SCN usando getOutcode
+        // algoritmo Sutherland-Hodgman no SCN usando getOutcode
         for(int lado = 0; lado < 4; ++lado){
             saida.clear();
             if(entrada.empty()){
@@ -40,7 +40,7 @@ public:
                 std::bitset<4> outS = this->getOutcode(S.x_wc, S.y_wc, limitesSCN);
                 std::bitset<4> outE = this->getOutcode(E.x_wc, E.y_wc, limitesSCN);
 
-                // Se o bit correspondente ao lado atual for 0, o ponto está DENTRO.
+                // se o bit correspondente ao lado atual for 0, o ponto está DENTRO.
                 bool comecoDentro = !outS.test(lado);
                 bool finalDentro = !outE.test(lado);
 
@@ -99,7 +99,6 @@ public:
             return;
         }
 
-        // 4. Mapeamento para Viewport (Limpo e matematicamente puro, zoom já está na matriz mCam)
         std::vector<QPointF> pontos_tela;
         pontos_tela.reserve(entrada.size());
 

@@ -11,10 +11,10 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    ui->frame->window = Window(0.0, 0.0, 500, 250);//inicializa a câmera diretamente no Frame
-    ui->frame->window.setLimites();
+    ui->frame->window = Window(0.0, 0.0, 500, 250);
     ui->frame->recalcularSCN();
     this->setDeslocamento();
+    ui->frame->setFocusPolicy(Qt::ClickFocus);
 
     //stacked widget + comboBox
     connect(ui->comboBox, QOverload<int>::of(&QComboBox::currentIndexChanged),ui->stackedWidget, &QStackedWidget::setCurrentIndex);
@@ -24,6 +24,10 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->bt_op, &QPushButton::clicked, this, &MainWindow::inputOperacao);
     //spinBox
     connect(ui->spinBoxDesloc, &QSpinBox::valueChanged, this, &MainWindow::setDeslocamento);
+    //menubar
+    connect(ui->Charizard, &QAction::triggered, this, &MainWindow::carregarModelo3d);
+    connect(ui->Cubo, &QAction::triggered, this, &MainWindow::carregarModelo3d);
+    connect(ui->Mew, &QAction::triggered, this, &MainWindow::carregarModelo3d);
 }
 
 void MainWindow::inputOperacao(){
@@ -143,7 +147,6 @@ void MainWindow::on_btn_winConfig_pressed()
     if(winConfig.exec() == QDialog::Accepted){
         ui->frame->window.setLargura(winConfig.getLarguraDigitada());
         ui->frame->window.setAltura(winConfig.getAlturaDigitada());
-        ui->frame->window.setLimites();
         ui->frame->recalcularSCN();
     }
 }
@@ -159,39 +162,33 @@ void MainWindow::setDeslocamento(){
 //métodos da ação da window
 void MainWindow::on_btn_cima_clicked(){
     ui->frame->window.setCentro_y(ui->frame->window.getCentro_y() + deslocamentoWindow);
-    ui->frame->window.setLimites();
     ui->frame->recalcularSCN();
 }
 
 void MainWindow::on_btn_baixo_clicked(){
      ui->frame->window.setCentro_y(ui->frame->window.getCentro_y() - deslocamentoWindow);
-    ui->frame->window.setLimites();
     ui->frame->recalcularSCN();
 }
 
 void MainWindow::on_btn_esquerda_clicked(){
     ui->frame->window.setCentro_x(ui->frame->window.getCentro_x() + deslocamentoWindow);
-    ui->frame->window.setLimites();
     ui->frame->recalcularSCN();
 }
 
 void MainWindow::on_btn_direita_clicked(){
     ui->frame->window.setCentro_x(ui->frame->window.getCentro_x() - deslocamentoWindow);
-    ui->frame->window.setLimites();
     ui->frame->recalcularSCN();
 }
 
 void MainWindow::on_btn_zoomMais_clicked(){
     ui->frame->window.setAltura(ui->frame->window.getAltura() + deslocamentoWindow);
     ui->frame->window.setLargura(ui->frame->window.getLargura() + deslocamentoWindow);
-    ui->frame->window.setLimites();
     ui->frame->recalcularSCN();
 }
 
 void MainWindow::on_btn_zoomMenos_clicked(){
     ui->frame->window.setAltura(ui->frame->window.getAltura() - deslocamentoWindow);
     ui->frame->window.setLargura(ui->frame->window.getLargura() - deslocamentoWindow);
-    ui->frame->window.setLimites();
     ui->frame->recalcularSCN();
 }
 
@@ -199,40 +196,34 @@ void MainWindow::on_btn_zoomMenos_clicked(){
 void MainWindow::on_btn_diagEsqCima_clicked(){
     ui->frame->window.setCentro_x(ui->frame->window.getCentro_x() - deslocamentoWindow);
     ui->frame->window.setCentro_y(ui->frame->window.getCentro_y() + deslocamentoWindow);
-    ui->frame->window.setLimites();
     ui->frame->recalcularSCN();
 }
 
 void MainWindow::on_btn_diagEsqBaixo_clicked(){
     ui->frame->window.setCentro_x(ui->frame->window.getCentro_x() - deslocamentoWindow);
     ui->frame->window.setCentro_y(ui->frame->window.getCentro_y() - deslocamentoWindow);
-    ui->frame->window.setLimites();
     ui->frame->recalcularSCN();
 }
 
 void MainWindow::on_btn_diagDirCima_clicked(){
     ui->frame->window.setCentro_x(ui->frame->window.getCentro_x() + deslocamentoWindow);
     ui->frame->window.setCentro_y(ui->frame->window.getCentro_y() + deslocamentoWindow);
-    ui->frame->window.setLimites();
     ui->frame->recalcularSCN();
 }
 
 void MainWindow::on_btn_diagDirBaixo_clicked(){
     ui->frame->window.setCentro_x(ui->frame->window.getCentro_x() + deslocamentoWindow);
     ui->frame->window.setCentro_y(ui->frame->window.getCentro_y() - deslocamentoWindow);
-    ui->frame->window.setLimites();
     ui->frame->recalcularSCN();
 }
 
 void MainWindow::on_btn_girarEsq_clicked(){;
     ui->frame->window.setAngulo(ui->frame->window.getAngulo()+10);
-    //ui->frame->window.setLimites();
     ui->frame->recalcularSCN();
 }
 
 void MainWindow::on_btn_girarDir_clicked(){
     ui->frame->window.setAngulo(ui->frame->window.getAngulo()-10);
-    //ui->frame->window.setLimites();
     ui->frame->recalcularSCN();
 }
 
@@ -240,42 +231,58 @@ void MainWindow::on_btn_reset_clicked(){
     ui->frame->window.setCentro_x(0.0);
     ui->frame->window.setCentro_y(0.0);
     ui->frame->window.setAngulo(0.0);
-    // DialogConfigWindow winConfig = DialogConfigWindow(this);
-    // ui->frame->window.setAltura(winConfig.getAlturaDigitada());
-    // ui->frame->window.setLargura(winConfig.getLarguraDigitada());
-    ui->frame->window.setLimites();
     ui->frame->recalcularSCN();
 }
 
 void MainWindow::on_btn_zoomViewportMenos_clicked()
 {
     ui->frame->window.diminuirZoom();
-    //ui->frame->window.setLimites();
     ui->frame->recalcularSCN();
 }
 void MainWindow::on_btn_zoomViewportMais_clicked()
 {
     ui->frame->window.aumentarZoom();
-    //ui->frame->window.setLimites();
     ui->frame->recalcularSCN();
 }
 
-void MainWindow::on_btn_carregarModelo_clicked()
-{
-    ui->frame->adicionarModelo3D("CHARIZARD",":/objs/Objetos/Charizard.obj");
-    ui->comboBoxDisplayFile->addItem("CHARIZARD");
+void MainWindow::carregarModelo3d(){
+    QAction* acao = qobject_cast<QAction*>(sender());
+    qDebug()<<"teste";
+    if(!acao){
+        return;
+    }
+    QString texto = acao->text();
+    if(texto == "Charizard"){
+        ui->frame->adicionarModelo3D(texto, ":/objs/Objetos/Charizard.obj");
+    }else if(texto == "Mew"){
+        ui->frame->adicionarModelo3D(texto, ":/objs/Objetos/mew.obj");
+    }else if(texto == "Cubo"){
+        ui->frame->adicionarModelo3D(texto, ":/objs/Objetos/cube.obj");
+    }
+    ui->comboBoxDisplayFile->addItem(texto);
 }
 
-void MainWindow::on_btn_carregarModelo_2_clicked()
-{
-    ui->frame->adicionarModelo3D("MEW", ":/objs/Objetos/mew.obj");
-    ui->comboBoxDisplayFile->addItem("MEW");
-}
-
-void MainWindow::on_btn_carregarModelo_3_clicked()
-{
-    ui->frame->adicionarModelo3D("Cubo", ":/objs/Objetos/cube.obj");
-    ui->comboBoxDisplayFile->addItem("Cubo");
+void MainWindow:: keyPressEvent(QKeyEvent *event){
+    if (ui->frame->hasFocus()){
+        switch(event->key()){
+            case Qt::Key_Up:
+                on_btn_cima_clicked();
+                break;
+            case Qt::Key_Down:
+                on_btn_baixo_clicked();
+                break;
+            case Qt::Key_Left:
+                on_btn_direita_clicked();
+                break;
+            case Qt::Key_Right:
+                on_btn_esquerda_clicked();
+                break;
+            default:
+                QMainWindow::keyPressEvent(event);
+        }
+    }else{
+        QMainWindow::keyPressEvent(event);
+    }
 }
 
 MainWindow::~MainWindow()

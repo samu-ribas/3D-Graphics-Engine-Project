@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QKeyEvent>
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -20,12 +21,10 @@ public:
 private slots:
     void processarPoligono(double x, double y, int l, double r); // polígono
     void processarPoligono(double x, double y, double c, double h); // retângulo
-
     void inputObjeto();
     void inputOperacao();
     void on_btn_winConfig_pressed();
     void setDeslocamento();
-
     void on_btn_cima_clicked();
     void on_btn_baixo_clicked();
     void on_btn_esquerda_clicked();
@@ -41,12 +40,10 @@ private slots:
     void on_btn_reset_clicked();
     void on_btn_zoomViewportMais_clicked();
     void on_btn_zoomViewportMenos_clicked();
+    void carregarModelo3d();
 
-    void on_btn_carregarModelo_clicked();
-
-    void on_btn_carregarModelo_2_clicked();
-
-    void on_btn_carregarModelo_3_clicked();
+protected:
+    void keyPressEvent(QKeyEvent *event);
 
 private:
     Ui::MainWindow *ui;

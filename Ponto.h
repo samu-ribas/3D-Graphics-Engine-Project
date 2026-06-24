@@ -10,8 +10,6 @@ public:
         p.push_back({x,y,0.0});
     }
 
-
-
     void desenhar(QPainter &painter, const Matriz& mCam, const Window& win) override {
         if (this->p.empty())
             return;
@@ -23,14 +21,12 @@ public:
             return;
         }
 
+        double x_vp = (c_scn.x_wc + 1.0) * (win.getLargura() / 2.0);
+        double y_vp = (1.0 - c_scn.y_wc) * (win.getAltura() / 2.0);
 
-        double x_vp = (c_scn.x_wc + 1.0) * ((win.getLargura()*win.getZoomViewport()) / 2.0) + (win.getLargura() - (win.getLargura()*win.getZoomViewport())) / 2.0;
-        double y_vp = (1.0 - c_scn.y_wc) * ((win.getAltura()*win.getZoomViewport()) / 2.0) + (win.getAltura() - (win.getAltura()*win.getZoomViewport())) / 2.0;
-
-        QPen caneta(Qt::white, 4);
+        QPen caneta(Qt::white, 3);
         painter.setPen(caneta);
-        painter.drawPoint(x_vp, y_vp);
+        painter.drawPoint(QPointF(x_vp, y_vp));
     }
-
 };
 #endif // PONTO_H

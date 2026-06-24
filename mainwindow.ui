@@ -13,6 +13,69 @@
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
+  <property name="styleSheet">
+   <string notr="true">QMainWindow { 
+    background-color: #2b2b2b; 
+    color: #eeeeee; 
+}
+
+QFrame#frame { 
+    background-color: #1e1e1e; 
+    border: 2px solid #111111; 
+    border-radius: 4px; 
+}
+
+QFrame#frame:focus { 
+    border: 2px solid #007acc; 
+}
+
+QPushButton { 
+    background-color: #3f3f46; 
+    color: white; 
+    border: 1px solid #111111; 
+    border-radius: 3px; 
+    padding: 5px; 
+}
+
+QPushButton:hover { 
+    background-color: #505050; 
+}
+
+QPushButton:pressed { 
+    background-color: #007acc; 
+}
+
+QComboBox, QSpinBox, QLineEdit { 
+    background-color: #3c3c3c; 
+    color: white; 
+    border: 1px solid #111111; 
+    padding: 3px; 
+    border-radius: 2px; 
+}
+
+QLabel { 
+    color: #cccccc; 
+}
+
+QMenuBar { 
+    background-color: #2b2b2b; 
+    color: #eeeeee; 
+}
+
+QMenuBar::item:selected { 
+    background-color: #3f3f46; 
+}
+
+QMenu { 
+    background-color: #2b2b2b; 
+    color: #eeeeee; 
+    border: 1px solid #111111; 
+}
+
+QMenu::item:selected { 
+    background-color: #007acc; 
+}</string>
+  </property>
   <widget class="QWidget" name="centralwidget">
    <widget class="MeuFrame" name="frame">
     <property name="geometry">
@@ -331,7 +394,7 @@
          <x>70</x>
          <y>10</y>
          <width>71</width>
-         <height>82</height>
+         <height>88</height>
         </rect>
        </property>
        <layout class="QHBoxLayout" name="horizontalLayout_7">
@@ -744,7 +807,7 @@
        <x>20</x>
        <y>30</y>
        <width>105</width>
-       <height>56</height>
+       <height>58</height>
       </rect>
      </property>
      <layout class="QVBoxLayout" name="verticalLayout_15">
@@ -834,7 +897,7 @@
         <rect>
          <x>10</x>
          <y>20</y>
-         <width>61</width>
+         <width>67</width>
          <height>58</height>
         </rect>
        </property>
@@ -1243,19 +1306,6 @@
      </property>
     </widget>
    </widget>
-   <widget class="QPushButton" name="btn_carregarModelo">
-    <property name="geometry">
-     <rect>
-      <x>20</x>
-      <y>460</y>
-      <width>121</width>
-      <height>31</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Desenhar Charizard</string>
-    </property>
-   </widget>
    <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
@@ -1300,32 +1350,6 @@
     </property>
     <layout class="QVBoxLayout" name="verticalLayout_23"/>
    </widget>
-   <widget class="QPushButton" name="btn_carregarModelo_2">
-    <property name="geometry">
-     <rect>
-      <x>20</x>
-      <y>490</y>
-      <width>121</width>
-      <height>31</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Desenhar Mew</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="btn_carregarModelo_3">
-    <property name="geometry">
-     <rect>
-      <x>20</x>
-      <y>530</y>
-      <width>121</width>
-      <height>31</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Desenhar Cubo</string>
-    </property>
-   </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
@@ -1333,11 +1357,50 @@
      <x>0</x>
      <y>0</y>
      <width>1312</width>
-     <height>21</height>
+     <height>20</height>
     </rect>
    </property>
+   <widget class="QMenu" name="menuInserir_Modelo_3D">
+    <property name="title">
+     <string>Inserir Modelo 3D</string>
+    </property>
+    <addaction name="Charizard"/>
+    <addaction name="Mew"/>
+    <addaction name="Cubo"/>
+   </widget>
+   <addaction name="menuInserir_Modelo_3D"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
+  <action name="actionCharizard">
+   <property name="text">
+    <string>Charizard</string>
+   </property>
+  </action>
+  <action name="actionMew">
+   <property name="text">
+    <string>Mew</string>
+   </property>
+  </action>
+  <action name="actionCubo">
+   <property name="text">
+    <string>Cubo</string>
+   </property>
+  </action>
+  <action name="Charizard">
+   <property name="text">
+    <string>Charizard</string>
+   </property>
+  </action>
+  <action name="Mew">
+   <property name="text">
+    <string>Mew</string>
+   </property>
+  </action>
+  <action name="Cubo">
+   <property name="text">
+    <string>Cubo</string>
+   </property>
+  </action>
  </widget>
  <customwidgets>
   <customwidget>

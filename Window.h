@@ -14,10 +14,6 @@ class Window
 public:
     Window(double cx, double cy, double w, double h);
 
-    void setLimites();
-
-    LimitesWindow getLimites() const;
-
     static LimitesWindow getLimitesSCN();
     int getMargem();
     double getCentro_x() const;
@@ -40,6 +36,5 @@ private:
     int margem;
     double centro_x, centro_y, largura, altura, angulo;
     double zoomViewport;
-    LimitesWindow limites;
 };
 #endif // WINDOW_H

@@ -17,7 +17,7 @@ public:
         Coordenada c = this->p.front();
         Coordenada c_scn = mCam * c;
 
-        if(c_scn.x_wc < -1.0 || c_scn.x_wc > 1.0 || c_scn.y_wc < -1.0 || c_scn.y_wc > 1.0) {
+        if((c_scn.x_wc < -1.0) || (c_scn.x_wc > 1.0) || (c_scn.y_wc < -1.0) || (c_scn.y_wc > 1.0)) {
             return;
         }
 

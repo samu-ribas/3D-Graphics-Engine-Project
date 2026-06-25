@@ -11,7 +11,6 @@ SOURCES += \
     Matriz.cpp \
     MeuFrame.cpp \
     camera.cpp \
-    dialogviewport.cpp \
     main.cpp \
     mainwindow.cpp \
     modelo3d.cpp \
@@ -25,13 +24,11 @@ HEADERS += \
     Ponto.h \
     Reta.h \
     camera.h \
-    dialogviewport.h \
     mainwindow.h \
     modelo3d.h \
     viewport.h
 
 FORMS += \
-    dialogviewport.ui \
     mainwindow.ui
 
 # Default rules for deployment.

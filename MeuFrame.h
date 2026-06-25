@@ -3,6 +3,7 @@
 #include <QFrame>
 #include <QVector>
 #include "Matriz.h"
+#include "camera.h"
 
 class MeuFrame : public QFrame
 {
@@ -11,7 +12,9 @@ public:
     explicit MeuFrame(QWidget *parent = nullptr);
     ~MeuFrame();
 
-    Window window;
+
+    Viewport viewport;
+    Camera camera;
     Matriz mCameraAtual;
 
     void adicionarPonto(QString nome, double x, double y);

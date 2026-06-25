@@ -7,14 +7,16 @@ CONFIG += c++17
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    Dialog.cpp \
     Forma.cpp \
     Matriz.cpp \
     MeuFrame.cpp \
-    Window.cpp \
-    dialogconfigwindow.cpp \
+    camera.cpp \
+    dialogviewport.cpp \
     main.cpp \
     mainwindow.cpp \
-    modelo3d.cpp
+    modelo3d.cpp \
+    viewport.cpp
 
 HEADERS += \
     Forma.h \
@@ -23,13 +25,14 @@ HEADERS += \
     Poligono.h \
     Ponto.h \
     Reta.h \
-    Window.h \
-    dialogconfigwindow.h \
+    camera.h \
+    dialogviewport.h \
     mainwindow.h \
-    modelo3d.h
+    modelo3d.h \
+    viewport.h
 
 FORMS += \
-    dialogconfigwindow.ui \
+    dialogviewport.ui \
     mainwindow.ui
 
 # Default rules for deployment.

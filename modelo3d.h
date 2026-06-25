@@ -12,7 +12,7 @@ public:
 
     static Modelo3D* carregarOBJ( const QString& nome, const QString& caminhoRecurso);
 
-    void desenhar(QPainter &painter, const Matriz& mCam, const Window& win);
+    void desenhar(QPainter &painter, const Matriz& mCam, const Viewport& win);
 
 private:
      std::vector< std::vector<int> > faces;

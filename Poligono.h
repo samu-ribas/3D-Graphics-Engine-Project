@@ -10,7 +10,7 @@ public:
         this->p = vertices;
     }
     
-    void desenhar(QPainter &painter, const Matriz& mCam, const Window& win) override{
+    void desenhar(QPainter &painter, const Matriz& mCam, const Viewport& viewport) override{
         if(this->p.size() < 3){
             return;
         }
@@ -22,7 +22,7 @@ public:
         }
 
         // limites Absolutos do SCN para guilhotina e interseções
-        LimitesWindow limitesSCN = Window::getLimitesSCN();
+        LimitesSCN limitesSCN = Viewport::getLimitesSCN();
 
         std::list<Coordenada> saida;
 
@@ -103,8 +103,8 @@ public:
         pontos_tela.reserve(entrada.size());
 
         for(const Coordenada& c_scn : entrada){
-            double x_vp = (c_scn.x_wc + 1.0) * (win.getLargura() / 2.0);
-            double y_vp = (1.0 - c_scn.y_wc) * (win.getAltura() / 2.0);
+            double x_vp = (c_scn.x_wc + 1.0) * (viewport.getLargura() / 2.0);
+            double y_vp = (1.0 - c_scn.y_wc) * (viewport.getAltura() / 2.0);
             pontos_tela.push_back(QPointF(x_vp, y_vp));
         }
 

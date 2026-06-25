@@ -1,30 +1,31 @@
-#include "dialogconfigwindow.h"
-#include "ui_dialogconfigwindow.h"
+#include "dialogviewport.h"
+#include "ui_dialogviewport.h"
 #include <QMessageBox>
 
-DialogConfigWindow::DialogConfigWindow(QWidget *parent)
+DialogViewport::DialogViewport(QWidget *parent)
     : QDialog(parent)
-    , ui(new Ui::DialogConfigWindow)
+    , ui(new Ui::DialogViewport)
 {
     ui->setupUi(this);
-    connect(ui->btnAplicar, &QPushButton::pressed, this, &DialogConfigWindow::setDimensoes);
-    connect(ui->btnCancelar, &QPushButton::pressed, this, &DialogConfigWindow::cancelar);
+    ui->setupUi(this);
+    connect(ui->btnAplicar, &QPushButton::pressed, this, &DialogViewport::setDimensoes);
+    connect(ui->btnCancelar, &QPushButton::pressed, this, &DialogViewport::cancelar);
 }
 
-double DialogConfigWindow::getLarguraDigitada() const{
+double DialogViewport::getLarguraDigitada() const{
     return this->largura;
 }
 
-double DialogConfigWindow::getAlturaDigitada() const{
+double DialogViewport::getAlturaDigitada() const{
     return this->altura;
 }
 
-void DialogConfigWindow::setDisplay(double largAtual, double altAtual) {
+void DialogViewport::setDisplay(double largAtual, double altAtual) {
     ui->lcdNumberLarg->display(largAtual);
     ui->lcdNumberAlt->display(altAtual);
 }
 
-void DialogConfigWindow::setDimensoes() {
+void DialogViewport::setDimensoes() {
     double inputLargura = ui->lineEditLargura->text().toDouble();
     double inputAltura = ui->lineEditAltura->text().toDouble();
 
@@ -41,11 +42,10 @@ void DialogConfigWindow::setDimensoes() {
     }
 }
 
-void DialogConfigWindow::cancelar(){
+void DialogViewport::cancelar(){
     this->reject();
 }
-
-DialogConfigWindow::~DialogConfigWindow()
+DialogViewport::~DialogViewport()
 {
     delete ui;
 }

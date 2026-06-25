@@ -4,17 +4,19 @@
 #include <cmath>
 #include <QMessageBox>
 #include "Forma.h"
-#include "dialogconfigwindow.h"
+#include "dialogviewport.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    ui->frame->window = Window(0.0, 0.0, 500, 250);
+    ui->frame->viewport = Viewport();
+    ui->frame->camera = Camera(0.0, 0.0, 0.0);
     ui->frame->recalcularSCN();
     this->setDeslocamento();
     ui->frame->setFocusPolicy(Qt::ClickFocus);
+
 
     //stacked widget + comboBox
     connect(ui->comboBox, QOverload<int>::of(&QComboBox::currentIndexChanged),ui->stackedWidget, &QStackedWidget::setCurrentIndex);
@@ -84,25 +86,25 @@ void MainWindow::inputObjeto(){
     switch(id){
         case 0:// ponto
             ui->frame->adicionarPonto(ui->lineNome->text(),
-                                      ui->inputX->text().toDouble() + ui->frame->window.getCentro_x(),
-                                      ui->inputY->text().toDouble() + ui->frame->window.getCentro_y());
+                                      ui->inputX->text().toDouble() + ui->frame->camera.getX(),
+                                      ui->inputY->text().toDouble() + ui->frame->camera.getY());
             break;
         case 1://reta
             ui->frame->adicionarReta(ui->lineNome->text(),
-                                    ui->inputXReta->text().toDouble() + ui->frame->window.getCentro_x(),
-                                     ui->inputYReta->text().toDouble() + ui->frame->window.getCentro_y(),
-                                    ui->inputXReta_2->text().toDouble() + ui->frame->window.getCentro_x (),
-                                     ui->inputYReta_2->text().toDouble() + ui->frame->window.getCentro_y() );
+                                    ui->inputXReta->text().toDouble() + ui->frame->camera.getX(),
+                                     ui->inputYReta->text().toDouble() + ui->frame->camera.getY(),
+                                    ui->inputXReta_2->text().toDouble() + ui->frame->camera.getX (),
+                                     ui->inputYReta_2->text().toDouble() + ui->frame->camera.getY() );
             break;
         case 2://poligono
-            this->processarPoligono(ui->inputXPoligono->text().toDouble() + ui->frame->window.getCentro_x(), // x do centro
-                                    ui->inputYPoligono->text().toDouble() + ui->frame->window.getCentro_y(), // y do centro
+            this->processarPoligono(ui->inputXPoligono->text().toDouble() + ui->frame->camera.getX(), // x do centro
+                                    ui->inputYPoligono->text().toDouble() + ui->frame->camera.getY(), // y do centro
                                    ui->inputLados->text().toInt(),
                                    ui->inputRaio->text().toDouble());
             break;
         case 3://retangulo
-            this->processarPoligono(ui->inputXRetangulo->text().toDouble() + ui->frame->window.getCentro_x (), // x do canto
-                                    ui->inputYRetangulo->text().toDouble() + ui->frame->window.getCentro_y() , // y do canto
+            this->processarPoligono(ui->inputXRetangulo->text().toDouble() + ui->frame->camera.getX (), // x do canto
+                                    ui->inputYRetangulo->text().toDouble() + ui->frame->camera.getY() , // y do canto
                                    ui->comprimentoRetangulo->text().toDouble(),
                                    ui->alturaRetangulo->text().toDouble());
         break;
@@ -141,12 +143,12 @@ void MainWindow::processarPoligono(double x, double y, double c, double h){
 
 void MainWindow::on_btn_winConfig_pressed()
 {
-    DialogConfigWindow winConfig = DialogConfigWindow(this);
-    winConfig.setDisplay(ui->frame->window.getLargura(), ui->frame->window.getAltura());
+    DialogViewport viewportAux = DialogViewport(this);
+    viewportAux.setDisplay(ui->frame->viewport.getLargura(), ui->frame->viewport.getAltura());
     ;
-    if(winConfig.exec() == QDialog::Accepted){
-        ui->frame->window.setLargura(winConfig.getLarguraDigitada());
-        ui->frame->window.setAltura(winConfig.getAlturaDigitada());
+    if(viewportAux.exec() == QDialog::Accepted){
+        ui->frame->viewport.setLargura(viewportAux.getLarguraDigitada());
+        ui->frame->viewport.setAltura(viewportAux.getAlturaDigitada());
         ui->frame->recalcularSCN();
     }
 }
@@ -161,87 +163,87 @@ void MainWindow::setDeslocamento(){
 
 //métodos da ação da window
 void MainWindow::on_btn_cima_clicked(){
-    ui->frame->window.setCentro_y(ui->frame->window.getCentro_y() + deslocamentoWindow);
+    ui->frame->camera.setY(ui->frame->camera.getY() + deslocamentoWindow);
     ui->frame->recalcularSCN();
 }
 
 void MainWindow::on_btn_baixo_clicked(){
-     ui->frame->window.setCentro_y(ui->frame->window.getCentro_y() - deslocamentoWindow);
+     ui->frame->camera.setY(ui->frame->camera.getY() - deslocamentoWindow);
     ui->frame->recalcularSCN();
 }
 
 void MainWindow::on_btn_esquerda_clicked(){
-    ui->frame->window.setCentro_x(ui->frame->window.getCentro_x() + deslocamentoWindow);
+    ui->frame->camera.setX(ui->frame->camera.getX() + deslocamentoWindow);
     ui->frame->recalcularSCN();
 }
 
 void MainWindow::on_btn_direita_clicked(){
-    ui->frame->window.setCentro_x(ui->frame->window.getCentro_x() - deslocamentoWindow);
+    ui->frame->camera.setX(ui->frame->camera.getX() - deslocamentoWindow);
     ui->frame->recalcularSCN();
 }
 
 void MainWindow::on_btn_zoomMais_clicked(){
-    ui->frame->window.setAltura(ui->frame->window.getAltura() + deslocamentoWindow);
-    ui->frame->window.setLargura(ui->frame->window.getLargura() + deslocamentoWindow);
+    ui->frame->viewport.setAltura(ui->frame->viewport.getAltura() + deslocamentoWindow);
+    ui->frame->viewport.setLargura(ui->frame->viewport.getLargura() + deslocamentoWindow);
     ui->frame->recalcularSCN();
 }
 
 void MainWindow::on_btn_zoomMenos_clicked(){
-    ui->frame->window.setAltura(ui->frame->window.getAltura() - deslocamentoWindow);
-    ui->frame->window.setLargura(ui->frame->window.getLargura() - deslocamentoWindow);
+    ui->frame->viewport.setAltura(ui->frame->viewport.getAltura() - deslocamentoWindow);
+    ui->frame->viewport.setLargura(ui->frame->viewport.getLargura() - deslocamentoWindow);
     ui->frame->recalcularSCN();
 }
 
 
 void MainWindow::on_btn_diagEsqCima_clicked(){
-    ui->frame->window.setCentro_x(ui->frame->window.getCentro_x() - deslocamentoWindow);
-    ui->frame->window.setCentro_y(ui->frame->window.getCentro_y() + deslocamentoWindow);
+    ui->frame->camera.setX(ui->frame->camera.getX() - deslocamentoWindow);
+    ui->frame->camera.setY(ui->frame->camera.getY() + deslocamentoWindow);
     ui->frame->recalcularSCN();
 }
 
 void MainWindow::on_btn_diagEsqBaixo_clicked(){
-    ui->frame->window.setCentro_x(ui->frame->window.getCentro_x() - deslocamentoWindow);
-    ui->frame->window.setCentro_y(ui->frame->window.getCentro_y() - deslocamentoWindow);
+    ui->frame->camera.setX(ui->frame->camera.getX() - deslocamentoWindow);
+    ui->frame->camera.setY(ui->frame->camera.getY() - deslocamentoWindow);
     ui->frame->recalcularSCN();
 }
 
 void MainWindow::on_btn_diagDirCima_clicked(){
-    ui->frame->window.setCentro_x(ui->frame->window.getCentro_x() + deslocamentoWindow);
-    ui->frame->window.setCentro_y(ui->frame->window.getCentro_y() + deslocamentoWindow);
+    ui->frame->camera.setX(ui->frame->camera.getX() + deslocamentoWindow);
+    ui->frame->camera.setY(ui->frame->camera.getY() + deslocamentoWindow);
     ui->frame->recalcularSCN();
 }
 
 void MainWindow::on_btn_diagDirBaixo_clicked(){
-    ui->frame->window.setCentro_x(ui->frame->window.getCentro_x() + deslocamentoWindow);
-    ui->frame->window.setCentro_y(ui->frame->window.getCentro_y() - deslocamentoWindow);
+    ui->frame->camera.setX(ui->frame->camera.getX() + deslocamentoWindow);
+    ui->frame->camera.setY(ui->frame->camera.getY() - deslocamentoWindow);
     ui->frame->recalcularSCN();
 }
 
 void MainWindow::on_btn_girarEsq_clicked(){;
-    ui->frame->window.setAngulo(ui->frame->window.getAngulo()+10);
+    ui->frame->camera.setAngulo(ui->frame->camera.getAngulo()+10);
     ui->frame->recalcularSCN();
 }
 
 void MainWindow::on_btn_girarDir_clicked(){
-    ui->frame->window.setAngulo(ui->frame->window.getAngulo()-10);
+    ui->frame->camera.setAngulo(ui->frame->camera.getAngulo()-10);
     ui->frame->recalcularSCN();
 }
 
 void MainWindow::on_btn_reset_clicked(){
-    ui->frame->window.setCentro_x(0.0);
-    ui->frame->window.setCentro_y(0.0);
-    ui->frame->window.setAngulo(0.0);
+    ui->frame->camera.setX(0.0);
+    ui->frame->camera.setY(0.0);
+    ui->frame->camera.setAngulo(0.0);
     ui->frame->recalcularSCN();
 }
 
 void MainWindow::on_btn_zoomViewportMenos_clicked()
 {
-    ui->frame->window.diminuirZoom();
+    ui->frame->camera.diminuirZoom();
     ui->frame->recalcularSCN();
 }
 void MainWindow::on_btn_zoomViewportMais_clicked()
 {
-    ui->frame->window.aumentarZoom();
+    ui->frame->camera.aumentarZoom();
     ui->frame->recalcularSCN();
 }
 

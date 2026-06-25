@@ -16,6 +16,8 @@ public:
     static Matriz gerarMatrizRy(double angulo);
     static Matriz gerarMatrizRz(double angulo);
 
+    static Matriz gerarMatrizPerspectiva(double d);
+
     Matriz operator*(const Matriz& m2) const;
     Coordenada operator*(const Coordenada& ponto) const;
 

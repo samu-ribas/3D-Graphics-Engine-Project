@@ -5,7 +5,7 @@
 #include <QVector>
 #include <QPoint>
 #include <bitset>
-#include "Window.h"
+#include "Viewport.h"
 
 struct Coordenada{
     double x_wc;
@@ -38,7 +38,7 @@ public:
 
     virtual ~Forma(){}
 
-    virtual void desenhar(QPainter &painter, const Matriz& mCam, const Window& win) = 0;
+    virtual void desenhar(QPainter &painter, const Matriz& mCam, const Viewport& win) = 0;
 
     void aplicarTransformacao(const Matriz& m);
 
@@ -46,7 +46,7 @@ public:
     std::list<Coordenada>& getCoordenada();
     QString getNome() const ;
     TipoForma getTipo() const ;
-    std::bitset<4> getOutcode(double x, double y, const LimitesWindow& limites);
+    std::bitset<4> getOutcode(double x, double y, const LimitesSCN& limites);
 
 protected:
     QString nome;

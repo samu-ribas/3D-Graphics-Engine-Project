@@ -42,13 +42,19 @@ Coordenada Forma::getCentroide() const {
     return {(minX + maxX) / 2.0, (minY + maxY) / 2.0, (minZ + maxZ) / 2.0};
 }
 
-std::list<Coordenada>& Forma::getCoordenada(){ return this->p; }
+std::list<Coordenada>& Forma::getCoordenada(){
+    return this->p;
+}
 
-QString Forma :: getNome() const { return nome; }
+QString Forma :: getNome() const {
+    return nome;
+}
 
-TipoForma Forma :: getTipo() const { return o_tipo; }
+TipoForma Forma :: getTipo() const {
+    return o_tipo;
+}
 
-std::bitset<4> Forma :: getOutcode(double x, double y, const LimitesWindow& limites){
+std::bitset<4> Forma :: getOutcode(double x, double y, const LimitesSCN& limites){
     std::bitset<4> code = INSIDE;
 
     if(x < limites.x_min)

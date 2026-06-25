@@ -7,7 +7,7 @@
 #include <QPainter>
 #include <QDebug>
 
-MeuFrame::MeuFrame(QWidget *parent) : QFrame(parent), window(0,0,0,0) {}
+MeuFrame::MeuFrame(QWidget *parent) : QFrame(parent) {}
 
 void MeuFrame:: adicionarPonto(QString name, double x, double y){
     displayFile.append(new Ponto(name ,x ,y));
@@ -30,7 +30,7 @@ void MeuFrame::adicionarModelo3D( QString nome, QString caminhoRecurso) {
         qDebug() << "Falha ao carregar OBJ";
         return;
     }
-    Matriz t = Matriz::gerarMatrizT(window.getCentro_x(), window.getCentro_y(), 0.0);
+    Matriz t = Matriz::gerarMatrizT(camera.getX(), camera.getY(), 0.0);
     modelo->aplicarTransformacao(t);
 
     displayFile.append(modelo);
@@ -80,18 +80,18 @@ void MeuFrame::rotacionarObjeto(QString n, double angulo, double x, double y, do
                     py = y;
                     pz = z;
                 }else{
-                    int larg_vp = this->width() - this->window.getMargem() * 2;
-                    int alt_vp  = this->height() - this->window.getMargem() * 2;
+                    int larg_vp = this->width() - 80 * 2;
+                    int alt_vp  = this->height() - 80 * 2;
 
-                    if(larg_vp <= 0 || alt_vp <= 0 || window.getLargura()== 0 || window.getAltura() == 0){
+                    if(larg_vp <= 0 || alt_vp <= 0 || viewport.getLargura()== 0 || viewport.getAltura() == 0){
                         return;
                     }
 
                     double x_scn = x / (larg_vp / 2.0);
                     double y_scn = y / (alt_vp / 2.0);
 
-                    px = x_scn * (window.getLargura() / 2.0) + window.getCentro_x();
-                    py = y_scn * (window.getAltura() / 2.0) + window.getCentro_y();
+                    px = x_scn * (viewport.getLargura() / 2.0) + camera.getX();
+                    py = y_scn * (viewport.getAltura() / 2.0) + camera.getY();
                     pz = z;
                 }
             }
@@ -128,20 +128,20 @@ void MeuFrame::recalcularSCN(){
     Matriz mRotacao;
     Matriz mEscala;
 
-    mTranslacao.m[0][3] = -window.getCentro_x();
-    mTranslacao.m[1][3] = -window.getCentro_y();
+    mTranslacao.m[0][3] = -camera.getX();
+    mTranslacao.m[1][3] = -camera.getY();
     mTranslacao.m[2][3] = 0.0; // câmera estática no eixo Z por enquanto
 
-    double rad = -window.getAngulo() * (M_PI/180.0);
+    double rad = -camera.getAngulo() * (M_PI/180.0);
     mRotacao.m[0][0] = cos(rad);
     mRotacao.m[0][1] = -sin(rad);
     mRotacao.m[1][0] = sin(rad);
     mRotacao.m[1][1] = cos(rad);
     mRotacao.m[2][2] = 1.0;
 
-    double zoom = window.getZoomViewport();
-    mEscala.m[0][0] = (2.0/window.getLargura()) * zoom;
-    mEscala.m[1][1] = (2.0/window.getAltura()) * zoom;
+    double zoom = camera.getZoom();
+    mEscala.m[0][0] = (2.0/viewport.getLargura()) * zoom;
+    mEscala.m[1][1] = (2.0/viewport.getAltura()) * zoom;
     mEscala.m[2][2] = 1.0;
 
     this->mCameraAtual = mEscala * mRotacao * mTranslacao;
@@ -153,8 +153,8 @@ void MeuFrame::paintEvent(QPaintEvent *event){
     QFrame::paintEvent(event);
     QPainter painter(this);
 
-    double altura = this->window.getAltura();
-    double largura = this->window.getLargura();
+    double altura = this->viewport.getAltura();
+    double largura = this->viewport.getLargura();
     int x_canto = (this->width() - largura ) / 2;
     int y_canto = (this->height() - altura) / 2;
 
@@ -162,7 +162,7 @@ void MeuFrame::paintEvent(QPaintEvent *event){
     painter.translate(x_canto, y_canto);
 
     for(Forma* df : std::as_const(displayFile)){
-        df->desenhar(painter, this->mCameraAtual, this->window);
+        df->desenhar(painter, this->mCameraAtual, this->viewport);
     }
 
     QPen canetaVermelha(Qt::darkRed, 6);

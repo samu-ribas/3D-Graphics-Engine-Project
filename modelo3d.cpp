@@ -111,7 +111,7 @@ Modelo3D* Modelo3D::carregarOBJ(const QString& nome, const QString& caminho)
     return new Modelo3D(nome, vertices, faces);
 }
 
-void Modelo3D::desenhar(QPainter &painter, const Matriz& mCam, const Window& win) {
+void Modelo3D::desenhar(QPainter &painter, const Matriz& mCam, const Viewport& viewport) {
     if(p.empty() || this->faces.empty()){
         return;
     }
@@ -121,7 +121,7 @@ void Modelo3D::desenhar(QPainter &painter, const Matriz& mCam, const Window& win
     QPen caneta(Qt::white, 1);
     painter.setPen(caneta);
 
-    LimitesWindow limitesSCN = Window::getLimitesSCN();
+    LimitesSCN limitesSCN = Viewport::getLimitesSCN();
 
     for(const auto& face : faces){
         if(face.size() < 3) continue;
@@ -182,11 +182,11 @@ void Modelo3D::desenhar(QPainter &painter, const Matriz& mCam, const Window& win
             }
 
             if(accept){
-                double x_vp0 = (x0 + 1.0) * (win.getLargura() / 2.0);
-                double y_vp0 = (1.0 - y0) * (win.getAltura() / 2.0);
+                double x_vp0 = (x0 + 1.0) * (viewport.getLargura() / 2.0);
+                double y_vp0 = (1.0 - y0) * (viewport.getAltura() / 2.0);
 
-                double x_vp1 = (x1 + 1.0) * (win.getLargura() / 2.0);
-                double y_vp1 = (1.0 - y1) * (win.getAltura() / 2.0);
+                double x_vp1 = (x1 + 1.0) * (viewport.getLargura() / 2.0);
+                double y_vp1 = (1.0 - y1) * (viewport.getAltura() / 2.0);
 
                 painter.drawLine(x_vp0, y_vp0, x_vp1, y_vp1);
             }

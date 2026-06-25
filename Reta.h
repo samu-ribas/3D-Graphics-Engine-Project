@@ -10,7 +10,7 @@ public:
         p.push_back({x2, y2, 0.0});
     }
 
-    void desenhar(QPainter &painter, const Matriz& mCam, const Window& win) override{
+    void desenhar(QPainter &painter, const Matriz& mCam, const Viewport& viewport) override{
         auto it = p.begin();
         Coordenada p1_mundo = *it;
         Coordenada p2_mundo = *(++it);
@@ -18,7 +18,7 @@ public:
         Coordenada p1_scn = mCam * p1_mundo;
         Coordenada p2_scn = mCam * p2_mundo;
 
-        LimitesWindow limitesSCN = Window::getLimitesSCN();
+        LimitesSCN limitesSCN = Viewport::getLimitesSCN();
 
         std::bitset<4> outcode1 = this->getOutcode(p1_scn.x_wc, p1_scn.y_wc, limitesSCN);
         std::bitset<4> outcode2 = this->getOutcode(p2_scn.x_wc, p2_scn.y_wc, limitesSCN);
@@ -62,11 +62,11 @@ public:
         }
 
         if (accept) {
-            double x1_vp = (p1_scn.x_wc + 1.0) * (win.getLargura() / 2.0);
-            double y1_vp = (1.0 - p1_scn.y_wc) * (win.getAltura() / 2.0);
+            double x1_vp = (p1_scn.x_wc + 1.0) * (viewport.getLargura() / 2.0);
+            double y1_vp = (1.0 - p1_scn.y_wc) * (viewport.getAltura() / 2.0);
 
-            double x2_vp = (p2_scn.x_wc + 1.0) * (win.getLargura() / 2.0);
-            double y2_vp = (1.0 - p2_scn.y_wc) * (win.getAltura() / 2.0);
+            double x2_vp = (p2_scn.x_wc + 1.0) * (viewport.getLargura() / 2.0);
+            double y2_vp = (1.0 - p2_scn.y_wc) * (viewport.getAltura() / 2.0);
 
             QPen caneta(Qt::white, 3);
             painter.setPen(caneta);

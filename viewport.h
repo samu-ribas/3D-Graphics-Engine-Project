@@ -16,7 +16,11 @@ public:
 
     double getLargura() const;
     double getAltura() const;
+    double getXvp() const;
+    double getYvp() const;
 
+    void setXvp(double x);
+    void setYvp(double y);
     void setLargura(double valor);
     void setAltura(double valor);
 

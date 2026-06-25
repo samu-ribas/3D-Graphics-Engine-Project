@@ -6,8 +6,30 @@ LimitesSCN Viewport::getLimitesSCN() {
     return {-1.0, 1.0, -1.0, 1.0};
 }
 
-double Viewport::getLargura() const { return largura; }
-double Viewport::getAltura() const { return altura; }
+double Viewport::getLargura() const {
+    return largura;
+}
+
+double Viewport::getAltura() const {
+    return altura;
+}
+
+double Viewport::getXvp() const{
+    return this->x_vp;
+}
+
+double Viewport::getYvp() const{
+    return this->y_vp;
+}
+
+void Viewport:: setXvp(double x){
+    this->x_vp = x;
+}
+
+void Viewport:: setYvp(double y){
+    this->y_vp = y;
+}
+
 
 void Viewport::setLargura(double valor) {
     if(valor > 0.0) {

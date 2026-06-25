@@ -11,7 +11,7 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    ui->frame->viewport = Viewport();
+    //ui->frame->viewport = Viewport();
     ui->frame->camera = Camera(0.0, 0.0, 0.0);
     ui->frame->recalcularSCN();
     this->setDeslocamento();
@@ -141,18 +141,6 @@ void MainWindow::processarPoligono(double x, double y, double c, double h){
     ui->frame->adicionarPoligono(ui->lineNome->text(), listaDePontos);
 }
 
-void MainWindow::on_btn_winConfig_pressed()
-{
-    DialogViewport viewportAux = DialogViewport(this);
-    viewportAux.setDisplay(ui->frame->viewport.getLargura(), ui->frame->viewport.getAltura());
-    ;
-    if(viewportAux.exec() == QDialog::Accepted){
-        ui->frame->viewport.setLargura(viewportAux.getLarguraDigitada());
-        ui->frame->viewport.setAltura(viewportAux.getAlturaDigitada());
-        ui->frame->recalcularSCN();
-    }
-}
-
 void MainWindow::setDeslocamento(){
     double valor = ui->spinBoxDesloc->value();
     if(valor>500){
@@ -161,7 +149,7 @@ void MainWindow::setDeslocamento(){
     this->deslocamentoWindow = valor;
 }
 
-//métodos da ação da window
+//métodos da ação da viewport
 void MainWindow::on_btn_cima_clicked(){
     ui->frame->camera.setY(ui->frame->camera.getY() + deslocamentoWindow);
     ui->frame->recalcularSCN();
@@ -287,7 +275,22 @@ void MainWindow:: keyPressEvent(QKeyEvent *event){
     }
 }
 
+void MainWindow::on_btn_viewportConfig_clicked()
+{
+    DialogViewport viewportAux = DialogViewport(this);
+    viewportAux.setDisplay(ui->frame->viewport.getLargura(), ui->frame->viewport.getAltura(), ui->frame->viewport.getXvp(), ui->frame->viewport.getYvp());
+    ;
+    if(viewportAux.exec() == QDialog::Accepted){
+        ui->frame->viewport.setLargura(viewportAux.getLarguraDigitada());
+        ui->frame->viewport.setAltura(viewportAux.getAlturaDigitada());
+        ui->frame->viewport.setXvp(viewportAux.getXDigitado());
+        ui->frame->viewport.setYvp(viewportAux.getYDigitado());
+        ui->frame->recalcularSCN();
+    }
+}
+
 MainWindow::~MainWindow()
 {
     delete ui;
 }
+

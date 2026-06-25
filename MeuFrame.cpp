@@ -7,7 +7,7 @@
 #include <QPainter>
 #include <QDebug>
 
-MeuFrame::MeuFrame(QWidget *parent) : QFrame(parent) {}
+MeuFrame::MeuFrame(QWidget *parent) : QFrame(parent), viewport(50.0, 50.0, 600.0, 350.0) {}
 
 void MeuFrame:: adicionarPonto(QString name, double x, double y){
     displayFile.append(new Ponto(name ,x ,y));
@@ -80,8 +80,8 @@ void MeuFrame::rotacionarObjeto(QString n, double angulo, double x, double y, do
                     py = y;
                     pz = z;
                 }else{
-                    int larg_vp = this->width() - 80 * 2;
-                    int alt_vp  = this->height() - 80 * 2;
+                    int larg_vp = this->viewport.getLargura();
+                    int alt_vp  = this->viewport.getAltura();
 
                     if(larg_vp <= 0 || alt_vp <= 0 || viewport.getLargura()== 0 || viewport.getAltura() == 0){
                         return;
@@ -153,13 +153,7 @@ void MeuFrame::paintEvent(QPaintEvent *event){
     QFrame::paintEvent(event);
     QPainter painter(this);
 
-    double altura = this->viewport.getAltura();
-    double largura = this->viewport.getLargura();
-    int x_canto = (this->width() - largura ) / 2;
-    int y_canto = (this->height() - altura) / 2;
-
-    //move a origem para esse canto centralizad
-    painter.translate(x_canto, y_canto);
+    painter.translate(this->viewport.getXvp(), this->viewport.getYvp());
 
     for(Forma* df : std::as_const(displayFile)){
         df->desenhar(painter, this->mCameraAtual, this->viewport);
@@ -167,6 +161,11 @@ void MeuFrame::paintEvent(QPaintEvent *event){
 
     QPen canetaVermelha(Qt::darkRed, 6);
     painter.setPen(canetaVermelha);
+
+    double altura = this->viewport.getAltura();
+    double largura = this->viewport.getLargura();
+    //double x = this->viewport.getXvp();
+    //double y = this->viewport.getYvp();
 
     painter.drawLine(0, 0, largura, 0);
     painter.drawLine(largura, 0, largura, altura);

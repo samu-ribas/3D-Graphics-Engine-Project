@@ -336,7 +336,7 @@ QMenu::item:selected {
       <string>⭯</string>
      </property>
     </widget>
-    <widget class="QPushButton" name="btn_winConfig">
+    <widget class="QPushButton" name="btn_viewportConfig">
      <property name="geometry">
       <rect>
        <x>30</x>

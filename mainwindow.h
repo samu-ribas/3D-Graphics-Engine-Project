@@ -23,7 +23,6 @@ private slots:
     void processarPoligono(double x, double y, double c, double h); // retângulo
     void inputObjeto();
     void inputOperacao();
-    void on_btn_winConfig_pressed();
     void setDeslocamento();
     void on_btn_cima_clicked();
     void on_btn_baixo_clicked();
@@ -41,6 +40,7 @@ private slots:
     void on_btn_zoomViewportMais_clicked();
     void on_btn_zoomViewportMenos_clicked();
     void carregarModelo3d();
+    void on_btn_viewportConfig_clicked();
 
 protected:
     void keyPressEvent(QKeyEvent *event) override;

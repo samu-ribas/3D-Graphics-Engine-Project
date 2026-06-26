@@ -30,6 +30,11 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->Charizard, &QAction::triggered, this, &MainWindow::carregarModelo3d);
     connect(ui->Cubo, &QAction::triggered, this, &MainWindow::carregarModelo3d);
     connect(ui->Mew, &QAction::triggered, this, &MainWindow::carregarModelo3d);
+    connect(ui->Pikachu, &QAction::triggered, this, &MainWindow::carregarModelo3d);
+    connect(ui->Charmander, &QAction::triggered, this, &MainWindow::carregarModelo3d);
+    connect(ui->Bulbasaur, &QAction::triggered, this, &MainWindow::carregarModelo3d);
+    connect(ui->Squirtle, &QAction::triggered, this, &MainWindow::carregarModelo3d);
+    connect(ui->Cubone, &QAction::triggered, this, &MainWindow::carregarModelo3d);
 }
 
 void MainWindow::inputOperacao(){
@@ -241,13 +246,25 @@ void MainWindow::carregarModelo3d(){
         return;
     }
     QString texto = acao->text();
+    QString caminho;
     if(texto == "Charizard"){
-        ui->frame->adicionarModelo3D(texto, ":/objs/Objetos/Charizard.obj");
+        caminho = ":/objs/Objetos/Charizard.obj";
     }else if(texto == "Mew"){
-        ui->frame->adicionarModelo3D(texto, ":/objs/Objetos/mew.obj");
+        caminho = ":/objs/Objetos/mew.obj";
     }else if(texto == "Cubo"){
-        ui->frame->adicionarModelo3D(texto, ":/objs/Objetos/cube.obj");
+        caminho = ":/objs/Objetos/cube.obj";
+    }else if(texto == "Pikachu"){
+        caminho = ":/objs/Objetos/pikachu.obj";
+    }else if(texto == "Squirtle"){
+        caminho = ":/objs/Objetos/Squirtle.obj";
+    }else if(texto == "Charmander"){
+        caminho = ":/objs/Objetos/Charmander.obj";
+    }else if(texto == "Bulbasaur"){
+        caminho = ":/objs/Objetos/Bulbasaur.obj";
+    }else if(texto == "Cubone"){
+        caminho = ":/objs/Objetos/Cubone.obj";
     }
+    ui->frame->adicionarModelo3D(texto, caminho);
     ui->comboBoxDisplayFile->addItem(texto);
 }
 

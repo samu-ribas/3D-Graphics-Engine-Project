@@ -4,7 +4,7 @@
 #include <QPainter>
 #include <QVector>
 #include <QPoint>
-#include "Viewport.h"
+#include "viewport.h"
 
 struct Coordenada{
     double x_wc;

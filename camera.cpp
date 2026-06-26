@@ -1,4 +1,4 @@
-#include "Camera.h"
+#include "camera.h"
 
 Camera::Camera(double cx, double cy, double cz) : x(cx), y(cy), z(cz), angulo(0.0), zoom(1.0), d(350.0) {}
 

@@ -6,7 +6,7 @@
 #include <QPainter>
 #include <QDebug>
 
-MeuFrame::MeuFrame(QWidget *parent) : QFrame(parent), viewport(50.0, 50.0, 600.0, 350.0) {}
+MeuFrame::MeuFrame(QWidget *parent) : QFrame(parent), viewport(50.0, 50.0, 800.0, 350.0) {}
 
 void MeuFrame:: adicionarPonto(QString name, double x, double y){
     displayFile.append(new Ponto(name ,x ,y));
@@ -134,7 +134,7 @@ void MeuFrame::paintEvent(QPaintEvent *event){
     QFrame::paintEvent(event);
     QPainter painter(this);
 
-    //painter.setRenderHint(QPainter::Antialiasing); //fica mais bonito
+    painter.setRenderHint(QPainter::Antialiasing); //fica mais bonito
 
     painter.translate(this->viewport.getXvp(), this->viewport.getYvp());
 

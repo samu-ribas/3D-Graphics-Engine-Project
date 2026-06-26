@@ -3,7 +3,6 @@
 #include "Reta.h"
 #include "Poligono.h"
 #include "modelo3d.h"
-#include <cmath>
 #include <QPainter>
 #include <QDebug>
 
@@ -24,17 +23,15 @@ void MeuFrame:: adicionarPoligono(QString name, std::list<Coordenada> pontos){
     recalcularSCN();
 }
 
-void MeuFrame::adicionarModelo3D( QString nome, QString caminhoRecurso) {
+void MeuFrame::adicionarModelo3D( QString nome, QString caminhoRecurso){
     Modelo3D* modelo = Modelo3D::carregarOBJ(nome, caminhoRecurso);
-    if(modelo == nullptr){
-        qDebug() << "Falha ao carregar OBJ";
+    if(modelo == nullptr)
         return;
-    }
-    Matriz t = Matriz::gerarMatrizT(camera.getX(), camera.getY(), 0.0);
-    modelo->aplicarTransformacao(t);
+
+    Matriz rotacaoY = Matriz::gerarMatrizRy(180.0);
+    modelo->aplicarTransformacao(rotacaoY);
 
     displayFile.append(modelo);
-    qDebug() << "Modelo carregado com sucesso";
     recalcularSCN();
 }
 
@@ -123,40 +120,26 @@ bool MeuFrame::contemObjeto(const QString& nome) const {
     return false;
 }
 
-void MeuFrame::recalcularSCN(){
-    Matriz mTranslacao;
-    Matriz mRotacao;
-    Matriz mEscala;
+void MeuFrame::recalcularSCN()
+{
+    Matriz translacao = Matriz::gerarMatrizT(-camera.getX(), -camera.getY(), -camera.getZ());
+    Matriz rotacao    = Matriz::gerarMatrizRz(-camera.getAngulo());
+    this->mView = rotacao * translacao;
 
-    mTranslacao.m[0][3] = -camera.getX();
-    mTranslacao.m[1][3] = -camera.getY();
-    mTranslacao.m[2][3] = 0.0; // câmera estática no eixo Z por enquanto
+    this->mProj = Matriz::gerarMatrizPerspectiva(camera.getD());
 
-    double rad = -camera.getAngulo() * (M_PI/180.0);
-    mRotacao.m[0][0] = cos(rad);
-    mRotacao.m[0][1] = -sin(rad);
-    mRotacao.m[1][0] = sin(rad);
-    mRotacao.m[1][1] = cos(rad);
-    mRotacao.m[2][2] = 1.0;
-
-    double zoom = camera.getZoom();
-    mEscala.m[0][0] = (2.0/viewport.getLargura()) * zoom;
-    mEscala.m[1][1] = (2.0/viewport.getAltura()) * zoom;
-    mEscala.m[2][2] = 1.0;
-
-    this->mCameraAtual = mEscala * mRotacao * mTranslacao;
     this->update();
 }
-
-
 void MeuFrame::paintEvent(QPaintEvent *event){
     QFrame::paintEvent(event);
     QPainter painter(this);
 
+    //painter.setRenderHint(QPainter::Antialiasing); //fica mais bonito
+
     painter.translate(this->viewport.getXvp(), this->viewport.getYvp());
 
     for(Forma* df : std::as_const(displayFile)){
-        df->desenhar(painter, this->mCameraAtual, this->viewport);
+        df->desenhar(painter, this->mView, this->mProj, this->viewport, this->camera.getZoom());
     }
 
     QPen canetaVermelha(Qt::darkRed, 6);
@@ -164,14 +147,13 @@ void MeuFrame::paintEvent(QPaintEvent *event){
 
     double altura = this->viewport.getAltura();
     double largura = this->viewport.getLargura();
-    //double x = this->viewport.getXvp();
-    //double y = this->viewport.getYvp();
 
     painter.drawLine(0, 0, largura, 0);
     painter.drawLine(largura, 0, largura, altura);
     painter.drawLine(largura, altura, 0, altura);
     painter.drawLine(0, altura, 0, 0);
 }
+
 
 MeuFrame::~MeuFrame() {
     qDeleteAll(displayFile);

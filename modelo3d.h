@@ -12,7 +12,7 @@ public:
 
     static Modelo3D* carregarOBJ( const QString& nome, const QString& caminhoRecurso);
 
-    void desenhar(QPainter &painter, const Matriz& mCam, const Viewport& win);
+    void desenhar(QPainter &painter, const Matriz& mView, const Matriz& mProj, const Viewport& win, double zoom) override  ;
 
 private:
      std::vector< std::vector<int> > faces;

@@ -4,14 +4,12 @@
 #include <QPainter>
 #include <QVector>
 #include <QPoint>
-#include <bitset>
 #include "Viewport.h"
 
 struct Coordenada{
     double x_wc;
     double y_wc;
     double z_wc;
-
     double x_scn;
     double y_scn;
 
@@ -28,25 +26,19 @@ enum class TipoForma{PONTO, RETA, POLIGONO, MODELO3D};
 
 class Forma{
 public:
-    const std::bitset<4> INSIDE = (0b0000);
-    const std::bitset<4> LEFT   = (0b0001);
-    const std::bitset<4> RIGHT  = (0b0010);
-    const std::bitset<4> BASE   = (0b0100);
-    const std::bitset<4> TOP    = (0b1000);
-
     Forma(QString n, TipoForma tipo);
 
     virtual ~Forma(){}
-
-    virtual void desenhar(QPainter &painter, const Matriz& mCam, const Viewport& win) = 0;
-
+    virtual void desenhar(QPainter &painter, const Matriz& mView, const Matriz& mProj, const Viewport& win, double zoom) = 0;
     void aplicarTransformacao(const Matriz& m);
 
     Coordenada getCentroide() const;
     std::list<Coordenada>& getCoordenada();
-    QString getNome() const ;
-    TipoForma getTipo() const ;
-    std::bitset<4> getOutcode(double x, double y, const LimitesSCN& limites);
+    QString getNome() const;
+    TipoForma getTipo() const;
+    int obterOutCode(double x, double y, const LimitesSCN& limites);
+    bool cohenSutherland(Coordenada& p1, Coordenada& p2, const LimitesSCN& limites);
+    bool clipNearPlane(Coordenada& p1, Coordenada& p2, double z_near);
 
 protected:
     QString nome;

@@ -1,6 +1,6 @@
 #include "Camera.h"
 
-Camera::Camera(double cx, double cy, double cz) : x(cx), y(cy), z(cz), angulo(0.0), zoom(1.0), d(50.0) {}
+Camera::Camera(double cx, double cy, double cz) : x(cx), y(cy), z(cz), angulo(0.0), zoom(1.0), d(350.0) {}
 
 double Camera::getX() const {
     return x;

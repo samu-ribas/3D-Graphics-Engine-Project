@@ -12,7 +12,7 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
     //ui->frame->viewport = Viewport();
-    ui->frame->camera = Camera(0.0, 0.0, 0.0);
+    ui->frame->camera = Camera(0.0, 0.0, -300.0);
     ui->frame->recalcularSCN();
     this->setDeslocamento();
     ui->frame->setFocusPolicy(Qt::ClickFocus);
@@ -237,7 +237,6 @@ void MainWindow::on_btn_zoomViewportMais_clicked()
 
 void MainWindow::carregarModelo3d(){
     QAction* acao = qobject_cast<QAction*>(sender());
-    qDebug()<<"teste";
     if(!acao){
         return;
     }

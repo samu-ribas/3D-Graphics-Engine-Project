@@ -23,7 +23,8 @@ Modelo3D* Modelo3D::carregarOBJ(const QString& nome, const QString& caminho)
     QString line;
 
     QTextStream stream(&file);
-    while(!stream.atEnd()){ //retorna verdadeiro se não houver mais dados para serem lidos do QTextStream;
+    while(!stream.atEnd())
+    {   //retorna verdadeiro se não houver mais dados para serem lidos do QTextStream;
         line = stream.readLine().trimmed();
 
         if(line.isEmpty() || line.startsWith('#')){//pula se for vazia ou comentario
@@ -41,22 +42,22 @@ Modelo3D* Modelo3D::carregarOBJ(const QString& nome, const QString& caminho)
             double x, y, z;
             if(iss >> x >> y >> z){
                 vertices.push_back(Coordenada(x, y, z));
-            }else{
-                qDebug() << "Linha de vértice mal formatada:" << line;
             }
         }else if (tipo == "f"){
             // Face: f v1[/vt1][/vn1] v2[/vt2][/vn2] ...
             std::vector<int> faceIndices;
             std::string token;
-            while(iss >> token){
+            while(iss >> token)
+            {
                 //extrai apenas o primeiro número (índice do vértice)
                 size_t slashPos = token.find('/');
                 std::string idxStr = (slashPos == std::string::npos) ? token : token.substr(0, slashPos);
+
                 //converte para inteiro
                 char* end;
                 long idx = std::strtol(idxStr.c_str(), &end, 10);
+
                 if (*end != '\0') {
-                    qDebug() << "Índice inválido na face:" << token.c_str();
                     continue;
                 }
                 //OBJ é 1‑based
@@ -72,8 +73,6 @@ Modelo3D* Modelo3D::carregarOBJ(const QString& nome, const QString& caminho)
 
                 if(idx >= 0 && idx < static_cast<long>(vertices.size())){
                     faceIndices.push_back(static_cast<int>(idx));
-                }else{
-                    qDebug() << "Índice fora dos limites:" << idx;
                 }
             }
             //triangula a face (se tiver mais de 3 vértices)
@@ -92,6 +91,7 @@ Modelo3D* Modelo3D::carregarOBJ(const QString& nome, const QString& caminho)
     }
 
     double minX=1e9, maxX=-1e9, minY=1e9, maxY=-1e9;
+
     for (auto& v : vertices) {
         minX = std::min(minX, v.x_wc);
         maxX = std::max(maxX, v.x_wc);
@@ -102,6 +102,7 @@ Modelo3D* Modelo3D::carregarOBJ(const QString& nome, const QString& caminho)
     double sy = 200.0 / (maxY - minY);
     double tx = -(minX + maxX) / 2.0;
     double ty = -(minY + maxY) / 2.0;
+
     for(auto& v : vertices){
         v.x_wc = (v.x_wc + tx) * sx;
         v.y_wc = (v.y_wc + ty) * sy;
@@ -111,85 +112,57 @@ Modelo3D* Modelo3D::carregarOBJ(const QString& nome, const QString& caminho)
     return new Modelo3D(nome, vertices, faces);
 }
 
-void Modelo3D::desenhar(QPainter &painter, const Matriz& mCam, const Viewport& viewport) {
-    if(p.empty() || this->faces.empty()){
-        return;
-    }
-    // Converte a lista de vértices para vetor para acesso por índice
-    std::vector<Coordenada> vertices(p.begin(), p.end());
-
-    QPen caneta(Qt::white, 1);
-    painter.setPen(caneta);
-
-    LimitesSCN limitesSCN = Viewport::getLimitesSCN();
+void Modelo3D:: desenhar(QPainter &painter, const Matriz& mView, const Matriz& mProj, const Viewport& win, double zoom){
+    std::vector<Coordenada> vertices_vector(this->p.begin(), this->p.end());
+    double z_near = 1.0;
+    double sx = (2.0 / win.getLargura()) * zoom;
+    double sy = (2.0 / win.getAltura())  * zoom;
 
     for(const auto& face : faces){
-        if(face.size() < 3) continue;
-
-        std::vector<Coordenada> faceSCN;
-        for(int aux : face){
-            if(aux < 0 || aux >= (int)vertices.size()){
+        if(face.size() < 3){
+            continue;
+        }
+        Coordenada v[3];
+        for(int i = 0; i < 3; ++i){
+            int idx = face[i];
+            if (idx < 0 || idx >= (int)vertices_vector.size()){
                 continue;
             }
-            faceSCN.push_back(mCam * vertices[aux]);
+            v[i] = mView * vertices_vector[idx];
         }
 
-        for(size_t i = 0; i < faceSCN.size(); ++i){
-            Coordenada p1 = faceSCN[i];
-            Coordenada p2 = faceSCN[(i + 1) % faceSCN.size()];
+        for(int i = 0; i < 3; ++i){
+            Coordenada p1 = v[i];
+            Coordenada p2 = v[(i + 1) % 3];
 
-            double x0 = p1.x_wc;
-            double y0 = p1.y_wc;
-            double x1 = p2.x_wc;
-            double y1 = p2.y_wc;
-
-            std::bitset<4> outcode0 = this->getOutcode(x0, y0, limitesSCN);
-            std::bitset<4> outcode1 = this->getOutcode(x1, y1, limitesSCN);
-            bool accept = false;
-
-            while(true){
-                if((outcode0 | outcode1).none()){
-                    accept = true;
-                    break;
-                }
-                if((outcode0 & outcode1).any())
-                    break;
-
-                std::bitset<4> out_fora = outcode0.any() ? outcode0 : outcode1;
-                double x = 0.0, y = 0.0;
-
-                if(out_fora.test(3)){
-                    x = x0 + (x1 - x0) * (1.0 - y0) / (y1 - y0);
-                    y = 1.0;
-                }else if(out_fora.test(2)){
-                    x = x0 + (x1 - x0) * (-1.0 - y0) / (y1 - y0);
-                    y = -1.0;
-                }else if(out_fora.test(1)){
-                    y = y0 + (y1 - y0) * (1.0 - x0) / (x1 - x0);
-                    x = 1.0;
-                }else if(out_fora.test(0)){
-                    y = y0 + (y1 - y0) * (-1.0 - x0) / (x1 - x0);
-                    x = -1.0;
-                }
-
-                if(out_fora == outcode0){
-                    x0 = x; y0 = y;
-                    outcode0 = this->getOutcode(x0, y0, limitesSCN);
-                }else{
-                    x1 = x; y1 = y;
-                    outcode1 = this->getOutcode(x1, y1, limitesSCN);
-                }
+            if(!clipNearPlane(p1, p2, z_near)){
+                continue;
             }
 
-            if(accept){
-                double x_vp0 = (x0 + 1.0) * (viewport.getLargura() / 2.0);
-                double y_vp0 = (1.0 - y0) * (viewport.getAltura() / 2.0);
+            p1 = mProj * p1;
+            p2 = mProj * p2;
 
-                double x_vp1 = (x1 + 1.0) * (viewport.getLargura() / 2.0);
-                double y_vp1 = (1.0 - y1) * (viewport.getAltura() / 2.0);
+            p1.x_wc *= sx;
+            p1.y_wc *= sy;
+            p2.x_wc *= sx;
+            p2.y_wc *= sy;
 
-                painter.drawLine(x_vp0, y_vp0, x_vp1, y_vp1);
+            p1.x_scn = p1.x_wc;
+            p1.y_scn = p1.y_wc;
+            p2.x_scn = p2.x_wc;
+            p2.y_scn = p2.y_wc;
+
+            LimitesSCN limites = Viewport::getLimitesSCN();
+            if(!cohenSutherland(p1, p2, limites)){
+                continue;
             }
+
+            double x1_vp = (p1.x_wc + 1.0) * (win.getLargura() / 2.0);
+            double y1_vp = (1.0 - p1.y_wc) * (win.getAltura()  / 2.0);
+            double x2_vp = (p2.x_wc + 1.0) * (win.getLargura() / 2.0);
+            double y2_vp = (1.0 - p2.y_wc) * (win.getAltura()  / 2.0);
+
+            painter.drawLine(x1_vp, y1_vp, x2_vp, y2_vp);
         }
     }
 }

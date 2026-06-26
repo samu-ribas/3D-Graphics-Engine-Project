@@ -10,112 +10,44 @@ public:
         this->p = vertices;
     }
     
-    void desenhar(QPainter &painter, const Matriz& mCam, const Viewport& viewport) override{
-        if(this->p.size() < 3){
-            return;
+    void desenhar(QPainter &painter, const Matriz& mView, const Matriz& mProj, const Viewport& win, double zoom) override {
+        if (this->p.size() < 3) return;
+
+        double sx = (2.0 / win.getLargura()) * zoom;
+        double sy = (2.0 / win.getAltura())  * zoom;
+        double z_near = 1.0;
+        LimitesSCN limites = Viewport::getLimitesSCN();
+
+        std::vector<Coordenada> vertices_cam;
+        for (const Coordenada& v : this->p) {
+            vertices_cam.push_back(mView * v);
         }
 
-        // converter todos os vértices originais para o SCN
-        std::list<Coordenada> entrada;
-        for(const Coordenada& v : this->p){
-            entrada.push_back(mCam * v);
-        }
+        // Aplica near plane clipping em cada aresta e desenha
+        for (size_t i = 0; i < vertices_cam.size(); ++i) {
+            Coordenada p1 = vertices_cam[i];
+            Coordenada p2 = vertices_cam[(i+1) % vertices_cam.size()];
 
-        // limites Absolutos do SCN para guilhotina e interseções
-        LimitesSCN limitesSCN = Viewport::getLimitesSCN();
+            if (!clipNearPlane(p1, p2, z_near)) continue;
 
-        std::list<Coordenada> saida;
+            p1 = mProj * p1;
+            p2 = mProj * p2;
 
-        // algoritmo Sutherland-Hodgman no SCN usando getOutcode
-        for(int lado = 0; lado < 4; ++lado){
-            saida.clear();
-            if(entrada.empty()){
-                break;
+            // Aplicar escala
+            p1.x_wc *= sx; p1.y_wc *= sy;
+            p2.x_wc *= sx; p2.y_wc *= sy;
+
+            p1.x_scn = p1.x_wc; p1.y_scn = p1.y_wc;
+            p2.x_scn = p2.x_wc; p2.y_scn = p2.y_wc;
+
+            if (cohenSutherland(p1, p2, limites)) {
+                double x1_vp = (p1.x_wc + 1.0) * (win.getLargura() / 2.0);
+                double y1_vp = (1.0 - p1.y_wc) * (win.getAltura() / 2.0);
+                double x2_vp = (p2.x_wc + 1.0) * (win.getLargura() / 2.0);
+                double y2_vp = (1.0 - p2.y_wc) * (win.getAltura() / 2.0);
+                painter.drawLine(QPointF(x1_vp, y1_vp), QPointF(x2_vp, y2_vp));
             }
-
-            Coordenada S = entrada.back();
-
-            for(const Coordenada& E : entrada){
-                // Calcula o outcode para S e E no SCN
-                std::bitset<4> outS = this->getOutcode(S.x_wc, S.y_wc, limitesSCN);
-                std::bitset<4> outE = this->getOutcode(E.x_wc, E.y_wc, limitesSCN);
-
-                // se o bit correspondente ao lado atual for 0, o ponto está DENTRO.
-                bool comecoDentro = !outS.test(lado);
-                bool finalDentro = !outE.test(lado);
-
-                if(finalDentro){
-                    if(!comecoDentro){
-                        // Interseção entrando
-                        Coordenada i;
-                        double dx = E.x_wc - S.x_wc;
-                        double dy = E.y_wc - S.y_wc;
-
-                        if(lado == 0){ // LEFT
-                            i.x_wc = limitesSCN.x_min;
-                            i.y_wc = (dx == 0.0) ? S.y_wc : S.y_wc + dy * (limitesSCN.x_min - S.x_wc) / dx;
-                        } else if(lado == 1){ // RIGHT
-                            i.x_wc = limitesSCN.x_max;
-                            i.y_wc = (dx == 0.0) ? S.y_wc : S.y_wc + dy * (limitesSCN.x_max - S.x_wc) / dx;
-                        } else if(lado == 2){ // BASE
-                            i.y_wc = limitesSCN.y_min;
-                            i.x_wc = (dy == 0.0) ? S.x_wc : S.x_wc + dx * (limitesSCN.y_min - S.y_wc) / dy;
-                        } else { // TOP
-                            i.y_wc = limitesSCN.y_max;
-                            i.x_wc = (dy == 0.0) ? S.x_wc : S.x_wc + dx * (limitesSCN.y_max - S.y_wc) / dy;
-                        }
-                        saida.push_back(i);
-                    }
-                    saida.push_back(E);
-                }
-                else if(comecoDentro){
-                    // Interseção saindo
-                    Coordenada i;
-                    double dx = E.x_wc - S.x_wc;
-                    double dy = E.y_wc - S.y_wc;
-
-                    if(lado == 0){ // LEFT
-                        i.x_wc = limitesSCN.x_min;
-                        i.y_wc = (dx == 0.0) ? S.y_wc : S.y_wc + dy * (limitesSCN.x_min - S.x_wc) / dx;
-                    } else if(lado == 1){ // RIGHT
-                        i.x_wc = limitesSCN.x_max;
-                        i.y_wc = (dx == 0.0) ? S.y_wc : S.y_wc + dy * (limitesSCN.x_max - S.x_wc) / dx;
-                    } else if(lado == 2){ // BASE
-                        i.y_wc = limitesSCN.y_min;
-                        i.x_wc = (dy == 0.0) ? S.x_wc : S.x_wc + dx * (limitesSCN.y_min - S.y_wc) / dy;
-                    } else { // TOP
-                        i.y_wc = limitesSCN.y_max;
-                        i.x_wc = (dy == 0.0) ? S.x_wc : S.x_wc + dx * (limitesSCN.y_max - S.y_wc) / dy;
-                    }
-                    saida.push_back(i);
-                }
-                S = E;
-            }
-            entrada = saida; // alimenta o próximo corte com o polígono já recotado
         }
-
-
-        if(entrada.size() < 3){
-            return;
-        }
-
-        std::vector<QPointF> pontos_tela;
-        pontos_tela.reserve(entrada.size());
-
-        for(const Coordenada& c_scn : entrada){
-            double x_vp = (c_scn.x_wc + 1.0) * (viewport.getLargura() / 2.0);
-            double y_vp = (1.0 - c_scn.y_wc) * (viewport.getAltura() / 2.0);
-            pontos_tela.push_back(QPointF(x_vp, y_vp));
-        }
-
-        QPen caneta(Qt::white, 3);
-        painter.setPen(caneta);
-
-        for(size_t i = 0 ; i < pontos_tela.size() - 1 ; ++i){
-            painter.drawLine(pontos_tela[i], pontos_tela[i + 1]);
-        }
-        painter.drawLine(pontos_tela.back(), pontos_tela.front());
     }
-
 };
 #endif // POLIGONO_H

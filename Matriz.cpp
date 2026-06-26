@@ -56,26 +56,53 @@ Matriz Matriz::gerarMatrizRz(double angulo){ // rotação z
     return rotacao;
 }
 
-Matriz Matriz::operator*(const Matriz& m2) const{
-    Matriz resultado;
-    double soma;
-    for(int i = 0 ; i<4 ; i++){
-        for(int j = 0 ; j<4 ; j++){
-            soma = 0.0;
-            for(int k = 0 ; k<4 ; k++){
-                soma += this->m[i][k] * m2.m[k][j];
-            }
-            resultado.m[i][j] = soma;
-        }
-    }
-    return resultado;
+Matriz Matriz::gerarMatrizPerspectiva(double d)
+{
+    Matriz p;
+    /*
+        x' = x / (z/d)
+        y' = y / (z/d)
+        w = z/d
+    */
+    p.m[3][2]=1.0/d;
+    p.m[3][3]=0;
+    return p;
 }
 
-Coordenada Matriz::operator*(const Coordenada& ponto) const{
-    Coordenada resultado;
-    //matriz 4x4 por vetor coluna (x, y, z, 1)
-    resultado.x_wc = (this->m[0][0] * ponto.x_wc) + (this->m[0][1] * ponto.y_wc) + (this->m[0][2] * ponto.z_wc) + (this->m[0][3] * 1.0);
-    resultado.y_wc = (this->m[1][0] * ponto.x_wc) + (this->m[1][1] * ponto.y_wc) + (this->m[1][2] * ponto.z_wc) + (this->m[1][3] * 1.0);
-    resultado.z_wc = (this->m[2][0] * ponto.x_wc) + (this->m[2][1] * ponto.y_wc) + (this->m[2][2] * ponto.z_wc) + (this->m[2][3] * 1.0);
-    return resultado;
+Matriz Matriz::operator*(const Matriz& b) const
+{
+    Matriz r;
+    for(int i=0;i<4;i++){
+        for(int j=0;j<4;j++){
+            r.m[i][j]=0;
+            for(int k=0;k<4;k++)
+                r.m[i][j]+=m[i][k]*b.m[k][j];
+        }
+    }
+    return r;
+
+}
+
+Coordenada Matriz::operator*(const Coordenada& p) const
+{
+    double x = m[0][0]*p.x_wc + m[0][1]*p.y_wc + m[0][2]*p.z_wc + m[0][3];
+    double y = m[1][0]*p.x_wc + m[1][1]*p.y_wc + m[1][2]*p.z_wc + m[1][3];
+    double z = m[2][0]*p.x_wc + m[2][1]*p.y_wc + m[2][2]*p.z_wc + m[2][3];
+    double w = m[3][0]*p.x_wc + m[3][1]*p.y_wc + m[3][2]*p.z_wc + m[3][3];
+
+    Coordenada r;
+
+    if(fabs(w) > 0.0001){
+        r.x_wc = x / w;
+        r.y_wc = y / w;
+        r.z_wc = z / w;
+    }else{
+        r.x_wc = x;
+        r.y_wc = y;
+        r.z_wc = z;
+    }
+    r.x_scn = r.x_wc;
+    r.y_scn = r.y_wc;
+
+    return r;
 }

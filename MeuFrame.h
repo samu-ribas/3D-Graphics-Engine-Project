@@ -15,7 +15,8 @@ public:
 
     Viewport viewport;
     Camera camera;
-    Matriz mCameraAtual;
+    Matriz mView; // Transformação para Coordenadas de Câmera (Viewing)
+    Matriz mProj; // Projeção Perspectiva e Mapeamento para SCN
 
     void adicionarPonto(QString nome, double x, double y);
     void adicionarReta(QString name, double x1, double y1, double x2, double y2);

@@ -12,7 +12,6 @@ public:
     explicit MeuFrame(QWidget *parent = nullptr);
     ~MeuFrame();
 
-
     Viewport viewport;
     Camera camera;
     Matriz mView; // Transformação para Coordenadas de Câmera (Viewing)

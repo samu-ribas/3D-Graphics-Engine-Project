@@ -13,7 +13,7 @@ public:
     ~MeuFrame();
 
     Viewport viewport;
-    Camera camera;
+    Camera *camera;
     Matriz mView; // Transformação para Coordenadas de Câmera (Viewing)
     Matriz mProj; // Projeção Perspectiva e Mapeamento para SCN
 

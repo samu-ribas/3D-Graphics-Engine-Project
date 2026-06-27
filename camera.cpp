@@ -1,6 +1,8 @@
 #include "camera.h"
 
-Camera::Camera(double cx, double cy, double cz) : x(cx), y(cy), z(cz), angulo(0.0), zoom(1.0), d(350.0) {}
+Camera::Camera(double cx, double cy, double cz) : Forma("Camera", TipoForma::CAMERA), x(cx), y(cy), z(cz), angulo(0.0), zoom(1.0), d(350.0) {
+    this->p.push_back(Coordenada(cx,cy,cz));
+}
 
 double Camera::getX() const {
     return x;
@@ -64,3 +66,22 @@ void Camera::diminuirZoom() {
     if(zoom < 0.1)
         zoom = 0.1;
 }
+
+void Camera::desenhar(QPainter &painter, const Matriz& mView, const Matriz& mProj, const Viewport& win, double zoom){
+    Q_UNUSED(painter);
+    Q_UNUSED(mView);
+    Q_UNUSED(mProj);
+    Q_UNUSED(win);
+    Q_UNUSED(zoom);
+}
+
+
+
+
+
+
+
+
+
+
+

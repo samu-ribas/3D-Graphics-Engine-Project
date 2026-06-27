@@ -6,7 +6,10 @@
 #include <QPainter>
 #include <QDebug>
 
-MeuFrame::MeuFrame(QWidget *parent) : QFrame(parent), viewport(50.0, 50.0, 600.0, 350.0) {}
+MeuFrame::MeuFrame(QWidget *parent) : QFrame(parent), viewport(50.0, 50.0, 600.0, 350.0) {
+    this->camera = new Camera(0.0,0.0, -300.0);
+    displayFile.append(this->camera);
+}
 
 void MeuFrame:: adicionarPonto(QString name, double x, double y){
     displayFile.append(new Ponto(name ,x ,y));
@@ -23,7 +26,7 @@ void MeuFrame:: adicionarPoligono(QString name, std::list<Coordenada> pontos){
     recalcularSCN();
 }
 
-void MeuFrame::adicionarModelo3D( QString nome, QString caminhoRecurso){
+void MeuFrame::adicionarModelo3D(QString nome, QString caminhoRecurso){
     Modelo3D* modelo = Modelo3D::carregarOBJ(nome, caminhoRecurso);
     if(modelo == nullptr)
         return;
@@ -87,8 +90,8 @@ void MeuFrame::rotacionarObjeto(QString n, double angulo, double x, double y, do
                     double x_scn = x / (larg_vp / 2.0);
                     double y_scn = y / (alt_vp / 2.0);
 
-                    px = x_scn * (viewport.getLargura() / 2.0) + camera.getX();
-                    py = y_scn * (viewport.getAltura() / 2.0) + camera.getY();
+                    px = x_scn * (viewport.getLargura() / 2.0) + camera->getX();
+                    py = y_scn * (viewport.getAltura() / 2.0) + camera->getY();
                     pz = z;
                 }
             }
@@ -122,14 +125,15 @@ bool MeuFrame::contemObjeto(const QString& nome) const {
 
 void MeuFrame::recalcularSCN()
 {
-    Matriz translacao = Matriz::gerarMatrizT(-camera.getX(), -camera.getY(), -camera.getZ());
-    Matriz rotacao    = Matriz::gerarMatrizRz(-camera.getAngulo());
+    Matriz translacao = Matriz::gerarMatrizT(-camera->getX(), -camera->getY(), -camera->getZ());
+    Matriz rotacao    = Matriz::gerarMatrizRz(-camera->getAngulo());
     this->mView = rotacao * translacao;
 
-    this->mProj = Matriz::gerarMatrizPerspectiva(camera.getD());
+    this->mProj = Matriz::gerarMatrizPerspectiva(camera->getD());
 
     this->update();
 }
+
 void MeuFrame::paintEvent(QPaintEvent *event){
     QFrame::paintEvent(event);
     QPainter painter(this);
@@ -139,7 +143,7 @@ void MeuFrame::paintEvent(QPaintEvent *event){
     painter.translate(this->viewport.getXvp(), this->viewport.getYvp());
 
     for(Forma* df : std::as_const(displayFile)){
-        df->desenhar(painter, this->mView, this->mProj, this->viewport, this->camera.getZoom());
+        df->desenhar(painter, this->mView, this->mProj, this->viewport, this->camera->getZoom());
     }
 
     QPen canetaVermelha(Qt::darkRed, 6);

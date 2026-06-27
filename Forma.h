@@ -22,7 +22,7 @@ struct Coordenada{
 
 class Matriz;
 
-enum class TipoForma{PONTO, RETA, POLIGONO, MODELO3D};
+enum class TipoForma{PONTO, RETA, POLIGONO, MODELO3D, CAMERA};
 
 class Forma{
 public:

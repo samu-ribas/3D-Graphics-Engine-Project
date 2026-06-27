@@ -23,13 +23,11 @@ public:
         p1 = mProj * p1;
         p2 = mProj * p2;
 
-        // Aplicar escala + zoom (AGORA)
         double sx = (2.0 / win.getLargura()) * zoom;
         double sy = (2.0 / win.getAltura())  * zoom;
         p1.x_wc *= sx; p1.y_wc *= sy;
         p2.x_wc *= sx; p2.y_wc *= sy;
 
-        // Copiar para x_scn/y_scn (por compatibilidade, mas não use)
         p1.x_scn = p1.x_wc; p1.y_scn = p1.y_wc;
         p2.x_scn = p2.x_wc; p2.y_scn = p2.y_wc;
 

@@ -24,7 +24,7 @@ Modelo3D* Modelo3D::carregarOBJ(const QString& nome, const QString& caminho)
 
     QTextStream stream(&file);
     while(!stream.atEnd())
-    {   //retorna verdadeiro se não houver mais dados para serem lidos do QTextStream;
+    {   //retorna verdadeiro se não houver mais dados para serem lidos do QTextStream
         line = stream.readLine().trimmed();
 
         if(line.isEmpty() || line.startsWith('#')){//pula se for vazia ou comentario
@@ -44,7 +44,7 @@ Modelo3D* Modelo3D::carregarOBJ(const QString& nome, const QString& caminho)
                 vertices.push_back(Coordenada(x, y, z));
             }
         }else if (tipo == "f"){
-            // Face: f v1[/vt1][/vn1] v2[/vt2][/vn2] ...
+            // Face: f v1[/vt1][/vn1] v2[/vt2][/vn2]
             std::vector<int> faceIndices;
             std::string token;
             while(iss >> token)

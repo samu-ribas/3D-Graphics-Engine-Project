@@ -1,5 +1,4 @@
-# Engine Gráfica 3D Interativa (C++ / Qt)
-
+# Engine Gráfica 3D Interativa
 Este repositório contém a implementação de um motor gráfico 3D renderizado por software, construído do zero utilizando **C++** e o framework **Qt**. O sistema renderiza primitivas geométricas e modelos 3D poligonais (formato `.obj`), orquestrando um pipeline de visualização completo — desde o Sistema de Coordenadas do Mundo (WC) até o mapeamento em pixels no Espaço de Tela (Viewport).
 
 ## Funcionalidades Principais
